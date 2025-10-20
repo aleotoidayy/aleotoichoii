@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tạo Mã QR Thanh Toán</title>
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+  <style>
+    :root {
+      --bg: #0f1220;
+      --bg-soft: #151935;
+      --text: #e8ebff;
+      --muted: #9aa3b2;
+      --brand: #6ea8fe;
+      --brand-2: #8f7afe;
+      --card: #141935;
+      --border: #273157;
+      --glow: rgba(110,168,254,0.35);
+      --shadow: 0 10px 30px rgba(8,12,40,0.45);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #eef2f9;
+        --bg-soft: #e3e9ff;
+        --text: #202533;
+        --muted: #6b7280;
+        --brand: #2f83ff;
+        --brand-2: #7c4dff;
+        --card: #ffffff;
+        --border: #dbe2f3;
+        --glow: rgba(47,131,255,0.25);
+        --shadow: 0 10px 26px rgba(47,131,255,0.08);
+      }
+    }
+    html[data-theme="light"] {
+      --bg: #eef2f9;
+      --bg-soft: #e3e9ff;
+      --text: #202533;
+      --muted: #6b7280;
+      --brand: #2f83ff;
+      --brand-2: #7c4dff;
+      --card: #ffffff;
+      --border: #dbe2f3;
+      --glow: rgba(47,131,255,0.25);
+      --shadow: 0 10px 26px rgba(47,131,255,0.08);
+    }
+    html[data-theme="dark"] {
+      --bg: #0f1220;
+      --bg-soft: #151935;
+      --text: #e8ebff;
+      --muted: #9aa3b2;
+      --brand: #6ea8fe;
+      --brand-2: #8f7afe;
+      --card: #141935;
+      --border: #273157;
+      --glow: rgba(110,168,254,0.35);
+      --shadow: 0 10px 30px rgba(8,12,40,0.45);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      color: var(--text);
+      background: linear-gradient(-45deg, #e0c3fc, #8ec5fc, #b2fcfb, #a1c4fd);
+      background-size: 400% 400%;
+      animation: gradientMove 15s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .container {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: saturate(180%) blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 24px;
+      border-radius: 18px;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: var(--shadow);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: 800;
+      font-size: 24px;
+    }
+    
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      font-size: 14px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    
+    input[type="text"]:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 4px var(--glow) inset;
+    }
+    
+    input[type="text"]::placeholder {
+      color: var(--muted);
+      opacity: 0.8;
+    }
+
+    button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,0.02));
+      color: var(--text);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      border-color: var(--brand);
+      box-shadow: 0 0 15px 5px var(--glow);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .dropdown {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+
+    .dropdown-list {
+      display: none;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: saturate(180%) blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: var(--shadow);
+      border-radius: 12px;
+      max-height: 250px;
+      overflow-y: auto;
+      margin-bottom: 8px;
+      padding: 8px;
+      position: relative;
+      z-index: 10;
+    }
+
+    .dropdown-list input {
+      width: 100%;
+      margin: 0 0 8px 0;
+      background: rgba(0,0,0,0.1);
+      border-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .dropdown-list div {
+      padding: 10px 12px;
+      cursor: pointer;
+      color: var(--text);
+      border-radius: 8px;
+      font-size: 14px;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .dropdown-list div:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
+    
+    .dropdown-list div:active {
+      transform: translateY(0);
+      transition-duration: 0.1s;
+    }
+
+    #controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+    }
+    
+    #controls button {
+      flex: 1;
+      min-width: 150px;
+    }
+
+    #loader {
+      text-align: center;
+      margin-top: 12px;
+      display: none;
+      color: var(--text);
+    }
+
+    #qrCode {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    #qrImg {
+      max-width: 100%;
+      background: white;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+    
+    .back-link {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; border: 1px solid var(--border);
+      padding: 6px 10px; border-radius: 999px; color: var(--muted);
+      text-decoration: none;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .back-link:hover { 
+      border-color: var(--brand); 
+      color: var(--text); 
+      box-shadow: 0 0 0 4px var(--glow) inset; 
+    }
+  </style>
+</head>
+<body>
+
+  <a href="." class="back-link">
+    <i class='bx bx-left-arrow-alt'></i> Quay lại
+  </a>
+
+  <div class="container">
+    <h1>Tạo Mã QR Thanh Toán</h1>
+    <input id="name" type="text" placeholder="Tên người nhận (viết hoa, không dấu)" />
+    <input id="account" type="text" placeholder="Số tài khoản" />
+
+    <div class="dropdown" id="bankBtn">-- Chọn ngân hàng --</div>
+    <div class="dropdown-list" id="bankListWrapper">
+      <input type="text" id="bankSearch" placeholder="Tìm ngân hàng..." />
+      <div id="bankList"></div>
+    </div>
+
+    <input id="amount" type="text" placeholder="Nhập số tiền" />
+    <input id="desc" type="text" placeholder="Nội dung chuyển khoản (không dấu)" />
+
+    <div id="controls">
+      <button id="generate"><i class='bx bx-qr'></i> Tạo QR</button>
+      <button id="download" style="display:none;"><i class='bx bxs-download'></i> Tải mã</button>
+      <button id="reset" style="display:none;"><i class='bx bx-revision'></i> Đổi thông tin</button>
+    </div>
+
+    <div id="loader">⏳ Đang tạo mã QR...</div>
+    <div id="qrCode"></div>
+  </div>
+
+  <script>
+    const banks = [
+  { name: "ABBANK", bin: "970425" },
+  { name: "ACB", bin: "970416" },
+  { name: "Agribank", bin: "970405" },
+  { name: "Bac A Bank", bin: "970409" },
+  { name: "BAOVIET Bank", bin: "970438" },
+  { name: "BIDV", bin: "970418" },
+  { name: "CAKE", bin: "546034" },
+  { name: "CBB", bin: "970444" },
+  { name: "CIMB", bin: "422589" },
+  { name: "CITIBANK", bin: "533948" },
+  { name: "COOPBANK", bin: "970446" },
+  { name: "DBS", bin: "796500" },
+  { name: "DongA Bank", bin: "970406" },
+  { name: "Eximbank", bin: "970431" },
+  { name: "GPBank", bin: "970408" },
+  { name: "HDBank", bin: "970437" },
+  { name: "Hong Leong Bank", bin: "970442" },
+  { name: "HSBC", bin: "458761" },
+  { name: "IBK - HCM", bin: "970456" },
+  { name: "IBK - HN", bin: "970455" },
+  { name: "Indovina Bank", bin: "970434" },
+  { name: "KBHCM", bin: "970463" },
+  { name: "KBHN", bin: "970462" },
+  { name: "KienlongBank", bin: "970452" },
+  { name: "LienVietPostBank", bin: "970449" },
+  { name: "MSB", bin: "970426" },
+  { name: "MB Bank", bin: "970422" },
+  { name: "Nam A Bank", bin: "970428" },
+  { name: "NCB – Quốc Dân", bin: "970419" },
+  { name: "OCB", bin: "970448" },
+  { name: "OceanBank", bin: "970414" },
+  { name: "PGBank", bin: "970430" },
+  { name: "Public Bank", bin: "970439" },
+  { name: "PVcomBank", bin: "970412" },
+  { name: "Saigonbank", bin: "970400" },
+  { name: "Sacombank", bin: "970403" },
+  { name: "SCB", bin: "970429" },
+  { name: "SeABank", bin: "970440" },
+  { name: "SHB", bin: "970443" },
+  { name: "Shinhan Bank", bin: "970424" },
+  { name: "Standard Chartered", bin: "970410" },
+  { name: "Techcombank", bin: "970407" },
+  { name: "Timo", bin: "963388" },
+  { name: "TPBank", bin: "970423" },
+  { name: "Ubank", bin: "546035" },
+  { name: "United Overseas Bank (UOB)", bin: "970458" },
+  { name: "VBSP", bin: "999888" },
+  { name: "Viet CapitalBank (VCCB)", bin: "970454" },
+  { name: "VIB", bin: "970441" },
+  { name: "VietABank", bin: "970427" },
+  { name: "VietBank", bin: "970433" },
+  { name: "Vietcombank", bin: "970436" },
+  { name: "VietinBank", bin: "970415" },
+  { name: "VPBank", bin: "970432" },
+  { name: "VRB – Liên doanh Việt Nga", bin: "970421" },
+  { name: "Woori Bank", bin: "970457" }
+      
+    ].sort((a, b) => a.name.localeCompare(b.name));
+
+    const nameInput = document.getElementById("name");
+    const accountInput = document.getElementById("account");
+    const bankBtn = document.getElementById("bankBtn");
+    const bankListWrapper = document.getElementById("bankListWrapper");
+    const bankList = document.getElementById("bankList");
+    const bankSearch = document.getElementById("bankSearch");
+    const amountInput = document.getElementById("amount");
+    const descInput = document.getElementById("desc");
+    const generateBtn = document.getElementById("generate");
+    const resetBtn = document.getElementById("reset");
+    const downloadBtn = document.getElementById("download");
+    const loader = document.getElementById("loader");
+    const qrCode = document.getElementById("qrCode");
+
+    let selectedBank = null;
+    let isLocked = false;
+    let qrImageUrl = null;
+
+    function renderBankList(filter = "") {
+      bankList.innerHTML = "";
+      banks
+        .filter(b => b.name.toLowerCase().includes(filter.toLowerCase()))
+        .forEach(bank => {
+          const div = document.createElement("div");
+          div.innerHTML = `<span>${bank.name}</span>`;
+          div.addEventListener("click", () => {
+            selectedBank = bank;
+            bankBtn.innerHTML = `<span>${bank.name}</span>`;
+            bankListWrapper.style.display = "none";
+          });
+          bankList.appendChild(div);
+        });
+    }
+
+    renderBankList();
+
+    bankBtn.addEventListener("click", () => {
+      if (isLocked) return;
+      bankListWrapper.style.display =
+        bankListWrapper.style.display === "block" ? "none" : "block";
+    });
+
+    bankSearch.addEventListener("input", () => {
+      renderBankList(bankSearch.value);
+    });
+
+    nameInput.addEventListener("input", () => {
+      nameInput.value = nameInput.value.toUpperCase();
+    });
+
+    amountInput.addEventListener("input", () => {
+      let val = amountInput.value.replace(/\D/g, "");
+      if (val) {
+        val = parseInt(val).toLocaleString("vi-VN");
+      }
+      amountInput.value = val;
+    });
+
+    generateBtn.addEventListener("click", () => {
+      const name = nameInput.value.trim();
+      const account = accountInput.value.trim();
+      const bank = selectedBank;
+      const amount = amountInput.value.replace(/\D/g, "");
+      const desc = descInput.value.trim();
+
+      if (!isLocked) {
+        if (!name || !account || !bank) {
+          alert("Vui lòng nhập đầy đủ Tên, STK và Ngân hàng.");
+          return;
+        }
+        localStorage.setItem("accountInfo", JSON.stringify({ name, account, bin: bank.bin }));
+        
+        isLocked = true;
+        nameInput.disabled = true;
+        accountInput.disabled = true;
+        bankBtn.style.pointerEvents = "none";
+        resetBtn.style.display = "inline-block";
+        generateBtn.innerHTML = "<i class='bx bx-qr'></i> Tạo QR Mới";
+      }
+
+      if (!amount) {
+        alert("Vui lòng nhập số tiền.");
+        return;
+      }
+
+      loader.style.display = "block";
+      qrCode.innerHTML = "";
+      downloadBtn.style.display = "none";
+
+      const template = "compact2";
+      const safeName = encodeURIComponent(name);
+      const safeDesc = encodeURIComponent(desc);
+      const qrApiUrl = `https://img.vietqr.io/image/${bank.bin}-${account}-${template}.png?amount=${amount}&addInfo=${safeDesc}&accountName=${safeName}`;
+      
+      qrImageUrl = qrApiUrl; 
+
+      const img = new Image();
+      img.src = qrApiUrl;
+      img.id = "qrImg";
+      
+      img.onload = () => {
+        loader.style.display = "none";
+        qrCode.appendChild(img);
+        downloadBtn.style.display = "inline-block";
+      };
+      img.onerror = () => {
+        loader.style.display = "none";
+        qrCode.innerText = "Lỗi: Không tạo được mã QR. Vui lòng kiểm tra lại STK và Ngân hàng.";
+        qrImageUrl = null;
+      };
+    });
+
+    downloadBtn.addEventListener("click", () => {
+      if (qrImageUrl) {
+        fetch(qrImageUrl) 
+          .then(response => response.blob()) 
+          .then(blob => {
+            const blobUrl = URL.createObjectURL(blob); 
+            const link = document.createElement("a");
+            link.href = blobUrl;
+            link.download = `qr-thanh-toan-${amountInput.value.replace(/\D/g, "")}.png`; 
+            document.body.appendChild(link);
+            link.click(); 
+            document.body.removeChild(link); 
+            URL.revokeObjectURL(blobUrl); 
+          })
+          .catch(() => {
+            alert("Không thể tải ảnh, vui lòng thử lại!");
+          });
+      }
+    });
+
+    resetBtn.addEventListener("click", () => {
+      isLocked = false;
+      nameInput.disabled = false;
+      accountInput.disabled = false;
+      bankBtn.style.pointerEvents = "auto";
+      bankBtn.innerHTML = "-- Chọn ngân hàng --"; 
+      resetBtn.style.display = "none";
+      downloadBtn.style.display = "none";
+      qrCode.innerHTML = "";
+      qrImageUrl = null;
+      generateBtn.innerHTML = "<i class='bx bx-qr'></i> Tạo QR";
+      localStorage.removeItem("accountInfo"); 
+    });
+    
+    document.addEventListener("DOMContentLoaded", () => {
+      const savedInfo = localStorage.getItem("accountInfo");
+      if (savedInfo) {
+        try {
+          const { name, account, bin } = JSON.parse(savedInfo);
+          const bank = banks.find(b => b.bin === bin);
+          
+          if (name && account && bank) {
+            nameInput.value = name;
+            accountInput.value = account;
+            selectedBank = bank;
+            bankBtn.innerHTML = `<span>${bank.name}</span>`;
+            
+            isLocked = true;
+            nameInput.disabled = true;
+            accountInput.disabled = true;
+            bankBtn.style.pointerEvents = "none";
+            resetBtn.style.display = "inline-block";
+            generateBtn.innerHTML = "<i class='bx bx-qr'></i> Tạo QR Mới";
+          }
+        } catch (e) {
+          localStorage.removeItem("accountInfo"); 
+        }
+      }
+    });
+    
+  </script>
+</body>
+</html>
