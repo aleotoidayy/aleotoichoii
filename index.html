@@ -290,7 +290,7 @@
     
     <input id="desc" type="text" placeholder="Nội dung chuyển khoản" />
 
-    <button id="generate"><i class='bx bx-qr'></i> Tạo QR </button>
+    <button id="generate"><i class='bx bx-qr'></i> Tạo QR</button>
 
     <div id="qrArea">
       <img id="qrImg" src="" alt="QR Code" />
@@ -319,21 +319,22 @@
       const savedName = localStorage.getItem('qr_name');
       const savedAccount = localStorage.getItem('qr_account');
       const savedBankCode = localStorage.getItem('qr_bank');
-      const savedDesc = localStorage.getItem('qr_desc');
       
       if (savedName) nameInput.value = savedName;
       if (savedAccount) accountInput.value = savedAccount;
-      if (savedDesc) descInput.value = savedDesc;
+
     }
 
     function saveData() {
+
       localStorage.setItem('qr_name', nameInput.value);
       localStorage.setItem('qr_account', accountInput.value);
-      localStorage.setItem('qr_desc', descInput.value);
+      
       if (selectedBank) {
         localStorage.setItem('qr_bank', selectedBank.bin);
         localStorage.setItem('qr_bank_name', selectedBank.shortName);
       }
+      
     }
 
     loadSavedData();
@@ -425,6 +426,7 @@
       } else {
         this.value = '';
       }
+
     });
 
     nameInput.addEventListener('input', function() {
@@ -432,7 +434,7 @@
       let end = this.selectionEnd;
       this.value = this.value.toUpperCase();
       this.setSelectionRange(start, end);
-      saveData();
+      saveData(); // Lưu khi nhập tên
     });
 
     descInput.addEventListener('input', function() {
@@ -472,7 +474,6 @@
       
       this.value = text.toLowerCase();
       
-      saveData();
     });
 
     bankBtn.addEventListener('click', (e) => {
@@ -581,6 +582,9 @@
     });
 
     window.addEventListener('beforeunload', saveData);
+
+    localStorage.removeItem('qr_amount');
+    localStorage.removeItem('qr_desc');
 
   </script>
 </body>
