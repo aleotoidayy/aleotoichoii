@@ -62,7 +62,7 @@
             transition: all 0.3s ease;
         }
 
-        .panel:hover {
+        .panel:hover, .panel.touch-active {
             box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
             transform: translateY(-2px);
         }
@@ -120,7 +120,7 @@
             box-shadow: 0 4px 15px rgba(175, 215, 255, 0.3);
         }
 
-        .btn-small:hover {
+        .btn-small:hover, .btn-small.touch-active {
             background: rgba(255, 255, 255, 0.6);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(175, 215, 255, 0.4);
@@ -148,7 +148,7 @@
             box-shadow: inset 0 2px 4px rgba(255,255,255,0.3);
         }
 
-        .code-editor:focus {
+        .code-editor:focus, .code-editor.touch-focus {
             outline: none;
             background: rgba(255, 255, 255, 0.5);
             border-color: rgba(59, 130, 246, 0.5);
@@ -203,7 +203,7 @@
             transition: all 0.3s ease;
         }
 
-        .horizontal-row:hover {
+        .horizontal-row:hover, .horizontal-row.touch-active {
             background: rgba(255, 255, 255, 0.25);
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(31, 38, 135, 0.1);
@@ -220,7 +220,7 @@
             transition: all 0.3s ease;
         }
 
-        .horizontal-row .option-row:hover {
+        .horizontal-row .option-row:hover, .horizontal-row .option-row.touch-active {
             border-right-color: rgba(59, 130, 246, 0.3);
         }
 
@@ -244,7 +244,7 @@
             transition: all 0.3s ease;
         }
 
-        .option-label:hover {
+        .option-label:hover, .option-label.touch-active {
             color: #3b82f6;
             transform: translateX(5px);
         }
@@ -260,7 +260,7 @@
             transition: all 0.3s ease;
         }
 
-        .option-label:hover i {
+        .option-label:hover i, .option-label.touch-active i {
             background: rgba(59, 130, 246, 0.2);
             transform: scale(1.1);
         }
@@ -386,7 +386,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .btn-primary:hover {
+        .btn-primary:hover, .btn-primary.touch-active {
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2);
             background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
@@ -402,7 +402,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .btn-secondary:hover {
+        .btn-secondary:hover, .btn-secondary.touch-active {
             transform: translateY(-4px) scale(1.02);
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2);
             background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
@@ -448,7 +448,7 @@
             transition: all 0.3s ease;
         }
 
-        .stat:hover {
+        .stat:hover, .stat.touch-active {
             background: rgba(255, 255, 255, 0.5);
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(31, 38, 135, 0.1);
@@ -488,7 +488,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .btn-copy:hover {
+        .btn-copy:hover, .btn-copy.touch-active {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(31, 38, 135, 0.15);
             background: linear-gradient(135deg, #ffffff 0%, #e6f7ff 100%);
@@ -500,7 +500,7 @@
             border: 1px solid rgba(255, 255, 255, 0.8);
         }
 
-        .btn-download:hover {
+        .btn-download:hover, .btn-download.touch-active {
             transform: translateY(-3px);
             box-shadow: 0 10px 25px rgba(31, 38, 135, 0.15);
             background: linear-gradient(135deg, #ffffff 0%, #f0eeff 100%);
@@ -1201,6 +1201,101 @@
                     e.preventDefault();
                     obfuscate();
                 }
+            });
+
+            const allOptionsRows = document.querySelectorAll('.option-row');
+            allOptionsRows.forEach(row => {
+                const label = row.querySelector('.option-label');
+                const control = row.querySelector('.option-control');
+                
+                label.addEventListener('touchstart', () => {
+                    row.classList.add('touch-active');
+                    label.classList.add('touch-active');
+                });
+                
+                label.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        row.classList.remove('touch-active');
+                        label.classList.remove('touch-active');
+                    }, 150);
+                });
+                
+                if (control) {
+                    control.addEventListener('touchstart', () => {
+                        row.classList.add('touch-active');
+                    });
+                    
+                    control.addEventListener('touchend', () => {
+                        setTimeout(() => {
+                            row.classList.remove('touch-active');
+                        }, 150);
+                    });
+                }
+            });
+
+            const horizontalRows = document.querySelectorAll('.horizontal-row');
+            horizontalRows.forEach(row => {
+                row.addEventListener('touchstart', () => {
+                    row.classList.add('touch-active');
+                });
+                
+                row.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        row.classList.remove('touch-active');
+                    }, 150);
+                });
+            });
+
+            const panels = document.querySelectorAll('.panel');
+            panels.forEach(panel => {
+                panel.addEventListener('touchstart', () => {
+                    panel.classList.add('touch-active');
+                });
+                
+                panel.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        panel.classList.remove('touch-active');
+                    }, 150);
+                });
+            });
+
+            const buttons = document.querySelectorAll('.btn, .btn-small, .btn-copy, .btn-download');
+            buttons.forEach(button => {
+                button.addEventListener('touchstart', () => {
+                    button.classList.add('touch-active');
+                });
+                
+                button.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        button.classList.remove('touch-active');
+                    }, 150);
+                });
+            });
+
+            const stats = document.querySelectorAll('.stat');
+            stats.forEach(stat => {
+                stat.addEventListener('touchstart', () => {
+                    stat.classList.add('touch-active');
+                });
+                
+                stat.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        stat.classList.remove('touch-active');
+                    }, 150);
+                });
+            });
+
+            const codeEditors = document.querySelectorAll('.code-editor');
+            codeEditors.forEach(editor => {
+                editor.addEventListener('touchstart', () => {
+                    editor.classList.add('touch-focus');
+                });
+                
+                editor.addEventListener('touchend', () => {
+                    setTimeout(() => {
+                        editor.classList.remove('touch-focus');
+                    }, 150);
+                });
             });
         }
 
