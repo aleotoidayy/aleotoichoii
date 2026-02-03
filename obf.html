@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obfuscate JavaScript</title>
+    <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom, #b9e9fc, #eefcff);
+            color: #1e3a5f;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-rows: auto auto auto 1fr;
+            gap: 20px;
+        }
+
+        .panel {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .panel:hover {
+            box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
+            transform: translateY(-2px);
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .panel-header i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 8px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel-header h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a5f;
+        }
+
+        .panel-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 15px rgba(175, 215, 255, 0.3);
+        }
+
+        .btn-small:hover {
+            background: rgba(255, 255, 255, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(175, 215, 255, 0.4);
+        }
+
+        .btn-small:active {
+            transform: translateY(-1px);
+        }
+
+        .code-editor {
+            width: 100%;
+            min-height: 180px;
+            max-height: 400px;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            padding: 20px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 14px;
+            color: #1e3a5f;
+            resize: vertical;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.3);
+        }
+
+        .code-editor:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.5);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.2), inset 0 1px 2px rgba(255,255,255,0.8);
+            transform: translateY(-1px);
+        }
+
+        .options-section {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border-radius: 20px;
+            padding: 24px;
+        }
+
+        .options-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .options-title i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 8px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .options-horizontal {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .horizontal-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .horizontal-row:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(31, 38, 135, 0.1);
+        }
+
+        .horizontal-row .option-row {
+            flex: 1;
+            min-width: 220px;
+            max-width: 320px;
+            padding: 10px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.3);
+            padding-right: 20px;
+            margin-right: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .horizontal-row .option-row:hover {
+            border-right-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .horizontal-row .option-row:last-child {
+            border-right: none;
+            margin-right: 0;
+            padding-right: 0;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: #1e3a5f;
+            cursor: pointer;
+            flex: 1;
+            user-select: none;
+            padding: 5px 0;
+            transition: all 0.3s ease;
+        }
+
+        .option-label:hover {
+            color: #3b82f6;
+            transform: translateX(5px);
+        }
+
+        .option-label i {
+            font-size: 1.2rem;
+            color: #3b82f6;
+            min-width: 28px;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 6px;
+            border-radius: 8px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .option-label:hover i {
+            background: rgba(59, 130, 246, 0.2);
+            transform: scale(1.1);
+        }
+
+        .option-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 150px;
+        }
+
+        select {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-width: 140px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(31, 38, 135, 0.08);
+        }
+
+        select:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            transform: translateY(-1px);
+        }
+
+        .checkbox {
+            position: relative;
+            width: 52px;
+            height: 26px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 13px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.3);
+        }
+
+        .checkbox.checked {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: rgba(59, 130, 246, 0.5);
+        }
+
+        .checkbox::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .checkbox.checked::after {
+            transform: translateX(26px);
+        }
+
+        input[type="text"] {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 8px 14px;
+            font-size: 0.9rem;
+            width: 180px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(31, 38, 135, 0.08);
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            transform: translateY(-1px);
+        }
+
+        input[type="text"]::placeholder {
+            color: #6b8299;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 36px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(31, 38, 135, 0.15);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ffffff 0%, #e6f7ff 100%);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+        }
+
+        .btn-primary:active {
+            transform: translateY(-2px) scale(0.99);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.2);
+            background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+        }
+
+        .btn i {
+            font-size: 1.4rem;
+        }
+
+        .btn-lock {
+            font-size: 1.6rem;
+        }
+
+        .output-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1e3a5f;
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(31, 38, 135, 0.1);
+        }
+
+        .stat i {
+            color: #3b82f6;
+            font-size: 1.3rem;
+            background: rgba(255, 255, 255, 0.5);
+            padding: 6px;
+            border-radius: 8px;
+        }
+
+        .output-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-copy, .btn-download {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 24px;
+            font-weight: 600;
+            border: none;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            min-width: 140px;
+            justify-content: center;
+            box-shadow: 0 6px 15px rgba(31, 38, 135, 0.1);
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(31, 38, 135, 0.15);
+            background: linear-gradient(135deg, #ffffff 0%, #e6f7ff 100%);
+        }
+
+        .btn-download {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f7ff 100%);
+            color: #1e3a5f;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(31, 38, 135, 0.15);
+            background: linear-gradient(135deg, #ffffff 0%, #f0eeff 100%);
+        }
+
+        .status {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 16px 32px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            display: none;
+            z-index: 1000;
+            animation: slideUpBounce 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55) forwards;
+            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.15);
+            font-weight: 600;
+        }
+
+        @keyframes slideUpBounce {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 30px) scale(0.9);
+            }
+            60% {
+                opacity: 1;
+                transform: translate(-50%, -5px) scale(1.02);
+            }
+            80% {
+                transform: translate(-50%, 2px) scale(0.99);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, 0) scale(1);
+            }
+        }
+
+        .status.success {
+            color: #10b981;
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .status.error {
+            color: #ef4444;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            color: #3b82f6;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(16px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin: 20px 0;
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+            margin-right: 12px;
+            font-size: 1.5rem;
+            color: #3b82f6;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.4);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(59, 130, 246, 0.6);
+        }
+
+        @media (max-width: 1200px) {
+            .horizontal-row {
+                gap: 15px;
+            }
+            
+            .horizontal-row .option-row {
+                min-width: 200px;
+                max-width: 280px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .horizontal-row .option-row {
+                min-width: 180px;
+                max-width: 240px;
+            }
+            
+            .option-label {
+                font-size: 0.9rem;
+            }
+            
+            .option-control {
+                min-width: 130px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .horizontal-row {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px;
+            }
+            
+            .horizontal-row .option-row {
+                min-width: 100%;
+                max-width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+                padding-right: 0;
+                margin-right: 0;
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .horizontal-row .option-row:last-child {
+                border-bottom: none;
+                margin-bottom: 0;
+                padding-bottom: 0;
+            }
+            
+            .panel-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .panel-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .output-info {
+                flex-direction: column;
+                gap: 20px;
+                align-items: stretch;
+            }
+            
+            .output-buttons {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .actions {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .panel {
+                padding: 20px;
+            }
+            
+            .btn {
+                padding: 14px 20px;
+                font-size: 1.1rem;
+                min-width: auto;
+                width: 100%;
+            }
+            
+            .option-control {
+                min-width: 100%;
+                justify-content: flex-start;
+            }
+            
+            select, input[type="text"] {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Obfuscate JavaScript</h1>
+        </div>
+
+        <div class="main-content">
+            <div class="input-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i class='bx bx-code-alt'></i>
+                            <h2>JavaScript Cần Mã Hóa</h2>
+                        </div>
+                        <div class="panel-actions">
+                            <button class="btn-small" id="pasteBtn">
+                                <i class='bx bx-paste'></i>
+                                Dán
+                            </button>
+                        </div>
+                    </div>
+                    <textarea class="code-editor" id="inputCode" placeholder="Dán code vào đây..."></textarea>
+                </div>
+
+                <div class="options-section">
+                    <div class="options-title">
+                        <i class='bx bx-cog'></i>
+                        <span>Obfuscation Options</span>
+                    </div>
+                    
+                    <div class="options-horizontal" id="optionsContainer">
+                        <div class="horizontal-row" id="basicOptions"></div>
+                        <div class="horizontal-row" id="mainOptions"></div>
+                        <div class="horizontal-row" id="lockOptions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button class="btn btn-primary" id="obfuscateBtn">
+                    <i class='bx bx-lock-alt btn-lock'></i>
+                    Obfuscate
+                </button>
+                <button class="btn btn-secondary" id="resetBtn">
+                    <i class='bx bx-reset'></i>
+                    Đặt Lại
+                </button>
+            </div>
+
+            <div class="output-section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div class="panel-title">
+                            <i class='bx bx-check-shield'></i>
+                            <h2>Kết Quả Mã Hóa</h2>
+                        </div>
+                    </div>
+                    <textarea class="code-editor" id="outputCode" readonly placeholder="Code đã được mã hóa sẽ ở đây..." style="height: 220px;"></textarea>
+                    <div class="output-info">
+                        <div class="stats">
+                            <div class="stat" id="charCount">
+                                <i class='bx bx-font'></i>
+                                <span>Ký tự: 0</span>
+                            </div>
+                            <div class="stat" id="lineCount">
+                                <i class='bx bx-text'></i>
+                                <span>Dòng: 0</span>
+                            </div>
+                            <div class="stat" id="sizeInfo">
+                                <i class='bx bx-data'></i>
+                                <span>Kích thước: 0KB</span>
+                            </div>
+                        </div>
+                        <div class="output-buttons">
+                            <button class="btn-download" id="downloadBtn">
+                                <i class='bx bx-download'></i>
+                                Tải Xuống
+                            </button>
+                            <button class="btn-copy" id="copyBtn">
+                                <i class='bx bx-copy'></i>
+                                Sao Chép
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading" id="loading">
+        <i class='bx bx-loader-circle'></i> Đang xử lý mã hóa...
+    </div>
+    <div class="status" id="status"></div>
+
+    <script>
+        const API_URL = "https://api-obfuscation.vercel.app/javascript/obfuscate";
+        
+        const optionsConfig = {
+            basic: [
+                { id: "target", type: "select", label: "Target", icon: "bx bx-globe", 
+                  options: ["browser", "node"], default: "browser" },
+                { id: "preset", type: "select", label: "Preset", icon: "bx bx-slider-alt", 
+                  options: ["low", "medium", "high"], default: "medium" }
+            ],
+            
+            main: [
+                { id: "stringEncoding", type: "checkbox", label: "String Encoding", icon: "bx bx-hash", default: true },
+                { id: "stringConcealing", type: "checkbox", label: "String Concealing", icon: "bx bx-hide", default: false },
+                { id: "stringCompression", type: "checkbox", label: "String Compression", icon: "bx bx-hash", default: false },
+                { id: "stringSplitting", type: "checkbox", label: "String Splitting", icon: "bx bx-cut", default: false },
+                { id: "renameVariables", type: "checkbox", label: "Rename Variables", icon: "bx bx-rename", default: true },
+                { id: "renameGlobals", type: "checkbox", label: "Rename Globals", icon: "bx bx-world", default: false },
+                { id: "movedDeclarations", type: "checkbox", label: "Moved Declarations", icon: "bx bx-move", default: false },
+                { id: "controlFlowFlattening", type: "checkbox", label: "Control Flow Flattening", icon: "bx bx-layer", default: false },
+                { id: "dispatcher", type: "checkbox", label: "Dispatcher", icon: "bx bx-network-chart", default: false },
+                { id: "opaquePredicates", type: "checkbox", label: "Opaque Predicates", icon: "bx bx-question-mark", default: false },
+                { id: "deadCode", type: "checkbox", label: "Dead Code", icon: "bx bx-x-circle", default: false },
+                { id: "calculator", type: "checkbox", label: "Calculator", icon: "bx bx-calculator", default: false },
+                { id: "integrity", type: "checkbox", label: "Integrity", icon: "bx bx-check-shield", default: false },
+                { id: "selfDefending", type: "checkbox", label: "Self Defending", icon: "bx bx-shield", default: true },
+                { id: "antiDebug", type: "checkbox", label: "Anti Debug", icon: "bx bx-bug", default: false },
+                { id: "duplicateLiteralsRemoval", type: "checkbox", label: "Duplicate Literals Removal", icon: "bx bx-trash", default: false },
+                { id: "shuffle", type: "checkbox", label: "Shuffle", icon: "bx bx-shuffle", default: false },
+                { id: "stack", type: "checkbox", label: "Stack", icon: "bx bx-layer", default: false }
+            ],
+            
+            locks: [
+                { id: "domainLock", type: "text", label: "Domain Lock", icon: "bx bx-link", 
+                  placeholder: "e.g., example.com", default: "" },
+                { id: "osLock", type: "text", label: "OS Lock", icon: "bx bx-desktop", 
+                  placeholder: "e.g., Windows, Linux", default: "" },
+                { id: "browserLock", type: "text", label: "Browser Lock", icon: "bx bx-globe", 
+                  placeholder: "e.g., Chrome, Firefox", default: "" }
+            ]
+        };
+
+        const presetConfigs = {
+            low: {
+                stringEncoding: true,
+                renameVariables: true,
+                selfDefending: true,
+                stringConcealing: false,
+                stringCompression: false,
+                stringSplitting: false,
+                renameGlobals: false,
+                movedDeclarations: false,
+                controlFlowFlattening: false,
+                dispatcher: false,
+                opaquePredicates: false,
+                deadCode: false,
+                calculator: false,
+                integrity: false,
+                antiDebug: false,
+                duplicateLiteralsRemoval: false,
+                shuffle: false,
+                stack: false
+            },
+            medium: {
+                stringEncoding: true,
+                stringCompression: true,
+                renameVariables: true,
+                selfDefending: true,
+                antiDebug: true,
+                stringConcealing: false,
+                stringSplitting: false,
+                renameGlobals: false,
+                movedDeclarations: false,
+                controlFlowFlattening: true,
+                dispatcher: false,
+                opaquePredicates: false,
+                deadCode: false,
+                calculator: false,
+                integrity: false,
+                duplicateLiteralsRemoval: false,
+                shuffle: false,
+                stack: false
+            },
+            high: {
+                stringEncoding: true,
+                stringConcealing: true,
+                stringCompression: true,
+                stringSplitting: true,
+                renameVariables: true,
+                renameGlobals: true,
+                movedDeclarations: true,
+                controlFlowFlattening: true,
+                dispatcher: true,
+                selfDefending: true,
+                antiDebug: true,
+                duplicateLiteralsRemoval: true,
+                shuffle: true,
+                stack: true,
+                opaquePredicates: false,
+                deadCode: true,
+                calculator: false,
+                integrity: false
+            }
+        };
+
+        const inputCode = document.getElementById('inputCode');
+        const outputCode = document.getElementById('outputCode');
+        const obfuscateBtn = document.getElementById('obfuscateBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const pasteBtn = document.getElementById('pasteBtn');
+        const loading = document.getElementById('loading');
+        const status = document.getElementById('status');
+        const charCount = document.getElementById('charCount');
+        const lineCount = document.getElementById('lineCount');
+        const sizeInfo = document.getElementById('sizeInfo');
+        const basicOptions = document.getElementById('basicOptions');
+        const mainOptions = document.getElementById('mainOptions');
+        const lockOptions = document.getElementById('lockOptions');
+
+        function createOptions() {
+            optionsConfig.basic.forEach(option => {
+                const row = createOptionRow(option);
+                basicOptions.appendChild(row);
+            });
+
+            optionsConfig.main.forEach(option => {
+                const row = createOptionRow(option);
+                mainOptions.appendChild(row);
+            });
+
+            optionsConfig.locks.forEach(option => {
+                const row = createOptionRow(option);
+                lockOptions.appendChild(row);
+            });
+
+            const presetSelect = document.getElementById('preset');
+            if (presetSelect) {
+                presetSelect.addEventListener('change', applyPreset);
+            }
+        }
+
+        function createOptionRow(option) {
+            const row = document.createElement('div');
+            row.className = 'option-row';
+            
+            const label = document.createElement('label');
+            label.className = 'option-label';
+            label.htmlFor = option.id;
+            label.innerHTML = `<i class="${option.icon}"></i>${option.label}`;
+            
+            const control = document.createElement('div');
+            control.className = 'option-control';
+            
+            if (option.type === 'select') {
+                const select = document.createElement('select');
+                select.id = option.id;
+                option.options.forEach(opt => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = opt;
+                    optionElement.textContent = opt;
+                    if (opt === option.default) {
+                        optionElement.selected = true;
+                    }
+                    select.appendChild(optionElement);
+                });
+                control.appendChild(select);
+            } else if (option.type === 'checkbox') {
+                const checkbox = document.createElement('div');
+                checkbox.className = `checkbox ${option.default ? 'checked' : ''}`;
+                checkbox.id = option.id;
+                
+                checkbox.addEventListener('click', () => {
+                    checkbox.classList.toggle('checked');
+                });
+                
+                label.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    checkbox.classList.toggle('checked');
+                });
+                
+                control.appendChild(checkbox);
+            } else if (option.type === 'text') {
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.id = option.id;
+                input.placeholder = option.placeholder || '';
+                input.value = option.default || '';
+                control.appendChild(input);
+            }
+            
+            row.appendChild(label);
+            row.appendChild(control);
+            return row;
+        }
+
+        function applyPreset() {
+            const presetSelect = document.getElementById('preset');
+            if (!presetSelect) return;
+            
+            const preset = presetSelect.value;
+            const config = presetConfigs[preset];
+            
+            if (!config) return;
+            
+            for (const [optionId, value] of Object.entries(config)) {
+                const checkbox = document.getElementById(optionId);
+                if (checkbox) {
+                    if (value) {
+                        checkbox.classList.add('checked');
+                    } else {
+                        checkbox.classList.remove('checked');
+                    }
+                }
+            }
+            
+            showStatus(`Đã áp dụng preset: ${preset}`, 'success');
+        }
+
+        function updateOutputInfo() {
+            const text = outputCode.value;
+            const chars = text.length;
+            const lines = text.split('\n').length;
+            const sizeKB = (chars / 1024).toFixed(2);
+            
+            charCount.querySelector('span').textContent = `Ký tự: ${chars}`;
+            lineCount.querySelector('span').textContent = `Dòng: ${lines}`;
+            sizeInfo.querySelector('span').textContent = `Kích thước: ${sizeKB}KB`;
+        }
+
+        function showStatus(message, type = 'success') {
+            status.textContent = message;
+            status.className = `status ${type}`;
+            status.style.display = 'block';
+            setTimeout(() => {
+                status.style.display = 'none';
+            }, 3000);
+        }
+
+        function getOptions() {
+            const options = { code: inputCode.value.trim() };
+            
+            optionsConfig.basic.forEach(option => {
+                if (option.type === 'select') {
+                    options[option.id] = document.getElementById(option.id).value;
+                }
+            });
+            
+            optionsConfig.main.forEach(option => {
+                if (option.type === 'checkbox') {
+                    const checkbox = document.getElementById(option.id);
+                    options[option.id] = checkbox.classList.contains('checked');
+                }
+            });
+            
+            optionsConfig.locks.forEach(option => {
+                if (option.type === 'text') {
+                    const input = document.getElementById(option.id);
+                    const value = input.value.trim();
+                    if (value) {
+                        if (option.id.includes('Lock')) {
+                            options[option.id] = value.split(',').map(item => item.trim()).filter(item => item);
+                        }
+                    }
+                }
+            });
+            
+            return options;
+        }
+
+        async function obfuscate() {
+            const options = getOptions();
+            
+            if (!options.code) {
+                showStatus('Vui lòng nhập mã JavaScript!', 'error');
+                return;
+            }
+            
+            loading.style.display = 'block';
+            obfuscateBtn.disabled = true;
+            obfuscateBtn.innerHTML = '<i class="bx bx-loader-circle"></i> Đang xử lý...';
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(options)
+                });
+                
+                if (response.ok) {
+                    const result = await response.text();
+                    outputCode.value = result;
+                    updateOutputInfo();
+                    showStatus('Mã hóa thành công!', 'success');
+                } else {
+                    const errorText = await response.text();
+                    showStatus(`Lỗi ${response.status}: ${errorText}`, 'error');
+                }
+            } catch (error) {
+                showStatus(`Lỗi mạng: ${error.message}`, 'error');
+            } finally {
+                loading.style.display = 'none';
+                obfuscateBtn.disabled = false;
+                obfuscateBtn.innerHTML = '<i class="bx bx-lock-alt btn-lock"></i> Obfuscate';
+            }
+        }
+
+        function copyOutput() {
+            if (!outputCode.value.trim()) {
+                showStatus('Không có dữ liệu để sao chép!', 'error');
+                return;
+            }
+            
+            outputCode.select();
+            outputCode.setSelectionRange(0, 99999);
+            
+            try {
+                document.execCommand('copy');
+                showStatus('Đã sao chép vào clipboard!', 'success');
+                copyBtn.innerHTML = '<i class="bx bx-check"></i> Đã sao chép';
+                setTimeout(() => {
+                    copyBtn.innerHTML = '<i class="bx bx-copy"></i> Sao Chép';
+                }, 2000);
+            } catch (err) {
+                showStatus('Sao chép thất bại!', 'error');
+            }
+        }
+
+        function downloadOutput() {
+            if (!outputCode.value.trim()) {
+                showStatus('Không có dữ liệu để tải xuống!', 'error');
+                return;
+            }
+            
+            const blob = new Blob([outputCode.value], { type: 'application/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'obfuscated-code.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showStatus('Đã tải xuống thành công!', 'success');
+        }
+
+        async function pasteFromClipboard() {
+            try {
+                const text = await navigator.clipboard.readText();
+                if (text) {
+                    inputCode.value = text;
+                    showStatus('Đã dán code từ clipboard!', 'success');
+                }
+            } catch (err) {
+                inputCode.focus();
+                document.execCommand('paste');
+                setTimeout(() => {
+                    showStatus('Đã dán code!', 'success');
+                }, 100);
+            }
+        }
+
+        function resetAll() {
+            inputCode.value = '';
+            outputCode.value = '';
+            
+            updateOutputInfo();
+            showStatus('Đã xóa tất cả code', 'success');
+        }
+
+        function init() {
+            createOptions();
+            updateOutputInfo();
+            
+            setTimeout(() => {
+                applyPreset();
+            }, 100);
+            
+            obfuscateBtn.addEventListener('click', obfuscate);
+            resetBtn.addEventListener('click', resetAll);
+            copyBtn.addEventListener('click', copyOutput);
+            downloadBtn.addEventListener('click', downloadOutput);
+            pasteBtn.addEventListener('click', pasteFromClipboard);
+            outputCode.addEventListener('input', updateOutputInfo);
+            
+            inputCode.addEventListener('keydown', (e) => {
+                if (e.ctrlKey && e.key === 'Enter') {
+                    e.preventDefault();
+                    obfuscate();
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
