@@ -1,8 +1,9 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tạo Mã QR Thanh Toán</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
@@ -21,6 +22,9 @@
       position: relative;
     }
 
+    /* =============================================
+       LIQUID GLASS ORBS
+       ============================================= */
     .orb {
       position: fixed;
       border-radius: 50%;
@@ -38,13 +42,9 @@
         inset 0 2px 8px rgba(255,255,255,0.7),
         0 8px 40px rgba(100,180,255,0.18),
         0 0 0 1px rgba(255,255,255,0.2);
-      /* Sửa lại thuộc tính backdrop-filter để tương thích mobile */
-      -webkit-backdrop-filter: blur(6px) saturate(1.4);
       backdrop-filter: blur(6px) saturate(1.4);
+      -webkit-backdrop-filter: blur(6px) saturate(1.4);
       overflow: hidden;
-      /* Thêm transform để fixed hoạt động tốt trên mobile */
-      -webkit-transform: translateZ(0);
-      transform: translateZ(0);
     }
     .orb::before {
       content: '';
@@ -108,15 +108,17 @@
       70%      { transform: translate(8px,18px) scale(0.98); }
     }
 
+    /* =============================================
+       TOAST — trên cùng giữa màn hình
+       ============================================= */
     .toast {
       position: fixed;
       top: 24px;
       left: 50%;
       transform: translateX(-50%) translateY(-80px);
       background: rgba(15, 30, 55, 0.82);
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(16px) saturate(1.6);
       backdrop-filter: blur(16px) saturate(1.6);
+      -webkit-backdrop-filter: blur(16px) saturate(1.6);
       border: 1px solid rgba(255,255,255,0.18);
       color: #fff;
       padding: 13px 20px;
@@ -135,6 +137,7 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    /* icon trong toast */
     .toast-icon {
       width: 18px; height: 18px;
       flex-shrink: 0;
@@ -144,17 +147,20 @@
       width: 18px; height: 18px;
     }
 
+    /* màu theo loại */
     .toast.success .toast-icon svg { color: #4ade80; }
     .toast.error   .toast-icon svg { color: #f87171; }
     .toast.warning .toast-icon svg { color: #fbbf24; }
     .toast.info    .toast-icon svg { color: #60a5fa; }
 
+    /* =============================================
+       CONTAINER
+       ============================================= */
     .container {
       position: relative; z-index: 1;
       background: rgba(255,255,255,0.28);
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(20px) saturate(1.6);
       backdrop-filter: blur(20px) saturate(1.6);
+      -webkit-backdrop-filter: blur(20px) saturate(1.6);
       border: 1.5px solid rgba(255,255,255,0.55);
       box-shadow:
         0 8px 40px rgba(100,180,255,0.18),
@@ -172,6 +178,9 @@
       letter-spacing: -0.5px;
     }
 
+    /* =============================================
+       INPUTS
+       ============================================= */
     input[type="text"] {
       width: 100%;
       padding: 15px 16px;
@@ -179,8 +188,6 @@
       border-radius: 16px;
       border: 1.5px solid rgba(255,255,255,0.7);
       background: rgba(255,255,255,0.38);
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       box-shadow: inset 0 2px 6px rgba(255,255,255,0.5), 0 2px 8px rgba(100,160,255,0.06);
       font-size: 15px; color: #1e3a5f; outline: none;
@@ -195,14 +202,15 @@
       transform: translateY(-2px);
     }
 
+    /* =============================================
+       DROPDOWN
+       ============================================= */
     .dropdown-wrapper { position: relative; margin-bottom: 12px; text-align: left; }
     
     .dropdown-btn {
       width: 100%; padding: 15px 16px; border-radius: 16px;
       border: 1.5px solid rgba(255,255,255,0.7);
       background: rgba(255,255,255,0.42);
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       box-shadow: inset 0 2px 6px rgba(255,255,255,0.5), 0 2px 8px rgba(100,160,255,0.06);
       cursor: pointer; display: flex; align-items: center; justify-content: space-between;
@@ -226,10 +234,10 @@
       position: absolute; top: calc(100% + 8px); left: 0; width: 100%;
       max-height: 0; overflow: hidden;
 
+      /* Glassmorphism */
       background: rgba(255, 255, 255, 0.22);
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(28px) saturate(1.8);
       backdrop-filter: blur(28px) saturate(1.8);
+      -webkit-backdrop-filter: blur(28px) saturate(1.8);
       border: 1.5px solid rgba(255, 255, 255, 0.55);
       box-shadow:
         0 16px 48px rgba(80, 140, 255, 0.15),
@@ -257,8 +265,6 @@
     .dropdown-search {
       width: 100%; padding: 10px 14px;
       background: rgba(255, 255, 255, 0.35);
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       border-radius: 12px;
       border: 1.5px solid rgba(255, 255, 255, 0.6);
@@ -298,6 +304,9 @@
     .bank-short { font-weight: 700; font-size: 14px; color: #1e3a5f; }
     .bank-full  { font-size: 11px; color: #5a7a99; }
 
+    /* =============================================
+       GENERATE BUTTON
+       ============================================= */
     button#generate {
       width: 100%; padding: 16px; margin-top: 10px; border: none; border-radius: 16px;
       background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(210,240,255,0.85) 100%);
@@ -307,8 +316,6 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
       font-family: 'Inter', sans-serif;
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       letter-spacing: 0.2px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -320,6 +327,9 @@
     }
     button#generate:active { transform: translateY(-1px) scale(0.99); }
 
+    /* =============================================
+       QR AREA
+       ============================================= */
     #qrArea {
       margin-top: 20px; display: none; flex-direction: column; align-items: center;
     }
@@ -338,8 +348,6 @@
       border: 1.5px solid rgba(255,255,255,0.75);
       border-radius: 12px; padding: 9px 20px;
       cursor: pointer; font-size: 13px; font-weight: 600; color: #1e3a5f;
-      /* Sửa lại thuộc tính backdrop-filter */
-      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       transition: all 0.25s ease;
       display: flex; align-items: center; gap: 6px;
@@ -349,6 +357,9 @@
 
     .qr-hint { margin-top: 6px; font-size: 12px; color: #7da3c0; }
 
+    /* =============================================
+       ANIMATIONS
+       ============================================= */
     @keyframes slideUpBounce {
       0%   { opacity: 0; transform: translateY(30px) scale(0.92); }
       60%  { opacity: 1; transform: translateY(-5px) scale(1.02); }
@@ -367,27 +378,19 @@
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #c0d8ef; border-radius: 10px; }
-    
-    /* Media query hỗ trợ thêm cho mobile */
-    @media (max-width: 768px) {
-      .orb {
-        /* Tăng cường hiệu ứng trên mobile */
-        -webkit-transform: translate3d(0,0,0);
-        transform: translate3d(0,0,0);
-      }
-      .container {
-        background: rgba(255,255,255,0.35);
-      }
-    }
   </style>
 
 </head>
 <body>
 
+  <!-- 4 Liquid Glass Orbs -->
+
   <div class="orb orb-1"></div>
   <div class="orb orb-2"></div>
   <div class="orb orb-3"></div>
   <div class="orb orb-4"></div>
+
+  <!-- Toast — trên cùng -->
 
   <div class="toast" id="toast">
     <div class="toast-icon" id="toastIcon"></div>
@@ -397,44 +400,50 @@
   <div class="container">
     <h1>✦ Tạo Mã QR Thanh Toán</h1>
 
-    <input id="name"    type="text" placeholder="Tên người nhận" />
-    <input id="account" type="text" inputmode="text" placeholder="Số tài khoản" autocomplete="off" />
+```
+<input id="name"    type="text" placeholder="Tên người nhận" />
+<input id="account" type="text" inputmode="text" placeholder="Số tài khoản" autocomplete="off" />
 
-    <div class="dropdown-wrapper">
-      <div class="dropdown-btn" id="bankBtn">
-        <span id="bankSelected">Chọn ngân hàng</span>
-        <i class='bx bx-chevron-down chevron'></i>
-      </div>
-      <div class="dropdown-list" id="bankList">
-        <input type="text" class="dropdown-search" id="bankSearch" placeholder="Tìm ngân hàng...">
-        <div id="bankItemsContainer">Đang tải danh sách...</div>
-      </div>
-    </div>
+<div class="dropdown-wrapper">
+  <div class="dropdown-btn" id="bankBtn">
+    <span id="bankSelected">Chọn ngân hàng</span>
+    <i class='bx bx-chevron-down chevron'></i>
+  </div>
+  <div class="dropdown-list" id="bankList">
+    <input type="text" class="dropdown-search" id="bankSearch" placeholder="Tìm ngân hàng...">
+    <div id="bankItemsContainer">Đang tải danh sách...</div>
+  </div>
+</div>
 
-    <input id="amount" type="text" inputmode="numeric" placeholder="Nhập số tiền (VNĐ)" />
-    <input id="desc"   type="text" placeholder="Nội dung chuyển khoản" />
+<input id="amount" type="text" inputmode="numeric" placeholder="Nhập số tiền (VNĐ)" />
+<input id="desc"   type="text" placeholder="Nội dung chuyển khoản" />
 
-    <button id="generate">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
-        <path d="M14 14h2v2h-2zM18 14h3v2h-3zM14 18h2v3h-2zM18 18h3v3h-3z"/>
-      </svg>
-      Tạo QR
-    </button>
+<button id="generate">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>
+    <path d="M14 14h2v2h-2zM18 14h3v2h-3zM14 18h2v3h-2zM18 18h3v3h-3z"/>
+  </svg>
+  Tạo QR
+</button>
 
-    <div id="qrArea">
-      <img id="qrImg" src="" alt="QR Code" />
-      <button id="copyBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-        </svg>
-        Sao chép ảnh
-      </button>
-      <p class="qr-hint">Nhấn giữ ảnh để lưu hoặc chia sẻ</p>
-    </div>
+<div id="qrArea">
+  <img id="qrImg" src="" alt="QR Code" />
+  <button id="copyBtn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+    </svg>
+    Sao chép ảnh
+  </button>
+  <p class="qr-hint">Nhấn giữ ảnh để lưu hoặc chia sẻ</p>
+</div>
+```
+
   </div>
 
   <script>
+    // =============================================
+    // SVG ICONS (không dùng emoji)
+    // =============================================
     const ICONS = {
       success: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4ade80"><circle cx="12" cy="12" r="10"/><polyline points="8,12 11,15 16,9"/></svg>`,
       error:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#f87171"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
@@ -464,6 +473,9 @@
     const toastIcon     = document.getElementById('toastIcon');
     const toastMsg      = document.getElementById('toastMsg');
 
+    // =============================================
+    // TOAST — hiện trên cùng, icon SVG
+    // =============================================
     let toastTimer;
     function showToast(msg, type = 'info') {
       toastIcon.innerHTML = ICONS[type] || ICONS.info;
@@ -475,12 +487,18 @@
       }, 2800);
     }
 
+    // =============================================
+    // SHAKE
+    // =============================================
     function shake(el) {
       el.classList.remove('shake');
       void el.offsetWidth;
       el.classList.add('shake');
     }
 
+    // =============================================
+    // LOCAL STORAGE
+    // =============================================
     function loadSavedData() {
       if (localStorage.getItem('qr_name'))    nameInput.value    = localStorage.getItem('qr_name');
       if (localStorage.getItem('qr_account')) accountInput.value = localStorage.getItem('qr_account');
@@ -495,6 +513,9 @@
     }
     loadSavedData();
 
+    // =============================================
+    // FETCH BANKS
+    // =============================================
     fetch('https://api.vietqr.io/v2/banks')
       .then(res => res.json())
       .then(data => {
@@ -548,6 +569,9 @@
       });
     }
 
+    // =============================================
+    // DROPDOWN
+    // =============================================
     function openDropdown() {
       bankList.classList.add('show');
       bankBtn.classList.add('active');
@@ -573,6 +597,11 @@
       if (!bankBtn.contains(e.target) && !bankList.contains(e.target)) closeDropdown();
     });
 
+    // =============================================
+    // INPUTS
+    // =============================================
+
+    // Tên: in hoa
     nameInput.addEventListener('input', function() {
       const s = this.selectionStart, e = this.selectionEnd;
       this.value = this.value.toUpperCase();
@@ -580,6 +609,7 @@
       saveData();
     });
 
+    // Số tài khoản: chỉ chữ + số + _ → tự in hoa
     accountInput.addEventListener('input', function() {
       const pos = this.selectionStart;
       const val = this.value.replace(/[^a-zA-Z0-9_]/g, '').toUpperCase();
@@ -588,11 +618,13 @@
       saveData();
     });
 
+    // Số tiền
     amountInput.addEventListener('input', function() {
       const val = this.value.replace(/[^0-9]/g, '');
       this.value = val ? parseInt(val).toLocaleString('vi-VN') : '';
     });
 
+    // Nội dung: bỏ dấu
     const charMap = {
       'á':'a','à':'a','ả':'a','ã':'a','ạ':'a','ă':'a','ắ':'a','ằ':'a','ẳ':'a','ẵ':'a','ặ':'a','â':'a','ấ':'a','ầ':'a','ẩ':'a','ẫ':'a','ậ':'a',
       'é':'e','è':'e','ẻ':'e','ẽ':'e','ẹ':'e','ê':'e','ế':'e','ề':'e','ể':'e','ễ':'e','ệ':'e',
@@ -613,6 +645,9 @@
         .toLowerCase();
     });
 
+    // =============================================
+    // GENERATE QR
+    // =============================================
     generateBtn.addEventListener('click', () => {
       if (!selectedBank) {
         shake(bankBtn);
@@ -649,6 +684,9 @@
       qrArea.style.display = 'flex';
     });
 
+    // =============================================
+    // COPY IMAGE
+    // =============================================
     copyBtn.addEventListener('click', async () => {
       try {
         const res  = await fetch(qrImg.src);
