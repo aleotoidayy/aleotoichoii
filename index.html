@@ -2,7 +2,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes" />
   <title>Tạo Mã QR Thanh Toán</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
@@ -38,9 +38,13 @@
         inset 0 2px 8px rgba(255,255,255,0.7),
         0 8px 40px rgba(100,180,255,0.18),
         0 0 0 1px rgba(255,255,255,0.2);
-      backdrop-filter: blur(6px) saturate(1.4);
+      /* Sửa lại thuộc tính backdrop-filter để tương thích mobile */
       -webkit-backdrop-filter: blur(6px) saturate(1.4);
+      backdrop-filter: blur(6px) saturate(1.4);
       overflow: hidden;
+      /* Thêm transform để fixed hoạt động tốt trên mobile */
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
     .orb::before {
       content: '';
@@ -110,8 +114,9 @@
       left: 50%;
       transform: translateX(-50%) translateY(-80px);
       background: rgba(15, 30, 55, 0.82);
-      backdrop-filter: blur(16px) saturate(1.6);
+      /* Sửa lại thuộc tính backdrop-filter */
       -webkit-backdrop-filter: blur(16px) saturate(1.6);
+      backdrop-filter: blur(16px) saturate(1.6);
       border: 1px solid rgba(255,255,255,0.18);
       color: #fff;
       padding: 13px 20px;
@@ -147,8 +152,9 @@
     .container {
       position: relative; z-index: 1;
       background: rgba(255,255,255,0.28);
-      backdrop-filter: blur(20px) saturate(1.6);
+      /* Sửa lại thuộc tính backdrop-filter */
       -webkit-backdrop-filter: blur(20px) saturate(1.6);
+      backdrop-filter: blur(20px) saturate(1.6);
       border: 1.5px solid rgba(255,255,255,0.55);
       box-shadow:
         0 8px 40px rgba(100,180,255,0.18),
@@ -173,6 +179,8 @@
       border-radius: 16px;
       border: 1.5px solid rgba(255,255,255,0.7);
       background: rgba(255,255,255,0.38);
+      /* Sửa lại thuộc tính backdrop-filter */
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       box-shadow: inset 0 2px 6px rgba(255,255,255,0.5), 0 2px 8px rgba(100,160,255,0.06);
       font-size: 15px; color: #1e3a5f; outline: none;
@@ -193,6 +201,8 @@
       width: 100%; padding: 15px 16px; border-radius: 16px;
       border: 1.5px solid rgba(255,255,255,0.7);
       background: rgba(255,255,255,0.42);
+      /* Sửa lại thuộc tính backdrop-filter */
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       box-shadow: inset 0 2px 6px rgba(255,255,255,0.5), 0 2px 8px rgba(100,160,255,0.06);
       cursor: pointer; display: flex; align-items: center; justify-content: space-between;
@@ -217,8 +227,9 @@
       max-height: 0; overflow: hidden;
 
       background: rgba(255, 255, 255, 0.22);
-      backdrop-filter: blur(28px) saturate(1.8);
+      /* Sửa lại thuộc tính backdrop-filter */
       -webkit-backdrop-filter: blur(28px) saturate(1.8);
+      backdrop-filter: blur(28px) saturate(1.8);
       border: 1.5px solid rgba(255, 255, 255, 0.55);
       box-shadow:
         0 16px 48px rgba(80, 140, 255, 0.15),
@@ -246,6 +257,8 @@
     .dropdown-search {
       width: 100%; padding: 10px 14px;
       background: rgba(255, 255, 255, 0.35);
+      /* Sửa lại thuộc tính backdrop-filter */
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       border-radius: 12px;
       border: 1.5px solid rgba(255, 255, 255, 0.6);
@@ -294,6 +307,8 @@
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
       font-family: 'Inter', sans-serif;
+      /* Sửa lại thuộc tính backdrop-filter */
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       letter-spacing: 0.2px;
       display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -323,6 +338,8 @@
       border: 1.5px solid rgba(255,255,255,0.75);
       border-radius: 12px; padding: 9px 20px;
       cursor: pointer; font-size: 13px; font-weight: 600; color: #1e3a5f;
+      /* Sửa lại thuộc tính backdrop-filter */
+      -webkit-backdrop-filter: blur(8px);
       backdrop-filter: blur(8px);
       transition: all 0.25s ease;
       display: flex; align-items: center; gap: 6px;
@@ -350,6 +367,18 @@
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #c0d8ef; border-radius: 10px; }
+    
+    /* Media query hỗ trợ thêm cho mobile */
+    @media (max-width: 768px) {
+      .orb {
+        /* Tăng cường hiệu ứng trên mobile */
+        -webkit-transform: translate3d(0,0,0);
+        transform: translate3d(0,0,0);
+      }
+      .container {
+        background: rgba(255,255,255,0.35);
+      }
+    }
   </style>
 
 </head>
