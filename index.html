@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="vi">
+<!DOCTYPE html><html lang="vi">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,9 +6,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }body {
 background: #080808;
 color: #e0e0e0;
 font-family: ‘Outfit’, sans-serif;
@@ -18,7 +15,6 @@ font-size: 13px;
 min-height: 100vh;
 overflow-x: hidden;
 }
-
 nav {
 position: fixed;
 top: 0; left: 0; right: 0;
@@ -31,7 +27,6 @@ opacity: 0;
 pointer-events: none;
 transform: translateY(-8px);
 }
-
 .nav-logo {
 font-family: ‘Outfit’, sans-serif;
 font-weight: 700;
@@ -41,10 +36,8 @@ color: #fff;
 text-decoration: none;
 position: relative;
 display: inline-block;
-padding: 8px 0;
-overflow: visible;
+padding: 4px 0;
 }
-
 .star {
 position: absolute;
 opacity: 0;
@@ -56,12 +49,10 @@ line-height: 1;
 }
 .star.top { top: -5px; }
 .star.bot { bottom: -5px; }
-
 @keyframes starBlink {
 0%, 100% { opacity: 0; transform: scale(0.3); }
 50%       { opacity: 0.8; transform: scale(1); }
 }
-
 main {
 display: flex;
 flex-direction: column;
@@ -69,7 +60,6 @@ align-items: center;
 padding: 110px 32px 20px;
 gap: 28px;
 }
-
 .hero {
 display: flex;
 flex-direction: column;
@@ -78,18 +68,15 @@ gap: 0;
 width: 100%;
 animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
 }
-
 @keyframes fadeUp {
 from { opacity: 0; transform: translateY(20px); }
 to   { opacity: 1; transform: translateY(0); }
 }
-
 .avatar-wrapper {
 position: relative;
 width: 150px;
 height: 150px;
 }
-
 .avatar-frame {
 position: absolute;
 top: 50%; left: 50%;
@@ -101,12 +88,10 @@ z-index: 2;
 pointer-events: none;
 animation: frameFloat 4s ease-in-out infinite;
 }
-
 @keyframes frameFloat {
 0%,100% { transform: translate(-50%, -50%) translateY(0); }
 50%      { transform: translate(-50%, -50%) translateY(-4px); }
 }
-
 .avatar-circle {
 width: 150px; height: 150px;
 border-radius: 50%;
@@ -117,7 +102,6 @@ background: #111;
 margin-top: -12px;
 }
 .avatar-circle img { width:100%; height:100%; object-fit:cover; }
-
 .hero-name {
 font-family: ‘Outfit’, sans-serif;
 font-weight: 800;
@@ -136,7 +120,6 @@ width: 22px; height: 22px;
 object-fit: contain;
 flex-shrink: 0;
 }
-
 .hero-meta {
 display: flex;
 align-items: center;
@@ -145,7 +128,6 @@ flex-wrap: wrap;
 justify-content: center;
 margin-top: 8px;
 }
-
 .hero-location, .hero-tele {
 display: flex;
 align-items: center;
@@ -158,13 +140,11 @@ transition: opacity 0.2s;
 }
 .hero-tele:hover { opacity: 0.6; }
 .hero-location i, .hero-tele i { font-size: 0.7rem; color: #fff; }
-
 .hero-meta-dot {
 width: 3px; height: 3px;
 border-radius: 50%;
 background: #333;
 }
-
 .content {
 width: 100%;
 max-width: 360px;
@@ -172,12 +152,10 @@ display: flex;
 flex-direction: column;
 gap: 24px;
 }
-
 .about-section {
 width: 100%;
 animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.08s both;
 }
-
 .section-label {
 font-family: ‘Outfit’, sans-serif;
 font-size: 0.6rem;
@@ -187,24 +165,20 @@ text-transform: uppercase;
 color: #444;
 margin-bottom: 8px;
 }
-
 .about-text {
 font-size: 0.85rem;
 line-height: 1.8;
 color: #999;
 }
-
 .projects-section {
 width: 100%;
 animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.14s both;
 }
-
 .projects-list {
 display: flex;
 flex-direction: column;
 gap: 8px;
 }
-
 .project-card {
 background: #111;
 border: 1px solid #1e1e1e;
@@ -219,7 +193,6 @@ transition: border-color 0.2s;
 width: 100%;
 }
 .project-card:hover { border-color: #333; }
-
 .project-icon-wrap {
 width: 36px; height: 36px;
 border-radius: 8px;
@@ -229,16 +202,13 @@ flex-shrink: 0;
 border: 1px solid #222;
 }
 .project-icon-wrap img { width:100%; height:100%; object-fit:cover; }
-
 .project-info { flex: 1; min-width: 0; }
-
 .project-name {
 font-family: ‘Outfit’, sans-serif;
 font-size: 0.82rem;
 font-weight: 600;
 color: #fff;
 }
-
 .project-sub {
 font-size: 0.7rem;
 color: #555;
@@ -250,16 +220,14 @@ display: flex;
 align-items: center;
 gap: 5px;
 }
-
 .hidden-val {
 filter: blur(5px);
 transition: filter 0.25s;
 display: inline-block;
-color: #888 !important;
+color: #888;
 text-decoration: none !important;
 }
 .hidden-val.revealed { filter: blur(0); }
-
 .copy-btn {
 display: none;
 background: none;
@@ -273,7 +241,6 @@ flex-shrink: 0;
 }
 .copy-btn:hover { color: #aaa; }
 .copy-btn.show { display: inline-flex; }
-
 .divider-wrap {
 display: flex;
 justify-content: center;
@@ -285,7 +252,6 @@ max-width: 360px;
 height: 1px;
 background: #1a1a1a;
 }
-
 footer {
 padding: 16px 32px 44px;
 display: flex;
@@ -294,7 +260,6 @@ align-items: center;
 gap: 6px;
 width: 100%;
 }
-
 .uptime-box {
 background: #111;
 border: 1px solid #1e1e1e;
@@ -307,7 +272,6 @@ font-size: 0.67rem;
 color: #555;
 letter-spacing: 0.02em;
 }
-
 .uptime-dot {
 width: 6px; height: 6px;
 border-radius: 50%;
@@ -320,19 +284,17 @@ flex-shrink: 0;
 0%,100% { opacity: 1; box-shadow: 0 0 8px #00e676; }
 50%      { opacity: 0.2; box-shadow: 0 0 2px #00e676; }
 }
-
 .copyright {
 font-size: 0.62rem;
 color: #555;
 letter-spacing: 0.06em;
 text-align: center;
 }
-
 .project-sub a, .project-sub span {
 color: inherit;
 text-decoration: none;
 }
-
+.hidden-val { color: #888 !important; text-decoration: none !important; }
 .toast {
 position: fixed;
 bottom: 32px; left: 50%;
@@ -353,128 +315,9 @@ z-index: 999;
 opacity: 1;
 transform: translateX(-50%) translateY(0);
 }
-
-.music-player {
-position: fixed;
-bottom: 20px;
-right: 20px;
-z-index: 200;
-background: #111;
-border: 1px solid #222;
-border-radius: 14px;
-padding: 8px 12px;
-display: flex;
-align-items: center;
-gap: 8px;
-width: 230px;
-box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-overflow: hidden;
-transition: opacity 0.3s ease;
-}
-
-.music-cover {
-width: 36px; height: 36px;
-border-radius: 8px;
-background: #1a1a1a;
-flex-shrink: 0;
-overflow: hidden;
-border: 1px solid #222;
-display: flex; align-items: center; justify-content: center;
-color: #333;
-font-size: 0.9rem;
-position: relative;
-}
-.music-cover.playing::after {
-content: ‘’;
-position: absolute;
-inset: 0;
-border-radius: 8px;
-animation: coverSpin 4s linear infinite;
-border: 1px solid #ffffff10;
-}
-@keyframes coverSpin {
-0% { box-shadow: inset 0 0 0 0 #fff1; }
-50% { box-shadow: inset 0 0 12px 2px #fff1; }
-100% { box-shadow: inset 0 0 0 0 #fff1; }
-}
-
-.music-info {
-flex: 1;
-min-width: 0;
-display: flex;
-flex-direction: column;
-gap: 1px;
-}
-
-.music-title {
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.72rem;
-font-weight: 600;
-color: #e0e0e0;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-
-.music-artist {
-font-size: 0.62rem;
-color: #444;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-}
-
-.music-controls {
-display: flex;
-align-items: center;
-gap: 6px;
-flex-shrink: 0;
-}
-
-.mc-btn {
-background: none;
-border: none;
-cursor: pointer;
-color: #555;
-font-size: 0.7rem;
-padding: 4px;
-border-radius: 50%;
-width: 26px; height: 26px;
-display: flex; align-items: center; justify-content: center;
-transition: color 0.2s, background 0.2s;
-flex-shrink: 0;
-}
-.mc-btn:hover { color: #fff; background: #1e1e1e; }
-
-.mc-btn.play-btn {
-background: #fff;
-color: #000;
-width: 28px; height: 28px;
-font-size: 0.65rem;
-}
-.mc-btn.play-btn:hover { background: #ddd; color: #000; }
-
-.music-bar {
-position: absolute;
-bottom: 0; left: 0; right: 0;
-height: 2px;
-background: #1a1a1a;
-border-radius: 0 0 16px 16px;
-overflow: hidden;
-}
-.music-bar-fill {
-height: 100%;
-background: #fff;
-width: 0%;
-transition: width 0.5s linear;
-border-radius: 0 0 16px 16px;
-}
 </style>
-
 </head>
-<body>
-
-  <nav id="navbar">
+<body><nav id="navbar">
     <a href="#" class="nav-logo">
       <span class="star top" style="left:2px;--d:2.2s;--delay:0s">✦</span>
       <span class="star top" style="left:55px;--d:1.9s;--delay:0.4s">✦</span>
@@ -484,23 +327,17 @@ border-radius: 0 0 16px 16px;
       <span class="star bot" style="left:130px;--d:2.4s;--delay:0.7s">✦</span>
       ThanhHoang Home
     </a>
-  </nav>
-
-  <main>
+  </nav><main>
     <section class="hero">
       <div class="avatar-wrapper">
         <div class="avatar-circle">
-          <img src="/Assets/Png/rong.png" alt="Avatar"/>
+          <img src="/Assets/rong.png" alt="Avatar"/>
         </div>
-        <img class="avatar-frame" src="/Assets/Png/mong-vuot-rong.png" alt="frame" onerror="this.style.display='none'"/>
-      </div>
-
-  <h1 class="hero-name">
+        <img class="avatar-frame" src="/Assets/mong-vuot-rong.png" alt="frame" onerror="this.style.display='none'"/>
+      </div><h1 class="hero-name">
     Nguyễn Thanh Hoàng
-    <img src="/Assets/Png/tick-xanh.png" alt="verified"/>
-  </h1>
-
-  <div class="hero-meta">
+    <img src="/Assets/tick-xanh.png" alt="verified"/>
+  </h1><div class="hero-meta">
     <div class="hero-location">
       <i class="fa-solid fa-location-dot"></i>
       <span>Hanoi / Vietnam</span>
@@ -511,20 +348,16 @@ border-radius: 0 0 16px 16px;
       <span>Telegram</span>
     </a>
   </div>
-</section>
-
-<div class="content">
+</section><div class="content">
   <section class="about-section">
     <div class="section-label">About Me</div>
     <p class="about-text">báo đời</p>
-  </section>
-
-  <section class="projects-section">
+  </section><section class="projects-section">
     <div class="section-label">Payment</div>
     <div class="projects-list">
       <div class="project-card" onclick="toggleReveal()">
         <div class="project-icon-wrap">
-          <img src="/Assets/Png/mbbank.png" alt="MB Bank"/>
+          <img src="/Assets/mbbank.png" alt="MB Bank"/>
         </div>
         <div class="project-info">
           <div class="project-name">MB Bank</div>
@@ -544,26 +377,13 @@ border-radius: 0 0 16px 16px;
       </div>
     </div>
   </section>
-
-</div>
-
-  </main>
-
-  <div class="divider-wrap"><div class="divider"></div></div>
-
-  <footer>
+</div></main><div class="divider-wrap"><div class="divider"></div></div><footer>
     <div class="uptime-box">
       <div class="uptime-dot"></div>
       <span>Đã hoạt động <span id="ut-days">0</span> ngày <span id="ut-hours">0</span> giờ <span id="ut-mins">0</span> phút <span id="ut-secs">0</span> giây</span>
     </div>
     <div class="copyright">© 2026 ThanhHoang. All rights reserved.</div>
-  </footer>
-
-  <div class="toast" id="toast">Đã sao chép!</div>
-
-  <script src="/Assets/playlist.js"></script>
-
-  <script>
+  </footer><div class="toast" id="toast">Đã sao chép!</div><script>
     const startTime = new Date('2026-03-01').getTime();
     function updateUptime() {
       const e = Math.floor((Date.now() - startTime) / 1000);
@@ -600,83 +420,5 @@ border-radius: 0 0 16px 16px;
       });
     }
 
-    /* playlist loaded from playlist.js */
-
-    let current = 0;
-    const audio = document.getElementById('audioEl');
-    const playIcon = document.getElementById('playIcon');
-    const musicTitle = document.getElementById('musicTitle');
-    const musicArtist = document.getElementById('musicArtist');
-    const musicCover = document.getElementById('musicCover');
-    const barFill = document.getElementById('musicBarFill');
-
-    function loadTrack(idx) {
-      const t = playlist[idx];
-      audio.src = t.src;
-      musicTitle.textContent = t.title;
-      musicArtist.textContent = t.artist;
-      if (t.cover) {
-        musicCover.innerHTML = '<img src="' + t.cover + '" style="width:100%;height:100%;object-fit:cover;border-radius:8px;"/>';
-      } else {
-        musicCover.innerHTML = '<i class="fa-solid fa-music"></i>';
-      }
-    }
-
-    function togglePlay() {
-      if (audio.paused) {
-        audio.play();
-        playIcon.className = 'fa-solid fa-pause';
-        musicCover.classList.add('playing');
-      } else {
-        audio.pause();
-        playIcon.className = 'fa-solid fa-play';
-        musicCover.classList.remove('playing');
-      }
-    }
-
-    function nextTrack() {
-      current = (current + 1) % playlist.length;
-      loadTrack(current);
-      audio.play();
-      playIcon.className = 'fa-solid fa-pause';
-      musicCover.classList.add('playing');
-    }
-
-    function prevTrack() {
-      current = (current - 1 + playlist.length) % playlist.length;
-      loadTrack(current);
-      audio.play();
-      playIcon.className = 'fa-solid fa-pause';
-      musicCover.classList.add('playing');
-    }
-
-    audio.addEventListener('ended', nextTrack);
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) barFill.style.width = (audio.currentTime / audio.duration * 100) + '%';
-    });
-
-    loadTrack(0);
-    window.addEventListener('load', () => {
-      audio.play().then(() => {
-        playIcon.className = 'fa-solid fa-pause';
-        musicCover.classList.add('playing');
-      }).catch(() => {});
-    });
-  </script>
-
-  <div class="music-player" id="musicPlayer">
-    <div class="music-cover" id="musicCover"><i class="fa-solid fa-music"></i></div>
-    <div class="music-info">
-      <div class="music-title" id="musicTitle">Chưa có bài</div>
-      <div class="music-artist" id="musicArtist">—</div>
-    </div>
-    <div class="music-controls">
-      <button class="mc-btn" onclick="prevTrack()"><i class="fa-solid fa-backward-step"></i></button>
-      <button class="mc-btn play-btn" id="playBtn" onclick="togglePlay()"><i class="fa-solid fa-play" id="playIcon"></i></button>
-      <button class="mc-btn" onclick="nextTrack()"><i class="fa-solid fa-forward-step"></i></button>
-    </div>
-    <div class="music-bar"><div class="music-bar-fill" id="musicBarFill"></div></div>
-    <audio id="audioEl" preload="auto"></audio>
-  </div>
-</body>
+  </script></body>
 </html>
