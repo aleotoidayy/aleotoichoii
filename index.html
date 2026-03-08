@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="vi">
+<!DOCTYPE html>
+<html lang="vi">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -6,318 +7,357 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }body {
-background: #080808;
-color: #e0e0e0;
-font-family: ‘Outfit’, sans-serif;
-font-weight: 300;
-font-size: 13px;
-min-height: 100vh;
-overflow-x: hidden;
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #080808;
+  color: #e0e0e0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
+
 nav {
-position: fixed;
-top: 0; left: 0; right: 0;
-padding: 20px 32px;
-z-index: 100;
-transition: opacity 0.35s ease, transform 0.35s ease;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  padding: 20px 32px;
+  z-index: 100;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 nav.hidden {
-opacity: 0;
-pointer-events: none;
-transform: translateY(-8px);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-8px);
 }
+
 .nav-logo {
-font-family: ‘Outfit’, sans-serif;
-font-weight: 700;
-font-size: 0.82rem;
-letter-spacing: 0.05em;
-color: #fff;
-text-decoration: none;
-position: relative;
-display: inline-block;
-padding: 4px 0;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  color: #fff;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  padding: 4px 0;
 }
+
 .star {
-position: absolute;
-opacity: 0;
-color: white;
-font-size: 6px;
-animation: starBlink var(–d, 2s) var(–delay, 0s) ease-in-out infinite;
-pointer-events: none;
-line-height: 1;
+  position: absolute;
+  opacity: 0;
+  color: white;
+  font-size: 6px;
+  animation: starBlink var(--d, 2s) var(--delay, 0s) ease-in-out infinite;
+  pointer-events: none;
+  line-height: 1;
 }
 .star.top { top: -5px; }
 .star.bot { bottom: -5px; }
+
 @keyframes starBlink {
-0%, 100% { opacity: 0; transform: scale(0.3); }
-50%       { opacity: 0.8; transform: scale(1); }
+  0%, 100% { opacity: 0; transform: scale(0.3); }
+  50%       { opacity: 0.8; transform: scale(1); }
 }
+
 main {
-display: flex;
-flex-direction: column;
-align-items: center;
-padding: 110px 32px 20px;
-gap: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 110px 32px 20px;
+  gap: 28px;
 }
+
 .hero {
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 0;
-width: 100%;
-animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
 }
+
 @keyframes fadeUp {
-from { opacity: 0; transform: translateY(20px); }
-to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
+
 .avatar-wrapper {
-position: relative;
-width: 150px;
-height: 150px;
+  position: relative;
+  width: 150px;
+  height: 150px;
 }
+
 .avatar-frame {
-position: absolute;
-top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-width: 200px;
-height: 200px;
-object-fit: contain;
-z-index: 2;
-pointer-events: none;
-animation: frameFloat 4s ease-in-out infinite;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  animation: frameFloat 4s ease-in-out infinite;
 }
+
 @keyframes frameFloat {
-0%,100% { transform: translate(-50%, -50%) translateY(0); }
-50%      { transform: translate(-50%, -50%) translateY(-4px); }
+  0%,100% { transform: translate(-50%, -50%) translateY(0); }
+  50%      { transform: translate(-50%, -50%) translateY(-4px); }
 }
+
 .avatar-circle {
-width: 150px; height: 150px;
-border-radius: 50%;
-overflow: hidden;
-position: relative; z-index: 1;
-border: 2px solid #222;
-background: #111;
-margin-top: -12px;
+  width: 150px; height: 150px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative; z-index: 1;
+  border: 2px solid #222;
+  background: #111;
+  margin-top: -12px;
 }
 .avatar-circle img { width:100%; height:100%; object-fit:cover; }
+
 .hero-name {
-font-family: ‘Outfit’, sans-serif;
-font-weight: 800;
-font-size: 1.5rem;
-color: #fff;
-letter-spacing: -0.01em;
-margin-top: 43px;
-text-align: center;
-display: flex;
-align-items: center;
-gap: 6px;
-justify-content: center;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: #fff;
+  letter-spacing: -0.01em;
+  margin-top: 43px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: center;
 }
 .hero-name img {
-width: 22px; height: 22px;
-object-fit: contain;
-flex-shrink: 0;
+  width: 22px; height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
+
 .hero-meta {
-display: flex;
-align-items: center;
-gap: 10px;
-flex-wrap: wrap;
-justify-content: center;
-margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
 }
+
 .hero-location, .hero-tele {
-display: flex;
-align-items: center;
-gap: 5px;
-color: #fff;
-font-size: 0.74rem;
-letter-spacing: 0.02em;
-text-decoration: none;
-transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #fff;
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  transition: opacity 0.2s;
 }
 .hero-tele:hover { opacity: 0.6; }
 .hero-location i, .hero-tele i { font-size: 0.7rem; color: #fff; }
+
 .hero-meta-dot {
-width: 3px; height: 3px;
-border-radius: 50%;
-background: #333;
+  width: 3px; height: 3px;
+  border-radius: 50%;
+  background: #333;
 }
+
 .content {
-width: 100%;
-max-width: 360px;
-display: flex;
-flex-direction: column;
-gap: 24px;
+  width: 100%;
+  max-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
+
 .about-section {
-width: 100%;
-animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.08s both;
+  width: 100%;
+  animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.08s both;
 }
+
 .section-label {
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.6rem;
-font-weight: 600;
-letter-spacing: 0.18em;
-text-transform: uppercase;
-color: #444;
-margin-bottom: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #444;
+  margin-bottom: 8px;
 }
+
 .about-text {
-font-size: 0.85rem;
-line-height: 1.8;
-color: #999;
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #999;
 }
+
 .projects-section {
-width: 100%;
-animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.14s both;
+  width: 100%;
+  animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.14s both;
 }
+
 .projects-list {
-display: flex;
-flex-direction: column;
-gap: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
+
 .project-card {
-background: #111;
-border: 1px solid #1e1e1e;
-border-radius: 10px;
-padding: 10px 14px;
-display: flex;
-align-items: center;
-gap: 12px;
-cursor: pointer;
-text-decoration: none;
-transition: border-color 0.2s;
-width: 100%;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.2s;
+  width: 100%;
 }
 .project-card:hover { border-color: #333; }
+
 .project-icon-wrap {
-width: 36px; height: 36px;
-border-radius: 8px;
-overflow: hidden;
-background: #1a1a1a;
-flex-shrink: 0;
-border: 1px solid #222;
+  width: 36px; height: 36px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #1a1a1a;
+  flex-shrink: 0;
+  border: 1px solid #222;
 }
 .project-icon-wrap img { width:100%; height:100%; object-fit:cover; }
+
 .project-info { flex: 1; min-width: 0; }
+
 .project-name {
-font-family: ‘Outfit’, sans-serif;
-font-size: 0.82rem;
-font-weight: 600;
-color: #fff;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
 }
+
 .project-sub {
-font-size: 0.7rem;
-color: #555;
-text-decoration: none;
-margin-top: 3px;
-user-select: none;
-letter-spacing: 0.02em;
-display: flex;
-align-items: center;
-gap: 5px;
+  font-size: 0.7rem;
+  color: #555;
+  text-decoration: none;
+  margin-top: 3px;
+  user-select: none;
+  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
+
 .hidden-val {
-filter: blur(5px);
-transition: filter 0.25s;
-display: inline-block;
-color: #888;
-text-decoration: none !important;
+  filter: blur(5px);
+  transition: filter 0.25s;
+  display: inline-block;
+  color: #888;
+  text-decoration: none !important;
 }
 .hidden-val.revealed { filter: blur(0); }
+
 .copy-btn {
-display: none;
-background: none;
-border: none;
-cursor: pointer;
-padding: 0 2px;
-color: #555;
-font-size: 0.65rem;
-transition: color 0.2s;
-flex-shrink: 0;
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px;
+  color: #555;
+  font-size: 0.65rem;
+  transition: color 0.2s;
+  flex-shrink: 0;
 }
 .copy-btn:hover { color: #aaa; }
 .copy-btn.show { display: inline-flex; }
+
 .divider-wrap {
-display: flex;
-justify-content: center;
-padding: 0 32px;
+  display: flex;
+  justify-content: center;
+  padding: 0 32px;
 }
 .divider {
-width: 100%;
-max-width: 360px;
-height: 1px;
-background: #1a1a1a;
+  width: 100%;
+  max-width: 360px;
+  height: 1px;
+  background: #1a1a1a;
 }
+
 footer {
-padding: 16px 32px 44px;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 6px;
-width: 100%;
+  padding: 16px 32px 44px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
 }
+
 .uptime-box {
-background: #111;
-border: 1px solid #1e1e1e;
-border-radius: 99px;
-padding: 10px 20px;
-display: flex;
-align-items: center;
-gap: 8px;
-font-size: 0.67rem;
-color: #555;
-letter-spacing: 0.02em;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 99px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.67rem;
+  color: #555;
+  letter-spacing: 0.02em;
 }
+
 .uptime-dot {
-width: 6px; height: 6px;
-border-radius: 50%;
-background: #00e676;
-box-shadow: 0 0 6px #00e676;
-animation: pulse 1.4s ease-in-out infinite;
-flex-shrink: 0;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #00e676;
+  box-shadow: 0 0 6px #00e676;
+  animation: pulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
 }
 @keyframes pulse {
-0%,100% { opacity: 1; box-shadow: 0 0 8px #00e676; }
-50%      { opacity: 0.2; box-shadow: 0 0 2px #00e676; }
+  0%,100% { opacity: 1; box-shadow: 0 0 8px #00e676; }
+  50%      { opacity: 0.2; box-shadow: 0 0 2px #00e676; }
 }
+
 .copyright {
-font-size: 0.62rem;
-color: #555;
-letter-spacing: 0.06em;
-text-align: center;
+  font-size: 0.62rem;
+  color: #555;
+  letter-spacing: 0.06em;
+  text-align: center;
 }
+
 .project-sub a, .project-sub span {
-color: inherit;
-text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 .hidden-val { color: #888 !important; text-decoration: none !important; }
 .toast {
-position: fixed;
-bottom: 32px; left: 50%;
-transform: translateX(-50%) translateY(10px);
-background: #1e1e1e;
-border: 1px solid #333;
-color: #aaa;
-font-size: 0.7rem;
-padding: 7px 16px;
-border-radius: 99px;
-opacity: 0;
-pointer-events: none;
-transition: opacity 0.2s, transform 0.2s;
-white-space: nowrap;
-z-index: 999;
+  position: fixed;
+  bottom: 32px; left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  background: #1e1e1e;
+  border: 1px solid #333;
+  color: #aaa;
+  font-size: 0.7rem;
+  padding: 7px 16px;
+  border-radius: 99px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  white-space: nowrap;
+  z-index: 999;
 }
 .toast.show {
-opacity: 1;
-transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
-</style>
+
+  </style>
 </head>
-<body><nav id="navbar">
+<body>
+
+  <nav id="navbar">
     <a href="#" class="nav-logo">
       <span class="star top" style="left:2px;--d:2.2s;--delay:0s">✦</span>
       <span class="star top" style="left:55px;--d:1.9s;--delay:0.4s">✦</span>
@@ -327,17 +367,23 @@ transform: translateX(-50%) translateY(0);
       <span class="star bot" style="left:130px;--d:2.4s;--delay:0.7s">✦</span>
       ThanhHoang Home
     </a>
-  </nav><main>
+  </nav>
+
+  <main>
     <section class="hero">
       <div class="avatar-wrapper">
         <div class="avatar-circle">
-          <img src="/Assets/rong.png" alt="Avatar"/>
+          <img src="/Assets/Png/rong.png" alt="Avatar"/>
         </div>
-        <img class="avatar-frame" src="/Assets/mong-vuot-rong.png" alt="frame" onerror="this.style.display='none'"/>
-      </div><h1 class="hero-name">
+        <img class="avatar-frame" src="/Assets/Png/mong-vuot-rong.png" alt="frame" onerror="this.style.display='none'"/>
+      </div>
+
+  <h1 class="hero-name">
     Nguyễn Thanh Hoàng
-    <img src="/Assets/tick-xanh.png" alt="verified"/>
-  </h1><div class="hero-meta">
+    <img src="/Assets/Png/tick-xanh.png" alt="verified"/>
+  </h1>
+
+  <div class="hero-meta">
     <div class="hero-location">
       <i class="fa-solid fa-location-dot"></i>
       <span>Hanoi / Vietnam</span>
@@ -348,16 +394,20 @@ transform: translateX(-50%) translateY(0);
       <span>Telegram</span>
     </a>
   </div>
-</section><div class="content">
+</section>
+
+<div class="content">
   <section class="about-section">
     <div class="section-label">About Me</div>
     <p class="about-text">báo đời</p>
-  </section><section class="projects-section">
+  </section>
+
+  <section class="projects-section">
     <div class="section-label">Payment</div>
     <div class="projects-list">
       <div class="project-card" onclick="toggleReveal()">
         <div class="project-icon-wrap">
-          <img src="/Assets/mbbank.png" alt="MB Bank"/>
+          <img src="/Assets/Png/mbbank.png" alt="MB Bank"/>
         </div>
         <div class="project-info">
           <div class="project-name">MB Bank</div>
@@ -377,13 +427,23 @@ transform: translateX(-50%) translateY(0);
       </div>
     </div>
   </section>
-</div></main><div class="divider-wrap"><div class="divider"></div></div><footer>
+</div>
+
+  </main>
+
+  <div class="divider-wrap"><div class="divider"></div></div>
+
+  <footer>
     <div class="uptime-box">
       <div class="uptime-dot"></div>
       <span>Đã hoạt động <span id="ut-days">0</span> ngày <span id="ut-hours">0</span> giờ <span id="ut-mins">0</span> phút <span id="ut-secs">0</span> giây</span>
     </div>
     <div class="copyright">© 2026 ThanhHoang. All rights reserved.</div>
-  </footer><div class="toast" id="toast">Đã sao chép!</div><script>
+  </footer>
+
+  <div class="toast" id="toast">Đã sao chép!</div>
+
+  <script>
     const startTime = new Date('2026-03-01').getTime();
     function updateUptime() {
       const e = Math.floor((Date.now() - startTime) / 1000);
@@ -420,5 +480,6 @@ transform: translateX(-50%) translateY(0);
       });
     }
 
-  </script></body>
+  </script>
+</body>
 </html>
