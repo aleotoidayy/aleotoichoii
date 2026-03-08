@@ -41,7 +41,8 @@ color: #fff;
 text-decoration: none;
 position: relative;
 display: inline-block;
-padding: 4px 0;
+padding: 8px 0;
+overflow: visible;
 }
 
 .star {
@@ -370,9 +371,6 @@ box-shadow: 0 8px 32px rgba(0,0,0,0.6);
 overflow: hidden;
 transition: opacity 0.3s ease;
 }
-.music-player.scrolling {
-opacity: 0.15;
-}
 
 .music-cover {
 width: 36px; height: 36px;
@@ -564,6 +562,8 @@ border-radius: 0 0 16px 16px;
 
   <div class="toast" id="toast">Đã sao chép!</div>
 
+  <script src="/Assets/playlist.js"></script>
+
   <script>
     const startTime = new Date('2026-03-01').getTime();
     function updateUptime() {
@@ -577,15 +577,9 @@ border-radius: 0 0 16px 16px;
     setInterval(updateUptime, 1000);
 
     const navbar = document.getElementById('navbar');
-    let scrollTimer;
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('hidden', window.scrollY > 40);
-      const player = document.getElementById('musicPlayer');
-      if (player) {
-        player.classList.add('scrolling');
-        clearTimeout(scrollTimer);
-        scrollTimer = setTimeout(() => player.classList.remove('scrolling'), 800);
-      }
+
     });
 
     let revealed = false;
@@ -608,9 +602,7 @@ border-radius: 0 0 16px 16px;
       });
     }
 
-    const playlist = [
-      { title: "Không Buông", artist: "Hngle ft. Ari", src: "/Assets/Music/khongbuong.mp3", cover: "/Assets/Png/khongbuong.png" },
-    ];
+    /* playlist loaded from playlist.js */
 
     let current = 0;
     const audio = document.getElementById('audioEl');
@@ -687,7 +679,7 @@ border-radius: 0 0 16px 16px;
     </div>
     <div class="music-bar"><div class="music-bar-fill" id="musicBarFill"></div></div>
     <audio id="audioEl" preload="auto"></audio>
-
+    
   </div>
 </body>
 </html>
