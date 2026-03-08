@@ -4,8 +4,8 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Thanh Hoàng</title>
-  <link href="https:
-  <link href="https:
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -50,11 +50,7 @@ position: absolute;
 opacity: 0;
 color: white;
 font-size: 6px;
-animation-name: starBlink;
-animation-duration: var(–d, 2s);
-animation-delay: var(–delay, 0s);
-animation-timing-function: ease-in-out;
-animation-iteration-count: infinite;
+animation: starBlink var(–d, 2s) var(–delay, 0s) ease-in-out infinite;
 pointer-events: none;
 line-height: 1;
 }
@@ -510,7 +506,7 @@ border-radius: 0 0 16px 16px;
       <span>Hanoi / Vietnam</span>
     </div>
     <div class="hero-meta-dot"></div>
-    <a href="https:
+    <a href="https://t.me/aleotoidayy" class="hero-tele" target="_blank">
       <i class="fa-brands fa-telegram"></i>
       <span>Telegram</span>
     </a>
@@ -548,6 +544,7 @@ border-radius: 0 0 16px 16px;
       </div>
     </div>
   </section>
+
 
 </div>
 
@@ -605,7 +602,7 @@ border-radius: 0 0 16px 16px;
       });
     }
 
-    
+    /* playlist loaded from playlist.js */
 
     let current = 0;
     const audio = document.getElementById('audioEl');
@@ -682,6 +679,7 @@ border-radius: 0 0 16px 16px;
     </div>
     <div class="music-bar"><div class="music-bar-fill" id="musicBarFill"></div></div>
     <audio id="audioEl" preload="auto"></audio>
+    
   </div>
 </body>
 </html>
