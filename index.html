@@ -1,197 +1,628 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Tạo Mã QR Thanh Toán</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap">
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thanh Hoàng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Inter', sans-serif; background: linear-gradient(160deg, #c2eeff 0%, #dff6ff 40%, #b8e8ff 70%, #cdf5e8 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; color: #333; overflow-x: hidden; position: relative; }
-    .orb { position: fixed; border-radius: 50%; pointer-events: none; z-index: 0; border: 1.5px solid rgba(255,255,255,0.7); box-shadow: inset 0 2px 12px rgba(255,255,255,0.85), 0 8px 40px rgba(100,180,255,0.14); overflow: hidden; will-change: transform; transform: translateZ(0); }
-    .orb::before { content: ''; position: absolute; top: 14%; left: 18%; width: 28%; height: 18%; background: rgba(255,255,255,0.75); border-radius: 50%; filter: blur(4px); }
-    .orb::after  { content: ''; position: absolute; bottom: 16%; right: 14%; width: 18%; height: 10%; background: rgba(255,255,255,0.35); border-radius: 50%; filter: blur(3px); }
-    .orb-1 { width:320px;height:320px;top:-80px;left:-100px;background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.6) 0%,rgba(147,210,255,.25) 45%,transparent 100%);animation:floatOrb1 9s ease-in-out infinite; }
-    .orb-2 { width:220px;height:220px;bottom:-50px;right:-60px;background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.6) 0%,rgba(160,240,200,.25) 45%,transparent 100%);animation:floatOrb2 11s ease-in-out infinite; }
-    .orb-3 { width:150px;height:150px;top:30%;right:-30px;background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.65) 0%,rgba(255,200,220,.28) 45%,transparent 100%);animation:floatOrb3 7s ease-in-out infinite; }
-    .orb-4 { width:180px;height:180px;bottom:15%;left:-50px;background:radial-gradient(circle at 33% 30%,rgba(255,255,255,.62) 0%,rgba(180,220,255,.24) 45%,transparent 100%);animation:floatOrb4 13s ease-in-out infinite; }
-    @keyframes floatOrb1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(18px,24px) scale(1.04)} 66%{transform:translate(-10px,14px) scale(.97)} }
-    @keyframes floatOrb2 { 0%,100%{transform:translate(0,0) scale(1)} 40%{transform:translate(-20px,-18px) scale(1.05)} 75%{transform:translate(10px,-8px) scale(.96)} }
-    @keyframes floatOrb3 { 0%,100%{transform:translate(0,0) scale(1) rotate(0deg)} 50%{transform:translate(-14px,20px) scale(1.06) rotate(8deg)} }
-    @keyframes floatOrb4 { 0%,100%{transform:translate(0,0) scale(1)} 35%{transform:translate(22px,-15px) scale(1.03)} 70%{transform:translate(8px,18px) scale(.98)} }
-    .toast { position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-80px);background:rgba(15,30,55,.82);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);color:#fff;padding:13px 20px;border-radius:50px;font-size:14px;font-weight:600;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.18);display:flex;align-items:center;gap:9px; }
-    .toast.show { opacity:1;transform:translateX(-50%) translateY(0); }
-    .toast-icon { width:18px;height:18px;flex-shrink:0;display:flex;align-items:center;justify-content:center; }
-    .toast-icon svg { width:18px;height:18px; }
-    .container { position:relative;z-index:1;background:rgba(255,255,255,.28);backdrop-filter:blur(20px) saturate(1.6);-webkit-backdrop-filter:blur(20px) saturate(1.6);border:1.5px solid rgba(255,255,255,.55);box-shadow:0 8px 40px rgba(100,180,255,.18),inset 0 1px 0 rgba(255,255,255,.8);padding:30px;border-radius:28px;width:100%;max-width:400px;text-align:center; }
-    h1 { margin-bottom:25px;margin-top:10px;font-weight:800;font-size:24px;color:#1e3a5f;letter-spacing:-.5px; }
-    input[type="text"] { width:100%;padding:15px 16px;margin-bottom:12px;border-radius:16px;border:1.5px solid rgba(255,255,255,.7);background:rgba(255,255,255,.38);backdrop-filter:blur(8px);box-shadow:inset 0 2px 6px rgba(255,255,255,.5);font-size:15px;color:#1e3a5f;outline:none;transition:all .3s;font-family:'Inter',sans-serif; }
-    input[type="text"]::placeholder { color:#7da3c0; }
-    input[type="text"]:focus { background:rgba(255,255,255,.65);border-color:rgba(255,255,255,.9);box-shadow:0 0 0 3px rgba(168,220,255,.3),inset 0 1px 4px rgba(255,255,255,.9);transform:translateY(-2px); }
-    .dropdown-wrapper { position:relative;margin-bottom:12px;text-align:left; }
-    .dropdown-btn { width:100%;padding:15px 16px;border-radius:16px;border:1.5px solid rgba(255,255,255,.7);background:rgba(255,255,255,.42);backdrop-filter:blur(8px);box-shadow:inset 0 2px 6px rgba(255,255,255,.5);cursor:pointer;display:flex;align-items:center;justify-content:space-between;color:#1e3a5f;font-weight:500;font-size:15px;transition:all .3s cubic-bezier(.34,1.56,.64,1);font-family:'Inter',sans-serif; }
-    .dropdown-btn:hover { background:rgba(255,255,255,.62);transform:translateY(-1px); }
-    .dropdown-btn .chevron { font-size:20px;transition:transform .35s cubic-bezier(.34,1.56,.64,1);flex-shrink:0; }
-    .dropdown-btn.active .chevron { transform:rotate(180deg); }
-    .dropdown-list { position:absolute;top:calc(100% + 8px);left:0;width:100%;max-height:0;overflow:hidden;background:rgba(255,255,255,.22);backdrop-filter:blur(28px) saturate(1.8);-webkit-backdrop-filter:blur(28px) saturate(1.8);border:1.5px solid rgba(255,255,255,.55);box-shadow:0 16px 48px rgba(80,140,255,.15),inset 0 1px 0 rgba(255,255,255,.8);border-radius:20px;z-index:100;opacity:0;transform:translateY(-8px) scale(.97);transform-origin:top center;transition:max-height .4s cubic-bezier(.34,1.56,.64,1),opacity .3s,transform .35s cubic-bezier(.34,1.56,.64,1);pointer-events:none; }
-    .dropdown-list.show { max-height:320px;opacity:1;transform:translateY(0) scale(1);pointer-events:all;overflow-y:auto;padding:10px; }
-    .dropdown-search { width:100%;padding:10px 14px;background:rgba(255,255,255,.35);backdrop-filter:blur(8px);border-radius:12px;border:1.5px solid rgba(255,255,255,.6);box-shadow:inset 0 1px 4px rgba(255,255,255,.5);outline:none;font-size:14px;margin-bottom:8px;color:#1e3a5f;font-family:'Inter',sans-serif;transition:all .25s;display:block; }
-    .dropdown-search::placeholder { color:#7da3c0; }
-    .dropdown-search:focus { background:rgba(255,255,255,.55);border-color:rgba(255,255,255,.9);box-shadow:0 0 0 3px rgba(168,220,255,.25); }
-    .bank-item { padding:10px 12px;cursor:pointer;border-radius:12px;display:flex;align-items:center;gap:10px;transition:all .2s cubic-bezier(.34,1.56,.64,1);border:1px solid transparent;-webkit-tap-highlight-color:transparent;user-select:none; }
-    .bank-item:hover,.bank-item.is-pressed { background:rgba(255,255,255,.45);border-color:rgba(255,255,255,.7);box-shadow:0 2px 12px rgba(100,180,255,.12);transform:translateX(3px); }
-    .bank-logo { width:45px;height:auto;object-fit:contain;background:rgba(255,255,255,.9);border-radius:8px;padding:3px;border:1px solid rgba(255,255,255,.8);flex-shrink:0; }
-    .bank-info { display:flex;flex-direction:column; }
-    .bank-short { font-weight:700;font-size:14px;color:#1e3a5f; }
-    .bank-full  { font-size:11px;color:#5a7a99; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── Kiểu QR toggle: 2 nút full width ── */
-#qrStyleToggle { display:flex;gap:8px;margin-bottom:12px; }
-.toggle-opt {
-  flex:1; display:flex; align-items:center; justify-content:center; gap:5px;
-  padding:10px 8px; border-radius:14px; font-size:.8rem; font-weight:600;
-  cursor:pointer; transition:all .22s cubic-bezier(.34,1.56,.64,1);
-  background:rgba(255,255,255,.35); color:#7da3c0;
-  border:1.5px solid rgba(255,255,255,.6);
-  font-family:inherit; white-space:nowrap;
-  -webkit-tap-highlight-color:transparent;
+body {
+background: #080808;
+color: #e0e0e0;
+font-family: ‘Outfit’, sans-serif;
+font-weight: 300;
+font-size: 13px;
+min-height: 100vh;
+overflow-x: hidden;
 }
-.toggle-opt:hover { background:rgba(255,255,255,.55);color:#1e3a5f; }
-.toggle-opt.active { background:rgba(255,255,255,.85);color:#1e3a5f;border-color:rgba(255,255,255,.9);box-shadow:0 2px 12px rgba(100,180,255,.18); }
 
-button#generate { width:100%;padding:16px;margin-top:2px;border:none;border-radius:16px;background:linear-gradient(135deg,rgba(255,255,255,.9) 0%,rgba(210,240,255,.85) 100%);border:1.5px solid rgba(255,255,255,.8);color:#1e3a5f;font-weight:800;font-size:16px;box-shadow:0 6px 20px rgba(0,150,255,.12),inset 0 1px 0 rgba(255,255,255,.9);cursor:pointer;transition:all .3s cubic-bezier(.34,1.56,.64,1);font-family:'Inter',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px; }
-button#generate:hover { transform:translateY(-3px) scale(1.02);box-shadow:0 12px 32px rgba(0,150,255,.22); }
-button#generate:active { transform:translateY(-1px) scale(.99); }
-#qrArea { margin-top:20px;display:none;flex-direction:column;align-items:center; }
-#qrArea.visible { display:flex;animation:slideUpBounce .5s cubic-bezier(.34,1.56,.64,1) forwards; }
-#qrImg { width:100%;border-radius:18px;border:5px solid rgba(255,255,255,.9);box-shadow:0 12px 36px rgba(0,0,0,.1); }
-#copyBtn { margin-top:10px;background:rgba(255,255,255,.45);border:1.5px solid rgba(255,255,255,.75);border-radius:12px;padding:9px 20px;cursor:pointer;font-size:13px;font-weight:600;color:#1e3a5f;backdrop-filter:blur(8px);transition:all .25s;display:flex;align-items:center;gap:6px;font-family:'Inter',sans-serif; }
-#copyBtn:hover { background:rgba(255,255,255,.75);transform:translateY(-1px); }
-.qr-hint { margin-top:6px;font-size:12px;color:#7da3c0; }
-@keyframes slideUpBounce { 0%{opacity:0;transform:translateY(30px) scale(.92)} 60%{opacity:1;transform:translateY(-5px) scale(1.02)} 80%{transform:translateY(2px) scale(.99)} 100%{opacity:1;transform:translateY(0) scale(1)} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 40%{transform:translateX(6px)} 60%{transform:translateX(-4px)} 80%{transform:translateX(4px)} }
-.shake { animation:shake .4s ease; }
-::-webkit-scrollbar { width:5px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:#c0d8ef;border-radius:10px; }
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+padding: 20px 32px;
+z-index: 100;
+transition: opacity 0.35s ease, transform 0.35s ease;
+}
+nav.hidden {
+opacity: 0;
+pointer-events: none;
+transform: translateY(-8px);
+}
 
-  </style>
+.nav-logo {
+font-family: ‘Outfit’, sans-serif;
+font-weight: 700;
+font-size: 0.82rem;
+letter-spacing: 0.05em;
+color: #fff;
+text-decoration: none;
+position: relative;
+display: inline-block;
+padding: 4px 0;
+}
+
+.star {
+position: absolute;
+opacity: 0;
+color: white;
+font-size: 6px;
+animation: starBlink var(–d, 2s) var(–delay, 0s) ease-in-out infinite;
+pointer-events: none;
+line-height: 1;
+}
+.star.top { top: -5px; }
+.star.bot { bottom: -5px; }
+
+@keyframes starBlink {
+0%, 100% { opacity: 0; transform: scale(0.3); }
+50%       { opacity: 0.8; transform: scale(1); }
+}
+
+main {
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 110px 32px 20px;
+gap: 28px;
+}
+
+.hero {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 0;
+width: 100%;
+animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(20px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+.avatar-wrapper {
+position: relative;
+width: 150px;
+height: 150px;
+}
+
+.avatar-frame {
+position: absolute;
+top: 50%; left: 50%;
+transform: translate(-50%, -50%);
+width: 200px;
+height: 200px;
+object-fit: contain;
+z-index: 2;
+pointer-events: none;
+animation: frameFloat 4s ease-in-out infinite;
+}
+
+@keyframes frameFloat {
+0%,100% { transform: translate(-50%, -50%) translateY(0); }
+50%      { transform: translate(-50%, -50%) translateY(-4px); }
+}
+
+.avatar-circle {
+width: 150px; height: 150px;
+border-radius: 50%;
+overflow: hidden;
+position: relative; z-index: 1;
+border: 2px solid #222;
+background: #111;
+margin-top: -12px;
+}
+.avatar-circle img { width:100%; height:100%; object-fit:cover; }
+
+.hero-name {
+font-family: ‘Outfit’, sans-serif;
+font-weight: 800;
+font-size: 1.5rem;
+color: #fff;
+letter-spacing: -0.01em;
+margin-top: 43px;
+text-align: center;
+display: flex;
+align-items: center;
+gap: 6px;
+justify-content: center;
+}
+.hero-name img {
+width: 22px; height: 22px;
+object-fit: contain;
+flex-shrink: 0;
+}
+
+.hero-meta {
+display: flex;
+align-items: center;
+gap: 10px;
+flex-wrap: wrap;
+justify-content: center;
+margin-top: 8px;
+}
+
+.hero-location, .hero-tele {
+display: flex;
+align-items: center;
+gap: 5px;
+color: #fff;
+font-size: 0.74rem;
+letter-spacing: 0.02em;
+text-decoration: none;
+transition: opacity 0.2s;
+}
+.hero-tele:hover { opacity: 0.6; }
+.hero-location i, .hero-tele i { font-size: 0.7rem; color: #fff; }
+
+.hero-meta-dot {
+width: 3px; height: 3px;
+border-radius: 50%;
+background: #333;
+}
+
+.content {
+width: 100%;
+max-width: 360px;
+display: flex;
+flex-direction: column;
+gap: 24px;
+}
+
+.about-section {
+width: 100%;
+animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.08s both;
+}
+
+.section-label {
+font-family: ‘Outfit’, sans-serif;
+font-size: 0.6rem;
+font-weight: 600;
+letter-spacing: 0.18em;
+text-transform: uppercase;
+color: #444;
+margin-bottom: 8px;
+}
+
+.about-text {
+font-size: 0.85rem;
+line-height: 1.8;
+color: #999;
+}
+
+.projects-section {
+width: 100%;
+animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.14s both;
+}
+
+.projects-list {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+
+.project-card {
+background: #111;
+border: 1px solid #1e1e1e;
+border-radius: 10px;
+padding: 10px 14px;
+display: flex;
+align-items: center;
+gap: 12px;
+cursor: pointer;
+text-decoration: none;
+transition: border-color 0.2s;
+width: 100%;
+}
+.project-card:hover { border-color: #333; }
+
+.project-icon-wrap {
+width: 36px; height: 36px;
+border-radius: 8px;
+overflow: hidden;
+background: #1a1a1a;
+flex-shrink: 0;
+border: 1px solid #222;
+}
+.project-icon-wrap img { width:100%; height:100%; object-fit:cover; }
+
+.project-info { flex: 1; min-width: 0; }
+
+.project-name {
+font-family: ‘Outfit’, sans-serif;
+font-size: 0.82rem;
+font-weight: 600;
+color: #fff;
+}
+
+.project-sub {
+font-size: 0.7rem;
+color: #555;
+text-decoration: none;
+margin-top: 3px;
+user-select: none;
+letter-spacing: 0.02em;
+display: flex;
+align-items: center;
+gap: 5px;
+}
+
+.hidden-val {
+filter: blur(5px);
+transition: filter 0.25s;
+display: inline-block;
+color: #888 !important;
+text-decoration: none !important;
+}
+.hidden-val.revealed { filter: blur(0); }
+
+.copy-btn {
+display: none;
+background: none;
+border: none;
+cursor: pointer;
+padding: 0 2px;
+color: #555;
+font-size: 0.65rem;
+transition: color 0.2s;
+flex-shrink: 0;
+}
+.copy-btn:hover { color: #aaa; }
+.copy-btn.show { display: inline-flex; }
+
+.divider-wrap {
+display: flex;
+justify-content: center;
+padding: 0 32px;
+}
+.divider {
+width: 100%;
+max-width: 360px;
+height: 1px;
+background: #1a1a1a;
+}
+
+footer {
+padding: 16px 32px 44px;
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 6px;
+width: 100%;
+}
+
+.uptime-box {
+background: #111;
+border: 1px solid #1e1e1e;
+border-radius: 99px;
+padding: 10px 20px;
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 0.67rem;
+color: #555;
+letter-spacing: 0.02em;
+}
+
+.uptime-dot {
+width: 6px; height: 6px;
+border-radius: 50%;
+background: #00e676;
+box-shadow: 0 0 6px #00e676;
+animation: pulse 1.4s ease-in-out infinite;
+flex-shrink: 0;
+}
+@keyframes pulse {
+0%,100% { opacity: 1; box-shadow: 0 0 8px #00e676; }
+50%      { opacity: 0.2; box-shadow: 0 0 2px #00e676; }
+}
+
+.copyright {
+font-size: 0.62rem;
+color: #555;
+letter-spacing: 0.06em;
+text-align: center;
+}
+
+.project-sub a, .project-sub span {
+color: inherit;
+text-decoration: none;
+}
+
+.toast {
+position: fixed;
+bottom: 32px; left: 50%;
+transform: translateX(-50%) translateY(10px);
+background: #1e1e1e;
+border: 1px solid #333;
+color: #aaa;
+font-size: 0.7rem;
+padding: 7px 16px;
+border-radius: 99px;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.2s, transform 0.2s;
+white-space: nowrap;
+z-index: 999;
+}
+.toast.show {
+opacity: 1;
+transform: translateX(-50%) translateY(0);
+}
+
+.music-player {
+position: fixed;
+bottom: 20px;
+right: 20px;
+z-index: 200;
+background: #111;
+border: 1px solid #222;
+border-radius: 14px;
+padding: 8px 12px;
+display: flex;
+align-items: center;
+gap: 8px;
+width: 230px;
+box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+overflow: hidden;
+transition: opacity 0.3s ease;
+}
+.music-player.scrolling {
+opacity: 0.15;
+}
+
+.music-cover {
+width: 36px; height: 36px;
+border-radius: 8px;
+background: #1a1a1a;
+flex-shrink: 0;
+overflow: hidden;
+border: 1px solid #222;
+display: flex; align-items: center; justify-content: center;
+color: #333;
+font-size: 0.9rem;
+position: relative;
+}
+.music-cover.playing::after {
+content: ‘’;
+position: absolute;
+inset: 0;
+border-radius: 8px;
+animation: coverSpin 4s linear infinite;
+border: 1px solid #ffffff10;
+}
+@keyframes coverSpin {
+0% { box-shadow: inset 0 0 0 0 #fff1; }
+50% { box-shadow: inset 0 0 12px 2px #fff1; }
+100% { box-shadow: inset 0 0 0 0 #fff1; }
+}
+
+.music-info {
+flex: 1;
+min-width: 0;
+display: flex;
+flex-direction: column;
+gap: 1px;
+}
+
+.music-title {
+font-family: ‘Outfit’, sans-serif;
+font-size: 0.72rem;
+font-weight: 600;
+color: #e0e0e0;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.music-artist {
+font-size: 0.62rem;
+color: #444;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+.music-controls {
+display: flex;
+align-items: center;
+gap: 6px;
+flex-shrink: 0;
+}
+
+.mc-btn {
+background: none;
+border: none;
+cursor: pointer;
+color: #555;
+font-size: 0.7rem;
+padding: 4px;
+border-radius: 50%;
+width: 26px; height: 26px;
+display: flex; align-items: center; justify-content: center;
+transition: color 0.2s, background 0.2s;
+flex-shrink: 0;
+}
+.mc-btn:hover { color: #fff; background: #1e1e1e; }
+
+.mc-btn.play-btn {
+background: #fff;
+color: #000;
+width: 28px; height: 28px;
+font-size: 0.65rem;
+}
+.mc-btn.play-btn:hover { background: #ddd; color: #000; }
+
+.music-bar {
+position: absolute;
+bottom: 0; left: 0; right: 0;
+height: 2px;
+background: #1a1a1a;
+border-radius: 0 0 16px 16px;
+overflow: hidden;
+}
+.music-bar-fill {
+height: 100%;
+background: #fff;
+width: 0%;
+transition: width 0.5s linear;
+border-radius: 0 0 16px 16px;
+}
+</style>
+
 </head>
 <body>
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-  <div class="orb orb-4"></div>
-  <div class="toast" id="toast"><div class="toast-icon" id="toastIcon"></div><span id="toastMsg"></span></div>
 
-  <div class="container">
-    <h1>✦ Tạo Mã QR Thanh Toán</h1>
-    <input id="name"    type="text" placeholder="Tên người nhận" />
-    <input id="account" type="text" inputmode="text" placeholder="Số tài khoản" autocomplete="off" />
-    <div class="dropdown-wrapper">
-      <div class="dropdown-btn" id="bankBtn">
-        <span id="bankSelected">Chọn ngân hàng</span>
-        <i class='bx bx-chevron-down chevron'></i>
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <span class="star top" style="left:2px;--d:2.2s;--delay:0s">✦</span>
+      <span class="star top" style="left:55px;--d:1.9s;--delay:0.4s">✦</span>
+      <span class="star top" style="left:110px;--d:2.5s;--delay:0.8s">✦</span>
+      <span class="star bot" style="left:20px;--d:2.8s;--delay:1.1s">✦</span>
+      <span class="star bot" style="left:80px;--d:2.0s;--delay:0.3s">✦</span>
+      <span class="star bot" style="left:130px;--d:2.4s;--delay:0.7s">✦</span>
+      ThanhHoang Home
+    </a>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="avatar-wrapper">
+        <div class="avatar-circle">
+          <img src="/Assets/Png/rong.png" alt="Avatar"/>
+        </div>
+        <img class="avatar-frame" src="/Assets/Png/mong-vuot-rong.png" alt="frame" onerror="this.style.display='none'"/>
       </div>
-      <div class="dropdown-list" id="bankList">
-        <input type="text" class="dropdown-search" id="bankSearch" placeholder="Tìm ngân hàng...">
-        <div id="bankItemsContainer">Đang tải danh sách...</div>
+
+  <h1 class="hero-name">
+    Nguyễn Thanh Hoàng
+    <img src="/Assets/Png/tick-xanh.png" alt="verified"/>
+  </h1>
+
+  <div class="hero-meta">
+    <div class="hero-location">
+      <i class="fa-solid fa-location-dot"></i>
+      <span>Hanoi / Vietnam</span>
+    </div>
+    <div class="hero-meta-dot"></div>
+    <a href="https://t.me/aleotoidayy" class="hero-tele" target="_blank">
+      <i class="fa-brands fa-telegram"></i>
+      <span>Telegram</span>
+    </a>
+  </div>
+</section>
+
+<div class="content">
+  <section class="about-section">
+    <div class="section-label">About Me</div>
+    <p class="about-text">báo đời</p>
+  </section>
+
+  <section class="projects-section">
+    <div class="section-label">Payment</div>
+    <div class="projects-list">
+      <div class="project-card" onclick="toggleReveal()">
+        <div class="project-icon-wrap">
+          <img src="/Assets/Png/mbbank.png" alt="MB Bank"/>
+        </div>
+        <div class="project-info">
+          <div class="project-name">MB Bank</div>
+          <div class="project-sub">
+            STK: <span class="hidden-val" id="stk">178235</span>
+            <button class="copy-btn" id="copy-stk" onclick="event.stopPropagation(); copyVal('stk')">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+          <div class="project-sub">
+            CTK: <span class="hidden-val" id="ctk">NGUYEN THANH HOANG</span>
+            <button class="copy-btn" id="copy-ctk" onclick="event.stopPropagation(); copyVal('ctk')">
+              <i class="fa-regular fa-copy"></i>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
-    <input id="amount" type="text" inputmode="numeric" placeholder="Nhập số tiền (VNĐ)" />
-    <input id="desc"   type="text" placeholder="Nội dung chuyển khoản" />
+  </section>
 
-<div id="qrStyleToggle">
-  <button class="toggle-opt active" data-val="compact2" onclick="setQrStyle(this)">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h2v2h-2zM18 14h3v2h-3zM14 18h2v3h-2zM18 18h3v3h-3z"/></svg>
-    Có thông tin
-  </button>
-  <button class="toggle-opt" data-val="qr_only" onclick="setQrStyle(this)">
-    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 7h4v4H7zM13 7h4v4h-4zM7 13h4v4H7zM13 13h2v2h-2zM17 13h0v2M15 17h4v2h-4z"/></svg>
-    Chỉ mã QR
-  </button>
+
 </div>
 
-<button id="generate">
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h2v2h-2zM18 14h3v2h-3zM14 18h2v3h-2zM18 18h3v3h-3z"/></svg>
-  Tạo QR
-</button>
+  </main>
 
-<div id="qrArea">
-  <img id="qrImg" src="" alt="QR Code" />
-  <button id="copyBtn">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-    Sao chép ảnh
-  </button>
-  <p class="qr-hint">Nhấn giữ ảnh để lưu hoặc chia sẻ</p>
-</div>
+  <div class="divider-wrap"><div class="divider"></div></div>
 
-  </div>
+  <footer>
+    <div class="uptime-box">
+      <div class="uptime-dot"></div>
+      <span>Đã hoạt động <span id="ut-days">0</span> ngày <span id="ut-hours">0</span> giờ <span id="ut-mins">0</span> phút <span id="ut-secs">0</span> giây</span>
+    </div>
+    <div class="copyright">© 2026 ThanhHoang. All rights reserved.</div>
+  </footer>
+
+  <div class="toast" id="toast">Đã sao chép!</div>
 
   <script>
-    const ICONS = {
-      success:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4ade80"><circle cx="12" cy="12" r="10"/><polyline points="8,12 11,15 16,9"/></svg>`,
-      error:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#f87171"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-      warning:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#fbbf24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
-      info:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#60a5fa"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
-      bank:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#60a5fa"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg>`,
-      copy:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#4ade80"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`,
-    };
-    const charMap = {'á':'a','à':'a','ả':'a','ã':'a','ạ':'a','ă':'a','ắ':'a','ằ':'a','ẳ':'a','ẵ':'a','ặ':'a','â':'a','ấ':'a','ầ':'a','ẩ':'a','ẫ':'a','ậ':'a','é':'e','è':'e','ẻ':'e','ẽ':'e','ẹ':'e','ê':'e','ế':'e','ề':'e','ể':'e','ễ':'e','ệ':'e','í':'i','ì':'i','ỉ':'i','ĩ':'i','ị':'i','ó':'o','ò':'o','ỏ':'o','õ':'o','ọ':'o','ô':'o','ố':'o','ồ':'o','ổ':'o','ỗ':'o','ộ':'o','ơ':'o','ớ':'o','ờ':'o','ở':'o','ỡ':'o','ợ':'o','ú':'u','ù':'u','ủ':'u','ũ':'u','ụ':'u','ư':'u','ứ':'u','ừ':'u','ử':'u','ữ':'u','ự':'u','ý':'y','ỳ':'y','ỷ':'y','ỹ':'y','ỵ':'y','đ':'d','Á':'A','À':'A','Ả':'A','Ã':'A','Ạ':'A','Ă':'A','Ắ':'A','Ằ':'A','Ẳ':'A','Ẵ':'A','Ặ':'A','Â':'A','Ấ':'A','Ầ':'A','Ẩ':'A','Ẫ':'A','Ậ':'A','É':'E','È':'E','Ẻ':'E','Ẽ':'E','Ẹ':'E','Ê':'E','Ế':'E','Ề':'E','Ể':'E','Ễ':'E','Ệ':'E','Í':'I','Ì':'I','Ỉ':'I','Ĩ':'I','Ị':'I','Ó':'O','Ò':'O','Ỏ':'O','Õ':'O','Ọ':'O','Ô':'O','Ố':'O','Ồ':'O','Ổ':'O','Ỗ':'O','Ộ':'O','Ơ':'O','Ớ':'O','Ờ':'O','Ở':'O','Ỡ':'O','Ợ':'O','Ú':'U','Ù':'U','Ủ':'U','Ũ':'U','Ụ':'U','Ư':'U','Ứ':'U','Ừ':'U','Ử':'U','Ữ':'U','Ự':'U','Ý':'Y','Ỳ':'Y','Ỷ':'Y','Ỹ':'Y','Ỵ':'Y','Đ':'D'};
-    function removeDiacritics(str) { return str.replace(/[^\u0000-\u007E]/g, m => charMap[m]||m); }
+    const startTime = new Date('2026-03-01').getTime();
+    function updateUptime() {
+      const e = Math.floor((Date.now() - startTime) / 1000);
+      document.getElementById('ut-days').textContent  = Math.floor(e / 86400);
+      document.getElementById('ut-hours').textContent = Math.floor((e % 86400) / 3600);
+      document.getElementById('ut-mins').textContent  = Math.floor((e % 3600) / 60);
+      document.getElementById('ut-secs').textContent  = e % 60;
+    }
+    updateUptime();
+    setInterval(updateUptime, 1000);
 
-    let banks = [], selectedBank = null;
-    window.qrStyle = 'compact2';
-    window.setQrStyle = function(btn) {
-      document.querySelectorAll('.toggle-opt').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      window.qrStyle = btn.dataset.val;
-    };
+    const navbar = document.getElementById('navbar');
+    let scrollTimer;
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('hidden', window.scrollY > 40);
+      const player = document.getElementById('musicPlayer');
+      if (player) {
+        player.classList.add('scrolling');
+        clearTimeout(scrollTimer);
+        scrollTimer = setTimeout(() => player.classList.remove('scrolling'), 800);
+      }
+    });
 
-    const nameInput=document.getElementById('name'), accountInput=document.getElementById('account'), amountInput=document.getElementById('amount'), descInput=document.getElementById('desc'), bankBtn=document.getElementById('bankBtn'), bankList=document.getElementById('bankList'), bankItemsContainer=document.getElementById('bankItemsContainer'), bankSearch=document.getElementById('bankSearch'), bankSelected=document.getElementById('bankSelected'), generateBtn=document.getElementById('generate'), qrArea=document.getElementById('qrArea'), qrImg=document.getElementById('qrImg'), copyBtn=document.getElementById('copyBtn'), toastEl=document.getElementById('toast'), toastIcon=document.getElementById('toastIcon'), toastMsg=document.getElementById('toastMsg');
+    let revealed = false;
+    function toggleReveal() {
+      revealed = !revealed;
+      document.getElementById('stk').classList.toggle('revealed', revealed);
+      document.getElementById('ctk').classList.toggle('revealed', revealed);
+      document.getElementById('copy-stk').classList.toggle('show', revealed);
+      document.getElementById('copy-ctk').classList.toggle('show', revealed);
+    }
 
     let toastTimer;
-    function showToast(msg,type='info'){toastIcon.innerHTML=ICONS[type]||ICONS.info;toastMsg.textContent=msg;toastEl.className=`toast ${type} show`;clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2800);}
-    function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
-    function loadSavedData(){if(localStorage.getItem('qr_name'))nameInput.value=localStorage.getItem('qr_name');if(localStorage.getItem('qr_account'))accountInput.value=localStorage.getItem('qr_account');}
-    function saveData(){localStorage.setItem('qr_name',nameInput.value);localStorage.setItem('qr_account',accountInput.value);if(selectedBank){localStorage.setItem('qr_bank',selectedBank.bin);localStorage.setItem('qr_bank_name',selectedBank.shortName);}}
-    loadSavedData();
-
-    fetch('https://api.vietqr.io/v2/banks').then(r=>r.json()).then(data=>{if(data.code==='00'){banks=data.data.sort((a,b)=>a.shortName.localeCompare(b.shortName));renderBanks(banks);const s=localStorage.getItem('qr_bank');if(s){const b=banks.find(b=>b.bin===s);if(b){selectedBank=b;setBankDisplay(b);}}}}).catch(()=>{bankItemsContainer.innerHTML='<div style="padding:10px;color:#e74c3c;text-align:center;font-size:13px">Lỗi tải danh sách ngân hàng!</div>';});
-
-    function setBankDisplay(bank){bankSelected.innerHTML=`<div style="display:flex;align-items:center;gap:10px"><img src="${bank.logo}" style="width:26px;border-radius:5px;border:1px solid #eee;"><span>${bank.shortName}</span></div>`;}
-    function renderBanks(list){bankItemsContainer.innerHTML='';if(!list.length){bankItemsContainer.innerHTML='<div style="padding:10px;color:#999;text-align:center;font-size:13px">Không tìm thấy ngân hàng</div>';return;}list.forEach(bank=>{const item=document.createElement('div');item.className='bank-item';item.innerHTML=`<img src="${bank.logo}" class="bank-logo" loading="lazy"><div class="bank-info"><span class="bank-short">${bank.shortName}</span><span class="bank-full">${bank.name}</span></div>`;let tm=false;item.addEventListener('touchstart',()=>{tm=false;item.classList.add('is-pressed');},{passive:true});item.addEventListener('touchmove',()=>{tm=true;item.classList.remove('is-pressed');},{passive:true});item.addEventListener('touchend',()=>{item.classList.remove('is-pressed');if(tm)return;selectedBank=bank;setBankDisplay(bank);saveData();closeDropdown();showToast('Đã chọn '+bank.shortName,'bank');});item.addEventListener('touchcancel',()=>{item.classList.remove('is-pressed');});item.addEventListener('click',()=>{selectedBank=bank;setBankDisplay(bank);saveData();closeDropdown();showToast('Đã chọn '+bank.shortName,'bank');});bankItemsContainer.appendChild(item);});}
-    function openDropdown(){bankList.classList.add('show');bankBtn.classList.add('active');setTimeout(()=>bankSearch.focus(),150);}
-    function closeDropdown(){bankList.classList.remove('show');bankBtn.classList.remove('active');setTimeout(()=>{bankSearch.value='';renderBanks(banks);},350);}
-    bankBtn.addEventListener('click',e=>{e.stopPropagation();bankList.classList.contains('show')?closeDropdown():openDropdown();});
-    bankSearch.addEventListener('input',e=>{const kw=e.target.value.toLowerCase();renderBanks(banks.filter(b=>b.shortName.toLowerCase().includes(kw)||b.name.toLowerCase().includes(kw)));});
-    window.addEventListener('click',e=>{if(!bankBtn.contains(e.target)&&!bankList.contains(e.target))closeDropdown();});
-    nameInput.addEventListener('input',function(){const s=this.selectionStart,e=this.selectionEnd;this.value=removeDiacritics(this.value).toUpperCase();this.setSelectionRange(s,e);saveData();});
-    accountInput.addEventListener('input',function(){const p=this.selectionStart;this.value=this.value.replace(/[^a-zA-Z0-9_]/g,'').toUpperCase();this.setSelectionRange(p,p);saveData();});
-    amountInput.addEventListener('input',function(){const v=this.value.replace(/[^0-9]/g,'');this.value=v?parseInt(v).toLocaleString('vi-VN'):'';});
-    descInput.addEventListener('input',function(){const p=this.selectionStart;this.value=removeDiacritics(this.value).toLowerCase();this.setSelectionRange(p,p);});
-
-    generateBtn.addEventListener('click',()=>{
-      if(!selectedBank){shake(bankBtn);showToast('Vui lòng chọn ngân hàng','warning');return;}
-      if(!accountInput.value.trim()){shake(accountInput);showToast('Vui lòng nhập số tài khoản','warning');accountInput.focus();return;}
-      if(!amountInput.value){shake(amountInput);showToast('Vui lòng nhập số tiền','warning');amountInput.focus();return;}
-      const bin=selectedBank.bin, acc=accountInput.value.trim(), amount=amountInput.value.replace(/\./g,''), name=encodeURIComponent(nameInput.value.trim()), desc=encodeURIComponent(descInput.value.trim());
-      const url=`https://img.vietqr.io/image/${bin}-${acc}-${window.qrStyle||'compact2'}.png?amount=${amount}&addInfo=${desc}&accountName=${name}`;
-      qrImg.onload=()=>{qrArea.classList.add('visible');qrArea.scrollIntoView({behavior:'smooth',block:'nearest'});showToast('Tạo QR thành công','success');};
-      qrImg.onerror=()=>showToast('Lỗi tạo QR, kiểm tra lại thông tin','error');
-      qrImg.src=url; qrArea.style.display='flex';
-    });
-
-    copyBtn.addEventListener('click',async()=>{
-      try{const res=await fetch(qrImg.src);const blob=await res.blob();await navigator.clipboard.write([new ClipboardItem({'image/png':blob})]);showToast('Đã sao chép ảnh QR','copy');}
-      catch{showToast('Không sao chép được, hãy nhấn giữ ảnh','warning');}
-    });
-
-    window.addEventListener('beforeunload',saveData);
-    localStorage.removeItem('qr_amount');
-    localStorage.removeItem('qr_desc');
+    function copyVal(id) {
+      const val = document.getElementById(id).textContent;
+      navigator.clipboard.writeText(val).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
+      });
+    }
   </script>
 
+  <div class="music-player" id="musicPlayer">
+    <div class="music-cover" id="musicCover"><i class="fa-solid fa-music"></i></div>
+    <div class="music-info">
+      <div class="music-title" id="musicTitle">Chưa có bài</div>
+      <div class="music-artist" id="musicArtist">—</div>
+    </div>
+    <div class="music-controls">
+      <button class="mc-btn" onclick="prevTrack()"><i class="fa-solid fa-backward-step"></i></button>
+      <button class="mc-btn play-btn" id="playBtn" onclick="togglePlay()"><i class="fa-solid fa-play" id="playIcon"></i></button>
+      <button class="mc-btn" onclick="nextTrack()"><i class="fa-solid fa-forward-step"></i></button>
+    </div>
+    <div class="music-bar"><div class="music-bar-fill" id="musicBarFill"></div></div>
+    <audio id="audioEl" preload="auto"></audio>
+
+  </div>
 </body>
 </html>
