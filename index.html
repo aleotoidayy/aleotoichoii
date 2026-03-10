@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 <head>
   <meta charset="UTF-8"/>
@@ -8,6 +9,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 
 body {
   background: #080808;
@@ -134,6 +136,7 @@ main {
   width: 22px; height: 22px;
   object-fit: contain;
   flex-shrink: 0;
+  margin-top: 4px;
 }
 
 .hero-meta {
@@ -166,7 +169,7 @@ main {
 
 .content {
   width: 100%;
-  max-width: 360px;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -273,6 +276,24 @@ main {
 .copy-btn:hover { color: #aaa; }
 .copy-btn.show { display: inline-flex; }
 
+.project-qr-btn {
+  background: none;
+  border: 1px solid #222;
+  border-radius: 6px;
+  padding: 5px 9px;
+  color: #555;
+  font-size: 0.65rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: 0.03em;
+}
+.project-qr-btn:hover { border-color: #444; color: #aaa; }
+
 .divider-wrap {
   display: flex;
   justify-content: center;
@@ -280,13 +301,13 @@ main {
 }
 .divider {
   width: 100%;
-  max-width: 360px;
+  max-width: 480px;
   height: 1px;
   background: #1a1a1a;
 }
 
 footer {
-  padding: 16px 32px 44px;
+  padding: 16px 32px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -325,17 +346,16 @@ footer {
   color: #555;
   letter-spacing: 0.06em;
   text-align: center;
+  padding: 16px 32px 44px;
 }
 
-.project-sub a, .project-sub span {
-  color: inherit;
-  text-decoration: none;
-}
+.project-sub a, .project-sub span { color: inherit; text-decoration: none; }
 .hidden-val { color: #888 !important; text-decoration: none !important; }
+
 .toast {
   position: fixed;
-  bottom: 32px; left: 50%;
-  transform: translateX(-50%) translateY(10px);
+  top: 32px; left: 50%;
+  transform: translateX(-50%) translateY(-10px);
   background: #1e1e1e;
   border: 1px solid #333;
   color: #aaa;
@@ -351,6 +371,163 @@ footer {
 .toast.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
+}
+
+.qr-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.qr-overlay.open {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.qr-modal {
+  background: #111;
+  border: 1px solid #222;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 260px;
+  transform: translateY(10px) scale(0.97);
+  transition: transform 0.25s cubic-bezier(0.22,1,0.36,1);
+}
+.qr-overlay.open .qr-modal {
+  transform: translateY(0) scale(1);
+}
+
+.qr-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.qr-modal-title {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.qr-modal-title img {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.qr-close {
+  background: none;
+  border: none;
+  color: #444;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 2px;
+}
+.qr-close:hover { color: #aaa; }
+
+.qr-img-wrap {
+  width: 190px; height: 190px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-img-wrap img { width: 100%; height: 100%; object-fit: contain; }
+
+.qr-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.qr-info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #161616;
+  border-radius: 7px;
+  padding: 7px 10px;
+}
+
+.qr-info-label {
+  font-size: 0.65rem;
+  color: #444;
+  letter-spacing: 0.05em;
+}
+
+.qr-info-val {
+  font-size: 0.72rem;
+  color: #ccc;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.qr-copy {
+  background: none;
+  border: none;
+  color: #444;
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  padding: 0;
+}
+.qr-copy:hover { color: #aaa; }
+
+@media (min-width: 768px) {
+  main { padding: 120px 48px 28px; }
+  .hero-name { font-size: 1.8rem; }
+  .avatar-wrapper { width: 170px; height: 170px; }
+  .avatar-circle { width: 170px; height: 170px; }
+  .avatar-frame { width: 230px; height: 230px; }
+  .content { max-width: 480px; }
+  .divider { max-width: 480px; }
+}
+
+@media (min-width: 1024px) {
+  main {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 140px 64px 40px;
+    gap: 64px;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+  .hero {
+    width: auto;
+    flex-shrink: 0;
+    position: sticky;
+    top: 140px;
+    align-self: flex-start;
+  }
+  .content { max-width: 420px; flex: 1; }
+  .divider-wrap { max-width: 1000px; margin: 0 auto; padding: 0 64px; }
+  .divider { max-width: 100%; }
+  footer { max-width: 1000px; margin: 0 auto; }
+  .copyright { max-width: 1000px; margin: 0 auto; width: 100%; }
 }
 
   </style>
@@ -424,6 +601,9 @@ footer {
             </button>
           </div>
         </div>
+        <button class="project-qr-btn" onclick="event.stopPropagation(); openQR()">
+          <i class="fa-solid fa-qrcode"></i> QR
+        </button>
       </div>
     </div>
   </section>
@@ -431,17 +611,49 @@ footer {
 
   </main>
 
-  <div class="divider-wrap"><div class="divider"></div></div>
-
   <footer>
     <div class="uptime-box">
       <div class="uptime-dot"></div>
       <span>Đã hoạt động <span id="ut-days">0</span> ngày <span id="ut-hours">0</span> giờ <span id="ut-mins">0</span> phút <span id="ut-secs">0</span> giây</span>
     </div>
-    <div class="copyright">© 2026 ThanhHoang. All rights reserved.</div>
   </footer>
 
-  <div class="toast" id="toast">Đã sao chép!</div>
+  <div class="divider-wrap"><div class="divider"></div></div>
+
+  <div class="copyright">© 2026 ThanhHoang. All rights reserved.</div>
+
+  <div class="qr-overlay" id="qrOverlay" onclick="closeQROutside(event)">
+    <div class="qr-modal" id="qrModal">
+      <div class="qr-modal-header">
+        <div class="qr-modal-title">
+          <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/af/9b/c0af9bc6-d304-6184-2e13-ffa41709bac8/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.jpg" alt="MB"/>
+          MB Bank
+        </div>
+        <button class="qr-close" onclick="closeQR()"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="qr-img-wrap">
+        <img src="/assets/pic/qr.png" alt="QR Code"/>
+      </div>
+      <div class="qr-info">
+        <div class="qr-info-row">
+          <span class="qr-info-label">STK</span>
+          <span class="qr-info-val">
+            178235
+            <button class="qr-copy" onclick="copyText('178235')"><i class="fa-regular fa-copy"></i></button>
+          </span>
+        </div>
+        <div class="qr-info-row">
+          <span class="qr-info-label">CTK</span>
+          <span class="qr-info-val">
+            NGUYEN THANH HOANG
+            <button class="qr-copy" onclick="copyText('NGUYEN THANH HOANG')"><i class="fa-regular fa-copy"></i></button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Đã sao chép</div>
 
   <script>
     const startTime = new Date('2026-03-01').getTime();
@@ -470,16 +682,37 @@ footer {
     }
 
     let toastTimer;
-    function copyVal(id) {
-      const val = document.getElementById(id).textContent;
-      navigator.clipboard.writeText(val).then(() => {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
-      });
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
     }
 
+    function copyVal(id) {
+      navigator.clipboard.writeText(document.getElementById(id).textContent).then(showToast);
+    }
+
+    function copyText(val) {
+      navigator.clipboard.writeText(val).then(showToast);
+    }
+
+    function openQR() {
+      document.getElementById('qrOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeQR() {
+      document.getElementById('qrOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function closeQROutside(e) {
+      if (e.target === document.getElementById('qrOverlay')) closeQR();
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeQR(); });
   </script>
+
 </body>
 </html>
