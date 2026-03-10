@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 <head>
   <meta charset="UTF-8"/>
@@ -9,7 +8,6 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 
 body {
   background: #080808;
@@ -87,16 +85,16 @@ main {
 
 .avatar-wrapper {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 110px;
+  height: 110px;
 }
 
 .avatar-frame {
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   object-fit: contain;
   z-index: 2;
   pointer-events: none;
@@ -109,13 +107,13 @@ main {
 }
 
 .avatar-circle {
-  width: 150px; height: 150px;
+  width: 110px; height: 110px;
   border-radius: 50%;
   overflow: hidden;
   position: relative; z-index: 1;
   border: 2px solid #222;
   background: #111;
-  margin-top: -12px;
+  margin-top: -8px;
 }
 .avatar-circle img { width:100%; height:100%; object-fit:cover; }
 
@@ -136,7 +134,7 @@ main {
   width: 22px; height: 22px;
   object-fit: contain;
   flex-shrink: 0;
-  margin-top: 4px;
+  margin-top: 8px;
 }
 
 .hero-meta {
@@ -293,6 +291,164 @@ main {
   letter-spacing: 0.03em;
 }
 .project-qr-btn:hover { border-color: #444; color: #aaa; }
+
+/* ── NOW PLAYING ── */
+.nowplaying-section {
+  width: 100%;
+  animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s both;
+}
+
+.np-card {
+  background: #111;
+  border: 1px solid #1e1e1e;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.2s;
+}
+.np-card:hover { border-color: #2a2a2a; }
+
+.np-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.np-cover {
+  width: 52px; height: 52px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #1a1a1a;
+  border: 1px solid #222;
+  position: relative;
+}
+.np-cover img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+.np-info { flex: 1; min-width: 0; }
+
+.np-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.np-artist {
+  font-size: 0.7rem;
+  color: #555;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.np-eq {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.np-eq span {
+  display: block;
+  width: 3px;
+  border-radius: 2px;
+  background: #fff;
+  opacity: 0.5;
+  transform-origin: bottom;
+}
+.np-eq.active span:nth-child(1) { animation: eq 0.8s 0.0s ease-in-out infinite alternate; }
+.np-eq.active span:nth-child(2) { animation: eq 0.8s 0.15s ease-in-out infinite alternate; }
+.np-eq.active span:nth-child(3) { animation: eq 0.8s 0.3s ease-in-out infinite alternate; }
+.np-eq span:nth-child(1) { height: 6px; }
+.np-eq span:nth-child(2) { height: 10px; }
+.np-eq span:nth-child(3) { height: 4px; }
+@keyframes eq {
+  from { height: 3px; opacity: 0.3; }
+  to   { height: 14px; opacity: 0.8; }
+}
+
+/* progress bar */
+.np-progress-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.np-progress {
+  width: 100%;
+  height: 3px;
+  background: #1e1e1e;
+  border-radius: 99px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.np-progress-fill {
+  height: 100%;
+  background: #fff;
+  border-radius: 99px;
+  width: 0%;
+  transition: width 0.3s linear;
+  pointer-events: none;
+}
+.np-progress:hover .np-progress-fill {
+  background: #ccc;
+}
+
+.np-times {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.62rem;
+  color: #3a3a3a;
+  letter-spacing: 0.03em;
+}
+
+/* controls */
+.np-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.np-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #555;
+  font-size: 0.85rem;
+  padding: 6px;
+  border-radius: 50%;
+  transition: color 0.2s, transform 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.np-btn:hover { color: #ccc; transform: scale(1.1); }
+.np-btn:active { transform: scale(0.92); }
+
+.np-btn-play {
+  background: #fff;
+  color: #000 !important;
+  width: 36px; height: 36px;
+  font-size: 0.8rem;
+  border-radius: 50%;
+  transition: background 0.2s, transform 0.15s;
+}
+.np-btn-play:hover { background: #ccc; transform: scale(1.08); }
+.np-btn-play:active { transform: scale(0.92); }
+
+/* ── END NOW PLAYING ── */
 
 .divider-wrap {
   display: flex;
@@ -499,37 +655,25 @@ footer {
 @media (min-width: 768px) {
   main { padding: 120px 48px 28px; }
   .hero-name { font-size: 1.8rem; }
-  .avatar-wrapper { width: 170px; height: 170px; }
-  .avatar-circle { width: 170px; height: 170px; }
-  .avatar-frame { width: 230px; height: 230px; }
+  .avatar-wrapper { width: 130px; height: 130px; }
+  .avatar-circle { width: 130px; height: 130px; }
+  .avatar-frame { width: 175px; height: 175px; }
   .content { max-width: 480px; }
   .divider { max-width: 480px; }
 }
 
 @media (min-width: 1024px) {
   main {
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 140px 64px 40px;
-    gap: 64px;
-    max-width: 1000px;
+    padding: 120px 32px 20px;
+    max-width: 480px;
     margin: 0 auto;
   }
-  .hero {
-    width: auto;
-    flex-shrink: 0;
-    position: sticky;
-    top: 140px;
-    align-self: flex-start;
-  }
-  .content { max-width: 420px; flex: 1; }
-  .divider-wrap { max-width: 1000px; margin: 0 auto; padding: 0 64px; }
+  .content { max-width: 480px; }
+  .divider-wrap { max-width: 480px; margin: 0 auto; padding: 0 32px; }
   .divider { max-width: 100%; }
-  footer { max-width: 1000px; margin: 0 auto; }
-  .copyright { max-width: 1000px; margin: 0 auto; width: 100%; }
+  footer { max-width: 480px; margin: 0 auto; }
+  .copyright { max-width: 480px; margin: 0 auto; width: 100%; }
 }
-
   </style>
 </head>
 <body>
@@ -555,60 +699,101 @@ footer {
         <img class="avatar-frame" src="/assets/pic/mong-vuot-rong.png" alt="frame" onerror="this.style.display='none'"/>
       </div>
 
-  <h1 class="hero-name">
-    Nguyễn Thanh Hoàng
-    <img src="/assets/pic/tick-xanh.png" alt="verified"/>
-  </h1>
+      <h1 class="hero-name">
+        Nguyễn Thanh Hoàng
+        <img src="/assets/pic/tick-xanh.png" alt="verified"/>
+      </h1>
 
-  <div class="hero-meta">
-    <div class="hero-location">
-      <i class="fa-solid fa-location-dot"></i>
-      <span>Hanoi / Vietnam</span>
-    </div>
-    <div class="hero-meta-dot"></div>
-    <a href="https://t.me/aleotoidayy" class="hero-tele" target="_blank">
-      <i class="fa-brands fa-telegram"></i>
-      <span>Telegram</span>
-    </a>
-  </div>
-</section>
-
-<div class="content">
-  <section class="about-section">
-    <div class="section-label">About Me</div>
-    <p class="about-text">báo đời</p>
-  </section>
-
-  <section class="projects-section">
-    <div class="section-label">Payment</div>
-    <div class="projects-list">
-      <div class="project-card" onclick="toggleReveal()">
-        <div class="project-icon-wrap">
-          <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/af/9b/c0af9bc6-d304-6184-2e13-ffa41709bac8/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.jpg" alt="MB Bank"/>
+      <div class="hero-meta">
+        <div class="hero-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <span>Hanoi / Vietnam</span>
         </div>
-        <div class="project-info">
-          <div class="project-name">MB Bank</div>
-          <div class="project-sub">
-            STK: <span class="hidden-val" id="stk">178235</span>
-            <button class="copy-btn" id="copy-stk" onclick="event.stopPropagation(); copyVal('stk')">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-          <div class="project-sub">
-            CTK: <span class="hidden-val" id="ctk">NGUYEN THANH HOANG</span>
-            <button class="copy-btn" id="copy-ctk" onclick="event.stopPropagation(); copyVal('ctk')">
-              <i class="fa-regular fa-copy"></i>
-            </button>
-          </div>
-        </div>
-        <button class="project-qr-btn" onclick="event.stopPropagation(); openQR()">
-          <i class="fa-solid fa-qrcode"></i> QR
-        </button>
+        <div class="hero-meta-dot"></div>
+        <a href="https://t.me/aleotoidayy" class="hero-tele" target="_blank">
+          <i class="fa-brands fa-telegram"></i>
+          <span>Telegram</span>
+        </a>
       </div>
-    </div>
-  </section>
-</div>
+    </section>
 
+    <div class="content">
+      <section class="about-section">
+        <div class="section-label">About Me</div>
+        <p class="about-text">báo đời</p>
+      </section>
+
+      <section class="projects-section">
+        <div class="section-label">Payment</div>
+        <div class="projects-list">
+          <div class="project-card" onclick="toggleReveal()">
+            <div class="project-icon-wrap">
+              <img src="https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/c0/af/9b/c0af9bc6-d304-6184-2e13-ffa41709bac8/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.jpg" alt="MB Bank"/>
+            </div>
+            <div class="project-info">
+              <div class="project-name">MB Bank</div>
+              <div class="project-sub">
+                STK: <span class="hidden-val" id="stk">178235</span>
+                <button class="copy-btn" id="copy-stk" onclick="event.stopPropagation(); copyVal('stk')">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+              <div class="project-sub">
+                CTK: <span class="hidden-val" id="ctk">NGUYEN THANH HOANG</span>
+                <button class="copy-btn" id="copy-ctk" onclick="event.stopPropagation(); copyVal('ctk')">
+                  <i class="fa-regular fa-copy"></i>
+                </button>
+              </div>
+            </div>
+            <button class="project-qr-btn" onclick="event.stopPropagation(); openQR()">
+              <i class="fa-solid fa-qrcode"></i> QR
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section class="nowplaying-section">
+        <div class="section-label">Now Playing</div>
+        <div class="np-card">
+          <div class="np-top">
+            <div class="np-cover" id="npCover">
+              <img id="npImg" src="/assets/pic/khongbuong.png" alt="cover"
+                   onerror="this.src='https://via.placeholder.com/52x52/111/333?text=♪'"/>
+            </div>
+            <div class="np-info">
+              <div class="np-title" id="npTitle">Không Buông</div>
+              <div class="np-artist" id="npArtist">Hngle ft. Ari</div>
+            </div>
+            <div class="np-eq" id="npEq">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+
+          <div class="np-progress-wrap">
+            <div class="np-progress" id="npProgressBar" onclick="seekAudio(event)">
+              <div class="np-progress-fill" id="npFill"></div>
+            </div>
+            <div class="np-times">
+              <span id="npCurrent">0:00</span>
+              <span id="npDuration">0:00</span>
+            </div>
+          </div>
+
+          <div class="np-controls">
+            <button class="np-btn" onclick="prevTrack()" title="Bài trước">
+              <i class="fa-solid fa-backward-step"></i>
+            </button>
+            <button class="np-btn np-btn-play" id="npPlayBtn" onclick="togglePlay()" title="Play/Pause">
+              <i class="fa-solid fa-play" id="npPlayIcon"></i>
+            </button>
+            <button class="np-btn" onclick="nextTrack()" title="Bài tiếp">
+              <i class="fa-solid fa-forward-step"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <footer>
@@ -619,7 +804,6 @@ footer {
   </footer>
 
   <div class="divider-wrap"><div class="divider"></div></div>
-
   <div class="copyright">© 2026 ThanhHoang. All rights reserved.</div>
 
   <div class="qr-overlay" id="qrOverlay" onclick="closeQROutside(event)">
@@ -688,31 +872,137 @@ footer {
       clearTimeout(toastTimer);
       toastTimer = setTimeout(() => toast.classList.remove('show'), 1800);
     }
-
     function copyVal(id) {
       navigator.clipboard.writeText(document.getElementById(id).textContent).then(showToast);
     }
-
     function copyText(val) {
       navigator.clipboard.writeText(val).then(showToast);
     }
-
     function openQR() {
       document.getElementById('qrOverlay').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
-
     function closeQR() {
       document.getElementById('qrOverlay').classList.remove('open');
       document.body.style.overflow = '';
     }
-
     function closeQROutside(e) {
       if (e.target === document.getElementById('qrOverlay')) closeQR();
     }
-
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeQR(); });
-  </script>
 
+    const playlist = [
+      {
+        title: "Không Buông",
+        artist: "Hngle ft. Ari",
+        src: "/assets/music/khongbuong.mp3",
+        cover: "/assets/pic/khongbuong.png"
+      },
+      {
+        title: "Khoan Thai",
+        artist: "Khải Đăng",
+        src: "/assets/music/khoanthai.mp3",
+        cover: "/assets/pic/khoanthai.png"
+      },
+      {
+        title: "2AM",
+        artist: "JustaTee ft. Big Daddy",
+        src: "/assets/music/2am.mp3",
+        cover: "/assets/pic/2am.png"
+      },
+      {
+        title: "Gió",
+        artist: "Jank",
+        src: "/assets/music/gio.mp3",
+        cover: "/assets/pic/gio.png"
+      },
+      {
+        title: "Ngày Mai Em Đi Mất",
+        artist: "Khải Đăng ft. Đạt G",
+        src: "/assets/music/ngaymaiemdimat.mp3",
+        cover: "/assets/pic/ngaymaiemdimat.png"
+      },
+    ];
+
+    let currentIndex = 0;
+    let isPlaying = false;
+    const audio = new Audio();
+
+    function loadTrack(index) {
+      const track = playlist[index];
+      audio.src = track.src;
+      document.getElementById('npTitle').textContent  = track.title;
+      document.getElementById('npArtist').textContent = track.artist;
+      document.getElementById('npImg').src = track.cover;
+      document.getElementById('npFill').style.width = '0%';
+      document.getElementById('npCurrent').textContent = '0:00';
+      document.getElementById('npDuration').textContent = '0:00';
+    }
+
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.play().catch(() => {});
+      }
+    }
+
+    function prevTrack() {
+      currentIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      loadTrack(currentIndex);
+      audio.play().catch(() => {});
+    }
+
+    function nextTrack() {
+      currentIndex = (currentIndex + 1) % playlist.length;
+      loadTrack(currentIndex);
+      audio.play().catch(() => {});
+    }
+
+    function seekAudio(e) {
+      if (!audio.duration) return;
+      const bar = document.getElementById('npProgressBar');
+      const rect = bar.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      audio.currentTime = ratio * audio.duration;
+    }
+
+    function fmtTime(s) {
+      if (isNaN(s)) return '0:00';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return `${m}:${sec.toString().padStart(2,'0')}`;
+    }
+
+    audio.addEventListener('play', () => {
+      isPlaying = true;
+      document.getElementById('npPlayIcon').className = 'fa-solid fa-pause';
+      document.getElementById('npEq').classList.add('active');
+    });
+
+    audio.addEventListener('pause', () => {
+      isPlaying = false;
+      document.getElementById('npPlayIcon').className = 'fa-solid fa-play';
+      document.getElementById('npEq').classList.remove('active');
+    });
+
+    audio.addEventListener('timeupdate', () => {
+      if (!audio.duration) return;
+      const pct = (audio.currentTime / audio.duration) * 100;
+      document.getElementById('npFill').style.width = pct + '%';
+      document.getElementById('npCurrent').textContent = fmtTime(audio.currentTime);
+    });
+
+    audio.addEventListener('loadedmetadata', () => {
+      document.getElementById('npDuration').textContent = fmtTime(audio.duration);
+    });
+
+    audio.addEventListener('ended', () => {
+      nextTrack();
+    });
+
+    loadTrack(currentIndex);
+    
+  </script>
 </body>
 </html>
