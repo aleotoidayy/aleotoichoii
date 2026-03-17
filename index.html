@@ -996,7 +996,7 @@
   <div class="toast" id="toast">Đã sao chép</div>
 
   <script>
-    const startTime = new Date('2026-03-01').getTime();
+    const startTime = new Date('2026-03-01T00:00:00+07:00').getTime();
     function updateUptime() {
       const e = Math.floor((Date.now() - startTime) / 1000);
       document.getElementById('ut-days').textContent  = Math.floor(e / 86400);
