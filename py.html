@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Python Obfuscator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0d0f14;--surface:#13161e;--surface2:#1a1e28;--border:#2a2f3f;
+    --accent:#7c6af7;--accent2:#a78bfa;--green:#4ade80;--red:#f87171;
+    --text:#e2e8f0;--muted:#64748b;
+    --font-code:'JetBrains Mono',monospace;
+    --font-ui:'Sora',sans-serif;
+  }
+  html,body{height:100%}
+  body{
+    font-family:var(--font-ui);
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+  }
+
+  /* ── HEADER ── */
+  .header{
+    text-align:center;
+    padding:40px 20px 28px;
+    border-bottom:1px solid var(--border);
+    background:linear-gradient(180deg,#12102a 0%,var(--bg) 100%);
+  }
+  .header h1{
+    font-size:32px;font-weight:700;letter-spacing:-1px;
+    background:linear-gradient(135deg,#a78bfa 0%,#7c6af7 50%,#60a5fa 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  }
+  .header p{
+    font-size:13px;color:var(--muted);
+    margin-top:8px;font-family:var(--font-code);
+    letter-spacing:0.5px;
+  }
+  .badge-row{
+    display:flex;flex-wrap:wrap;gap:6px;
+    justify-content:center;margin-top:16px;
+  }
+  .badge{
+    font-size:11px;font-family:var(--font-code);
+    padding:3px 10px;border-radius:4px;
+    background:#1e1b40;color:#a78bfa;
+    border:1px solid #3730a3;
+  }
+
+  /* ── MAIN ── */
+  .main{
+    max-width:1200px;margin:0 auto;
+    padding:28px 24px 40px;
+  }
+
+  /* ── EDITORS ── */
+  .editors{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  @media(max-width:768px){
+    .editors{grid-template-columns:1fr}
+  }
+
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .panel-header{
+    display:flex;align-items:center;
+    justify-content:space-between;
+    padding:10px 16px;
+    background:var(--surface2);
+    border-bottom:1px solid var(--border);
+    flex-shrink:0;
+  }
+  .panel-title{
+    font-size:12px;font-weight:600;
+    font-family:var(--font-code);
+    color:var(--muted);letter-spacing:1px;
+  }
+  .panel-actions{display:flex;gap:6px}
+  .icon-btn{
+    background:none;
+    border:1px solid var(--border);
+    border-radius:5px;padding:4px 10px;
+    cursor:pointer;font-size:11px;
+    color:var(--muted);
+    font-family:var(--font-code);
+    transition:all 0.15s;
+  }
+  .icon-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+
+  textarea{
+    width:100%;flex:1;
+    background:transparent;
+    border:none;outline:none;
+    font-family:var(--font-code);
+    font-size:13px;line-height:1.7;
+    color:var(--text);
+    padding:16px;resize:none;
+    height:340px;tab-size:4;
+  }
+  textarea::placeholder{color:var(--muted)}
+  textarea::-webkit-scrollbar{width:6px}
+  textarea::-webkit-scrollbar-track{background:transparent}
+  textarea::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+  .output-area{
+    font-family:var(--font-code);
+    font-size:13px;line-height:1.7;
+    color:var(--text);
+    padding:16px;height:340px;
+    overflow-y:auto;
+    white-space:pre-wrap;word-break:break-all;
+    flex:1;
+  }
+  .output-area::-webkit-scrollbar{width:6px}
+  .output-area::-webkit-scrollbar-track{background:transparent}
+  .output-area::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+  .output-placeholder{color:var(--muted);font-style:italic}
+
+  /* ── BUTTON ── */
+  .obf-btn{
+    width:100%;margin-top:16px;
+    padding:14px;border-radius:10px;
+    border:none;cursor:pointer;
+    font-family:var(--font-ui);
+    font-size:15px;font-weight:600;
+    letter-spacing:0.3px;
+    background:linear-gradient(135deg,#7c6af7,#6d5ce7);
+    color:#fff;
+    transition:all 0.2s;
+    position:relative;overflow:hidden;
+  }
+  .obf-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 24px rgba(124,106,247,0.4);
+  }
+  .obf-btn:active{transform:scale(0.99)}
+  .obf-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none}
+  .obf-btn.loading::after{
+    content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,0.15),transparent);
+    animation:shimmer 1s infinite;
+  }
+  @keyframes shimmer{to{left:100%}}
+
+  /* ── STATUS ── */
+  .status-bar{
+    display:none;align-items:center;gap:10px;
+    margin-top:12px;padding:10px 14px;
+    border-radius:8px;font-size:12px;
+    font-family:var(--font-code);
+  }
+  .status-bar.success{background:#052e16;border:1px solid #166534;color:var(--green)}
+  .status-bar.error{background:#2d0a0a;border:1px solid #7f1d1d;color:var(--red)}
+  .status-bar.info{background:#0c0a2e;border:1px solid #3730a3;color:#a78bfa}
+
+  /* ── STATS ── */
+  .stats{
+    display:none;flex-wrap:wrap;gap:20px;
+    margin-top:12px;padding:12px 16px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:8px;
+  }
+  .stat{font-size:12px;font-family:var(--font-code);color:var(--muted)}
+  .stat span{color:var(--accent2);font-weight:600}
+
+  .dot-blink{animation:blink 1s step-end infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+  /* ── FOOTER ── */
+  .footer{
+    text-align:center;padding:20px;
+    font-size:11px;font-family:var(--font-code);
+    color:var(--muted);
+    border-top:1px solid var(--border);
+    margin-top:20px;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>// Python Obfuscator</h1>
+  <p>AES-256-CBC &nbsp;·&nbsp; AST-Level &nbsp;·&nbsp; XOR Split Key &nbsp;·&nbsp; Control Flow Flattening</p>
+  <div class="badge-row" id="badges"></div>
+</div>
+
+<div class="main">
+  <div class="editors">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">INPUT.py</span>
+        <div class="panel-actions">
+          <button class="icon-btn" onclick="clearInput()">clear</button>
+          <button class="icon-btn" onclick="loadSample()">sample</button>
+        </div>
+      </div>
+      <textarea id="input" placeholder="# Dán code Python vào đây...
+def hello(name):
+    print(f'Hello, {name}!')
+
+hello('World')"></textarea>
+    </div>
+
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">OUTPUT.py</span>
+        <div class="panel-actions">
+          <button class="icon-btn" id="copy-btn" onclick="copyOutput()">copy</button>
+          <button class="icon-btn" onclick="downloadOutput()">download</button>
+        </div>
+      </div>
+      <div class="output-area" id="output">
+        <span class="output-placeholder">// Output obfuscated sẽ hiện ở đây...</span>
+      </div>
+    </div>
+  </div>
+
+  <button class="obf-btn" id="obf-btn" onclick="runObfuscate()">⬡ &nbsp;Obfuscate Code</button>
+
+  <div id="status-bar" class="status-bar"></div>
+
+  <div class="stats" id="stats">
+    <div class="stat">time: <span id="stat-time">-</span></div>
+    <div class="stat">input: <span id="stat-in">-</span></div>
+    <div class="stat">output: <span id="stat-out">-</span></div>
+    <div class="stat">ratio: <span id="stat-ratio">-</span></div>
+    <div class="stat">obfuscated at: <span id="stat-at">-</span></div>
+  </div>
+
+  <div class="footer">python-obfuscator · api by aleotoiday · powered by AES-256-CBC + AST transform</div>
+</div>
+
+<script>
+const features = [
+  'AES-256-CBC Encryption', 'Per-String Random IV', 'XOR-Split Key Storage',
+  'AST-Level Obfuscation', 'Local Variable Renaming', 'Safe Control-Flow Flattening',
+  'Encrypted Runtime Loader', 'Auto-Rebuild per Python Version', 'Cross-Platform Support',
+  'Clean Failure Handling', 'VT-Friendly (Research)', 'Vietnam Timezone Support'
+];
+const badgeEl = document.getElementById('badges');
+features.forEach(f => {
+  const b = document.createElement('span');
+  b.className = 'badge'; b.textContent = f;
+  badgeEl.appendChild(b);
+});
+
+function clearInput() { document.getElementById('input').value = ''; }
+
+function loadSample() {
+  document.getElementById('input').value =
+`def fibonacci(n):
+    if n <= 1:
+        return n
+    a, b = 0, 1
+    secret_key = "my_api_key_12345"
+    for i in range(2, n + 1):
+        a, b = b, a + b
+    return b
+
+class Calculator:
+    def __init__(self):
+        self.history = []
+
+    def add(self, x, y):
+        result = x + y
+        self.history.append(f"{x} + {y} = {result}")
+        return result
+
+calc = Calculator()
+print(calc.add(fibonacci(10), 42))`;
+}
+
+let outputText = '';
+
+async function runObfuscate() {
+  const code = document.getElementById('input').value.trim();
+  if (!code) { showStatus('error', 'Vui lòng nhập code Python!'); return; }
+
+  const btn = document.getElementById('obf-btn');
+  btn.disabled = true;
+  btn.classList.add('loading');
+  btn.textContent = '⬡  Đang obfuscate...';
+
+  const outEl = document.getElementById('output');
+  outEl.innerHTML = '<span class="output-placeholder"><span class="dot-blink">▌</span> Đang xử lý, vui lòng chờ...</span>';
+  showStatus('info', 'Connecting to obfuscation API...');
+  document.getElementById('stats').style.display = 'none';
+
+  const t0 = performance.now();
+  try {
+    const res = await fetch('https://api-obfuscation-py.vercel.app/api/python/obfuscate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ code })
+    });
+    const data = await res.json();
+    const elapsed = ((performance.now() - t0) / 1000).toFixed(2);
+
+    if (data.success) {
+      outputText = data.code;
+      outEl.textContent = data.code;
+      showStatus('success', `✓ Obfuscate thành công trong ${data.execution_time || elapsed + 's'}`);
+
+      const inLen = code.length, outLen = data.code.length;
+      document.getElementById('stat-time').textContent = data.execution_time || elapsed + 's';
+      document.getElementById('stat-in').textContent = fmtBytes(inLen);
+      document.getElementById('stat-out').textContent = fmtBytes(outLen);
+      document.getElementById('stat-ratio').textContent = (outLen / inLen).toFixed(1) + 'x';
+      document.getElementById('stat-at').textContent = data.obfuscate_at || '-';
+      document.getElementById('stats').style.display = 'flex';
+    } else {
+      outEl.innerHTML = '<span class="output-placeholder">// Lỗi xảy ra...</span>';
+      showStatus('error', '✗ ' + data.error);
+    }
+  } catch (e) {
+    outEl.innerHTML = '<span class="output-placeholder">// Không thể kết nối API</span>';
+    showStatus('error', '✗ Không thể kết nối: ' + e.message);
+  }
+
+  btn.disabled = false;
+  btn.classList.remove('loading');
+  btn.textContent = '⬡  Obfuscate Code';
+}
+
+function fmtBytes(n) { return n < 1024 ? n + ' B' : (n / 1024).toFixed(1) + ' KB'; }
+
+function showStatus(type, msg) {
+  const el = document.getElementById('status-bar');
+  el.className = 'status-bar ' + type;
+  el.textContent = msg;
+  el.style.display = 'flex';
+}
+
+function copyOutput() {
+  if (!outputText) return;
+  navigator.clipboard.writeText(outputText).then(() => {
+    const btn = document.getElementById('copy-btn');
+    btn.textContent = 'copied!';
+    setTimeout(() => btn.textContent = 'copy', 1500);
+  });
+}
+
+function downloadOutput() {
+  if (!outputText) return;
+  const a = document.createElement('a');
+  a.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(outputText);
+  a.download = 'obfuscated.py';
+  a.click();
+}
+</script>
+</body>
+</html>
