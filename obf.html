@@ -8,434 +8,115 @@
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-
 :root{
-  --bg:#0a0a0a;
-  --bg2:#111111;
-  --glass:rgba(255,255,255,0.04);
-  --glass2:rgba(255,255,255,0.07);
-  --glass3:rgba(255,255,255,0.10);
-  --border:rgba(255,255,255,0.09);
-  --border2:rgba(255,255,255,0.15);
-  --border3:rgba(255,255,255,0.22);
-  --text:#f8f8f8;
-  --sub:#888;
-  --sub2:#555;
-  --white-glow:rgba(255,255,255,0.85);
+  --bg:#0a0a0a;--border:rgba(255,255,255,0.09);--border2:rgba(255,255,255,0.15);--text:#f8f8f8;
 }
-
 body{
-  font-family:'Outfit',sans-serif;
-  font-weight:300;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  padding:80px 20px 60px;
-  position:relative;
-  overflow-x:hidden;
+  font-family:'Outfit',sans-serif;font-weight:300;background:var(--bg);color:var(--text);
+  min-height:100vh;padding:20px 20px 60px;position:relative;overflow-x:hidden;
 }
-
-nav{
-  position:fixed;
-  top:0;left:0;right:0;
-  padding:20px 32px;
-  z-index:100;
-  transition:opacity 0.35s ease,transform 0.35s ease;
-}
-nav.hidden{opacity:0;pointer-events:none;transform:translateY(-8px);}
-
-.nav-logo{
-  font-family:'Outfit',sans-serif;
-  font-weight:700;
-  font-size:0.82rem;
-  letter-spacing:0.05em;
-  color:#fff;
-  text-decoration:none;
-  position:relative;
-  display:inline-block;
-  padding:4px 0;
-}
-
-.star{
-  position:absolute;
-  opacity:0;
-  color:white;
-  font-size:6px;
-  animation:starBlink var(--d,2s) var(--delay,0s) ease-in-out infinite;
-  pointer-events:none;
-  line-height:1;
-  will-change:transform,opacity;
-}
-.star.top{top:-5px;}
-.star.bot{bottom:-5px;}
-
-@keyframes starBlink{
-  0%,100%{opacity:0;transform:scale(0.3);}
-  50%{opacity:0.8;transform:scale(1);}
-}
-
 body::before{
-  content:'';
-  position:fixed;
-  inset:0;
-  background:
-    radial-gradient(ellipse 60% 40% at 20% 0%, rgba(255,255,255,0.03) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 80% 100%, rgba(255,255,255,0.02) 0%, transparent 60%);
-  pointer-events:none;
-  z-index:0;
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 60% 40% at 20% 0%,rgba(255,255,255,0.03) 0%,transparent 70%),radial-gradient(ellipse 40% 30% at 80% 100%,rgba(255,255,255,0.02) 0%,transparent 60%);
+  pointer-events:none;z-index:0;
 }
-
 .toast{
-  position:fixed;top:24px;left:50%;
-  transform:translateX(-50%) translateY(-80px);
-  background:rgba(18,18,18,0.95);
-  backdrop-filter:blur(24px) saturate(1.8);
-  -webkit-backdrop-filter:blur(24px) saturate(1.8);
-  border:1px solid var(--border2);
-  color:#fff;padding:12px 22px;
-  border-radius:50px;font-size:13px;font-weight:500;
-  opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);
-  pointer-events:none;white-space:nowrap;z-index:9999;
+  position:fixed;top:24px;left:50%;transform:translateX(-50%) translateY(-80px);
+  background:rgba(18,18,18,0.95);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);
+  border:1px solid var(--border2);color:#fff;padding:12px 22px;border-radius:50px;font-size:13px;font-weight:500;
+  opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);pointer-events:none;white-space:nowrap;z-index:9999;
   box-shadow:0 0 0 1px rgba(255,255,255,0.05),0 20px 60px rgba(0,0,0,0.6);
-  display:flex;align-items:center;gap:8px;
-  font-family:'Outfit',sans-serif;
+  display:flex;align-items:center;gap:8px;font-family:'Outfit',sans-serif;
 }
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 .toast-icon{width:16px;height:16px;flex-shrink:0;}
 .toast-icon svg{width:16px;height:16px;}
-
 .container{max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:16px;position:relative;z-index:1;}
-
-.header{text-align:center;padding:20px 0 28px;}
-.header h1{
-  font-size:clamp(2.2rem,5vw,3.8rem);
-  font-weight:800;
-  letter-spacing:-2px;
-  line-height:1;
-  font-family:'Outfit',sans-serif;
-  color:transparent;
-  -webkit-text-stroke:1px rgba(255,255,255,0.9);
-  text-shadow:
-    0 0 40px rgba(255,255,255,0.4),
-    0 0 80px rgba(255,255,255,0.15),
-    0 0 120px rgba(255,255,255,0.08);
-  margin-bottom:0;
-  background:
-    linear-gradient(135deg,
-      #fff 0%,
-      rgba(255,255,255,0.7) 40%,
-      rgba(255,255,255,0.9) 60%,
-      #fff 100%);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-  background-clip:text;
-  filter:drop-shadow(0 0 30px rgba(255,255,255,0.3));
-}
-
 .glass{
-  background:
-    linear-gradient(135deg,
-      rgba(255,255,255,0.08) 0%,
-      rgba(255,255,255,0.03) 40%,
-      rgba(255,255,255,0.06) 100%);
-  backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);
-  -webkit-backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);
-  border:1px solid var(--border2);
-  border-top:1px solid rgba(255,255,255,0.2);
-  border-left:1px solid rgba(255,255,255,0.12);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.03),
-    inset 0 1px 0 rgba(255,255,255,0.12),
-    inset 0 -1px 0 rgba(0,0,0,0.3),
-    0 8px 32px rgba(0,0,0,0.4),
-    0 2px 8px rgba(0,0,0,0.3);
-  border-radius:20px;
-  padding:24px;
-  transition:box-shadow .3s ease,border-color .3s ease;
-  position:relative;
-  overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,0.08) 0%,rgba(255,255,255,0.03) 40%,rgba(255,255,255,0.06) 100%);
+  backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);-webkit-backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);
+  border:1px solid var(--border2);border-top:1px solid rgba(255,255,255,0.2);border-left:1px solid rgba(255,255,255,0.12);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.03),inset 0 1px 0 rgba(255,255,255,0.12),inset 0 -1px 0 rgba(0,0,0,0.3),0 8px 32px rgba(0,0,0,0.4),0 2px 8px rgba(0,0,0,0.3);
+  border-radius:20px;padding:24px;transition:box-shadow .3s ease,border-color .3s ease;position:relative;overflow:hidden;
 }
-
 .glass::before{
-  content:'';
-  position:absolute;
-  top:0;left:0;right:0;
-  height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),rgba(255,255,255,0.1),transparent);
-  pointer-events:none;
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.25),rgba(255,255,255,0.1),transparent);pointer-events:none;
 }
-
 .glass:hover{
   border-color:rgba(255,255,255,0.2);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.05),
-    inset 0 1px 0 rgba(255,255,255,0.16),
-    inset 0 -1px 0 rgba(0,0,0,0.3),
-    0 16px 48px rgba(0,0,0,0.5),
-    0 4px 12px rgba(0,0,0,0.3);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.05),inset 0 1px 0 rgba(255,255,255,0.16),inset 0 -1px 0 rgba(0,0,0,0.3),0 16px 48px rgba(0,0,0,0.5),0 4px 12px rgba(0,0,0,0.3);
 }
-
-.panel-header{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-bottom:20px;padding-bottom:16px;
-  border-bottom:1px solid var(--border);
-}
+.panel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--border);}
 .panel-title{display:flex;align-items:center;gap:10px;}
-.panel-title-icon{
-  font-size:1.1rem;color:rgba(255,255,255,0.7);
-  background:rgba(255,255,255,0.07);
-  backdrop-filter:blur(8px);
-  padding:7px;border-radius:10px;
-  border:1px solid var(--border2);
-  display:flex;align-items:center;justify-content:center;
-}
+.panel-title-icon{font-size:1.1rem;color:rgba(255,255,255,0.7);background:rgba(255,255,255,0.07);backdrop-filter:blur(8px);padding:7px;border-radius:10px;border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;}
 .panel-header h2{font-size:1rem;font-weight:600;color:rgba(255,255,255,0.85);letter-spacing:-.3px;font-family:'Outfit',sans-serif;}
 .panel-actions{display:flex;gap:8px;flex-wrap:wrap;}
-
 .options-section{
   background:linear-gradient(135deg,rgba(255,255,255,0.06) 0%,rgba(255,255,255,0.02) 50%,rgba(255,255,255,0.05) 100%);
-  backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);
-  -webkit-backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);
-  border:1px solid var(--border2);
-  border-top:1px solid rgba(255,255,255,0.18);
+  backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);-webkit-backdrop-filter:blur(40px) saturate(1.5) brightness(1.05);
+  border:1px solid var(--border2);border-top:1px solid rgba(255,255,255,0.18);
   box-shadow:inset 0 1px 0 rgba(255,255,255,0.1),0 8px 32px rgba(0,0,0,0.4);
-  border-radius:20px;padding:24px;
-  position:relative;overflow:hidden;
+  border-radius:20px;padding:24px;position:relative;overflow:hidden;
 }
-.options-section::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);
-  pointer-events:none;
-}
-
+.options-section::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);pointer-events:none;}
 .options-title{font-size:.85rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:16px;display:flex;align-items:center;gap:8px;letter-spacing:.08em;text-transform:uppercase;font-family:'Outfit',sans-serif;}
 .options-title i{font-size:1rem;color:rgba(255,255,255,0.4);}
-
-.horizontal-row{
-  display:flex;flex-wrap:wrap;gap:10px;
-  padding:14px;
-  background:rgba(255,255,255,0.03);
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,0.07);
-  margin-bottom:10px;
-}
+.horizontal-row{display:flex;flex-wrap:wrap;gap:10px;padding:14px;background:rgba(255,255,255,0.03);border-radius:14px;border:1px solid rgba(255,255,255,0.07);margin-bottom:10px;}
 .horizontal-row:last-child{margin-bottom:0;}
-
 .option-row{flex:1;min-width:180px;max-width:260px;padding:4px 12px 4px 0;border-right:1px solid rgba(255,255,255,0.06);}
 .option-row:last-child{border-right:none;padding-right:0;}
-
-.option-label{
-  display:flex;align-items:center;gap:8px;
-  font-size:.8rem;font-weight:500;
-  color:rgba(255,255,255,0.6);cursor:pointer;
-  user-select:none;padding:2px 0;
-  transition:color .15s ease;
-  font-family:'Outfit',sans-serif;
-  -webkit-tap-highlight-color:transparent;
-}
+.option-label{display:flex;align-items:center;gap:8px;font-size:.8rem;font-weight:500;color:rgba(255,255,255,0.6);cursor:pointer;user-select:none;padding:2px 0;transition:color .15s ease;font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent;}
 .option-label:hover{color:rgba(255,255,255,0.9);}
 .option-label i{font-size:.9rem;color:rgba(255,255,255,0.3);min-width:20px;text-align:center;transition:color .15s;}
 .option-label:hover i{color:rgba(255,255,255,0.6);}
-
 .option-control{display:flex;align-items:center;margin-top:6px;}
-
-.btn-small{
-  display:flex;align-items:center;gap:6px;
-  padding:7px 13px;font-size:.78rem;font-weight:500;
-  border-radius:10px;cursor:pointer;
-  transition:all .2s cubic-bezier(.34,1.4,.64,1);
-  background:rgba(255,255,255,0.06);
-  backdrop-filter:blur(8px);
-  color:rgba(255,255,255,0.6);
-  border:1px solid rgba(255,255,255,0.1);
-  font-family:'Outfit',sans-serif;
-  -webkit-tap-highlight-color:transparent;
-}
+.btn-small{display:flex;align-items:center;gap:6px;padding:7px 13px;font-size:.78rem;font-weight:500;border-radius:10px;cursor:pointer;transition:all .2s cubic-bezier(.34,1.4,.64,1);background:rgba(255,255,255,0.06);backdrop-filter:blur(8px);color:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.1);font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent;}
 .btn-small:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.2);transform:translateY(-1px);}
-
-.code-editor{
-  width:100%;min-height:180px;max-height:400px;
-  background:rgba(0,0,0,0.35);
-  backdrop-filter:blur(8px);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:14px;padding:16px;
-  font-family:'Courier New',monospace;
-  font-size:13px;color:rgba(255,255,255,0.85);
-  resize:vertical;line-height:1.65;
-  transition:all .25s ease;
-  box-shadow:inset 0 2px 8px rgba(0,0,0,0.4);
-  outline:none;
-}
-.code-editor:focus{
-  background:rgba(0,0,0,0.45);
-  border-color:rgba(255,255,255,0.18);
-  box-shadow:0 0 0 3px rgba(255,255,255,0.04),inset 0 2px 8px rgba(0,0,0,0.5);
-}
+.code-editor{width:100%;min-height:180px;max-height:400px;background:rgba(0,0,0,0.35);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;font-family:'Courier New',monospace;font-size:13px;color:rgba(255,255,255,0.85);resize:vertical;line-height:1.65;transition:all .25s ease;box-shadow:inset 0 2px 8px rgba(0,0,0,0.4);outline:none;}
+.code-editor:focus{background:rgba(0,0,0,0.45);border-color:rgba(255,255,255,0.18);box-shadow:0 0 0 3px rgba(255,255,255,0.04),inset 0 2px 8px rgba(0,0,0,0.5);}
 .code-editor::placeholder{color:rgba(255,255,255,0.2);font-style:italic;}
-
-select{
-  background:rgba(0,0,0,0.4);
-  backdrop-filter:blur(8px);
-  color:rgba(255,255,255,0.75);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:10px;padding:7px 11px;
-  font-size:.78rem;font-weight:500;min-width:120px;
-  cursor:pointer;transition:all .2s ease;
-  font-family:'Outfit',sans-serif;outline:none;
-  appearance:none;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.3)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat;
-  background-position:right 10px center;
-  padding-right:28px;
-}
+select{background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:7px 11px;font-size:.78rem;font-weight:500;min-width:120px;cursor:pointer;transition:all .2s ease;font-family:'Outfit',sans-serif;outline:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='rgba(255,255,255,0.3)' d='M6 8L0 0h12z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;}
 select option{background:#1a1a1a;color:#fff;}
 select:focus{border-color:rgba(255,255,255,0.22);background-color:rgba(0,0,0,0.55);}
-
-.checkbox{
-  position:relative;width:44px;height:24px;
-  background:rgba(255,255,255,0.06);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:12px;cursor:pointer;
-  transition:all .3s cubic-bezier(.34,1.4,.64,1);
-  box-shadow:inset 0 2px 4px rgba(0,0,0,0.3);flex-shrink:0;
-  -webkit-tap-highlight-color:transparent;
-}
-.checkbox.checked{
-  background:linear-gradient(135deg,rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.15) 100%);
-  border-color:rgba(255,255,255,0.35);
-  box-shadow:0 0 12px rgba(255,255,255,0.12),inset 0 1px 0 rgba(255,255,255,0.2);
-}
-.checkbox::after{
-  content:'';position:absolute;top:2px;left:2px;
-  width:18px;height:18px;background:white;
-  border-radius:50%;transition:transform .3s cubic-bezier(.34,1.56,.64,1);
-  box-shadow:0 2px 6px rgba(0,0,0,0.4);
-  opacity:0.3;
-}
+.checkbox{position:relative;width:44px;height:24px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:12px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.4,.64,1);box-shadow:inset 0 2px 4px rgba(0,0,0,0.3);flex-shrink:0;-webkit-tap-highlight-color:transparent;}
+.checkbox.checked{background:linear-gradient(135deg,rgba(255,255,255,0.25) 0%,rgba(255,255,255,0.15) 100%);border-color:rgba(255,255,255,0.35);box-shadow:0 0 12px rgba(255,255,255,0.12),inset 0 1px 0 rgba(255,255,255,0.2);}
+.checkbox::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;background:white;border-radius:50%;transition:transform .3s cubic-bezier(.34,1.56,.64,1);box-shadow:0 2px 6px rgba(0,0,0,0.4);opacity:0.3;}
 .checkbox.checked::after{transform:translateX(20px);opacity:1;}
-
-input[type="text"]{
-  background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);
-  color:rgba(255,255,255,0.75);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:10px;padding:7px 11px;
-  font-size:.78rem;width:100%;
-  transition:all .2s ease;
-  font-family:'Outfit',sans-serif;outline:none;
-}
+input[type="text"]{background:rgba(0,0,0,0.4);backdrop-filter:blur(8px);color:rgba(255,255,255,0.75);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:7px 11px;font-size:.78rem;width:100%;transition:all .2s ease;font-family:'Outfit',sans-serif;outline:none;}
 input[type="text"]:focus{border-color:rgba(255,255,255,0.22);}
 input[type="text"]::placeholder{color:rgba(255,255,255,0.18);}
-
 .actions{display:flex;justify-content:center;gap:14px;padding:8px 0;}
-
-.btn{
-  display:flex;align-items:center;gap:9px;
-  padding:14px 32px;font-size:.95rem;font-weight:600;
-  border-radius:16px;cursor:pointer;
-  transition:all .3s cubic-bezier(.34,1.4,.64,1);
-  min-width:170px;justify-content:center;
-  font-family:'Outfit',sans-serif;
-  -webkit-tap-highlight-color:transparent;
-}
-
-.btn-primary{
-  background:linear-gradient(135deg,rgba(255,255,255,0.92) 0%,rgba(255,255,255,0.82) 100%);
-  color:#0a0a0a;border:1px solid rgba(255,255,255,0.4);
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.1),
-    inset 0 1px 0 rgba(255,255,255,1),
-    0 8px 24px rgba(255,255,255,0.12),
-    0 4px 12px rgba(0,0,0,0.4);
-  text-shadow:none;
-}
-.btn-primary:hover{
-  background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.9) 100%);
-  transform:translateY(-2px) scale(1.02);
-  box-shadow:0 0 0 1px rgba(255,255,255,0.2),inset 0 1px 0 #fff,0 16px 40px rgba(255,255,255,0.2),0 6px 16px rgba(0,0,0,0.5);
-}
-
-.btn-secondary{
-  background:rgba(255,255,255,0.06);
-  color:rgba(255,255,255,0.7);
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 4px 12px rgba(0,0,0,0.3);
-}
-.btn-secondary:hover{
-  background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.95);
-  border-color:rgba(255,255,255,0.2);
-  transform:translateY(-2px);
-}
+.btn{display:flex;align-items:center;gap:9px;padding:14px 32px;font-size:.95rem;font-weight:600;border-radius:16px;cursor:pointer;transition:all .3s cubic-bezier(.34,1.4,.64,1);min-width:170px;justify-content:center;font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent;}
+.btn-primary{background:linear-gradient(135deg,rgba(255,255,255,0.92) 0%,rgba(255,255,255,0.82) 100%);color:#0a0a0a;border:1px solid rgba(255,255,255,0.4);box-shadow:0 0 0 1px rgba(255,255,255,0.1),inset 0 1px 0 rgba(255,255,255,1),0 8px 24px rgba(255,255,255,0.12),0 4px 12px rgba(0,0,0,0.4);}
+.btn-primary:hover{background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.9) 100%);transform:translateY(-2px) scale(1.02);box-shadow:0 0 0 1px rgba(255,255,255,0.2),inset 0 1px 0 #fff,0 16px 40px rgba(255,255,255,0.2),0 6px 16px rgba(0,0,0,0.5);}
+.btn-secondary{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 4px 12px rgba(0,0,0,0.3);}
+.btn-secondary:hover{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.95);border-color:rgba(255,255,255,0.2);transform:translateY(-2px);}
 .btn:active{transform:translateY(0) scale(.98) !important;}
 .btn i{font-size:1.1rem;}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none !important;}
-
 .stats-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;}
-.stat{
-  display:flex;align-items:center;gap:6px;
-  color:rgba(255,255,255,0.45);font-size:.72rem;font-weight:500;
-  padding:5px 10px;
-  background:rgba(255,255,255,0.04);
-  border-radius:8px;border:1px solid rgba(255,255,255,0.07);
-  font-family:'Outfit',sans-serif;
-  white-space:nowrap;transition:all .2s;
-}
+.stat{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,0.45);font-size:.72rem;font-weight:500;padding:5px 10px;background:rgba(255,255,255,0.04);border-radius:8px;border:1px solid rgba(255,255,255,0.07);font-family:'Outfit',sans-serif;white-space:nowrap;transition:all .2s;}
 .stat:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.65);}
 .stat i{color:rgba(255,255,255,0.25);font-size:.85rem;}
 .stat.ratio-good i{color:rgba(255,255,255,0.4);}
-
-.output-info{
-  display:flex;justify-content:space-between;align-items:center;
-  margin-top:14px;padding:12px 16px;
-  background:rgba(255,255,255,0.03);
-  border-radius:12px;border:1px solid rgba(255,255,255,0.07);
-  flex-wrap:wrap;gap:10px;
-}
+.output-info{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding:12px 16px;background:rgba(255,255,255,0.03);border-radius:12px;border:1px solid rgba(255,255,255,0.07);flex-wrap:wrap;gap:10px;}
 .stats{display:flex;gap:6px;flex-wrap:wrap;}
 .output-buttons{display:flex;gap:8px;}
-
-.btn-copy,.btn-download{
-  display:flex;align-items:center;gap:7px;
-  padding:9px 16px;font-weight:500;font-size:.8rem;
-  border-radius:12px;cursor:pointer;
-  transition:all .25s cubic-bezier(.34,1.4,.64,1);
-  min-width:110px;justify-content:center;
-  font-family:'Outfit',sans-serif;
-  -webkit-tap-highlight-color:transparent;
-}
-.btn-copy{
-  background:rgba(255,255,255,0.08);
-  color:rgba(255,255,255,0.7);
-  border:1px solid rgba(255,255,255,0.12);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);
-}
+.btn-copy,.btn-download{display:flex;align-items:center;gap:7px;padding:9px 16px;font-weight:500;font-size:.8rem;border-radius:12px;cursor:pointer;transition:all .25s cubic-bezier(.34,1.4,.64,1);min-width:110px;justify-content:center;font-family:'Outfit',sans-serif;-webkit-tap-highlight-color:transparent;}
+.btn-copy{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.12);box-shadow:inset 0 1px 0 rgba(255,255,255,0.08);}
 .btn-copy:hover{background:rgba(255,255,255,0.14);color:#fff;border-color:rgba(255,255,255,0.22);transform:translateY(-1px);}
-
-.btn-download{
-  background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.06) 100%);
-  color:rgba(255,255,255,0.7);
-  border:1px solid rgba(255,255,255,0.14);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);
-}
+.btn-download{background:linear-gradient(135deg,rgba(255,255,255,0.12) 0%,rgba(255,255,255,0.06) 100%);color:rgba(255,255,255,0.7);border:1px solid rgba(255,255,255,0.14);box-shadow:inset 0 1px 0 rgba(255,255,255,0.1);}
 .btn-download:hover{background:rgba(255,255,255,0.18);color:#fff;border-color:rgba(255,255,255,0.25);transform:translateY(-1px);}
-
-.loading{
-  display:none;text-align:center;padding:20px;
-  color:rgba(255,255,255,0.5);font-size:.85rem;font-weight:500;
-  background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);
-  border-radius:16px;border:1px solid rgba(255,255,255,0.08);
-  font-family:'Outfit',sans-serif;
-}
+.loading{display:none;text-align:center;padding:20px;color:rgba(255,255,255,0.5);font-size:.85rem;font-weight:500;background:rgba(255,255,255,0.04);backdrop-filter:blur(20px);border-radius:16px;border:1px solid rgba(255,255,255,0.08);font-family:'Outfit',sans-serif;}
 .loading i{animation:spin 1s linear infinite;margin-right:8px;font-size:1rem;}
-
 @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
 .shake{animation:shake .35s ease;}
-
 ::-webkit-scrollbar{width:5px;height:5px;}
 ::-webkit-scrollbar-track{background:rgba(255,255,255,0.02);border-radius:10px;}
 ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:10px;}
 ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.2);}
-
 @media(max-width:768px){
   .horizontal-row{flex-direction:column;gap:8px;}
   .option-row{min-width:100%;max-width:100%;border-right:none;border-bottom:1px solid rgba(255,255,255,0.05);padding-right:0;padding-bottom:10px;}
@@ -448,24 +129,11 @@ input[type="text"]::placeholder{color:rgba(255,255,255,0.18);}
   .btn{width:100%;max-width:300px;}
 }
 @media(max-width:480px){
-  body{padding:16px 12px 40px;}
   .glass,.options-section{padding:16px;border-radius:16px;}
 }
 </style>
 </head>
 <body>
-
-<nav id="navbar">
-  <a href="#" class="nav-logo">
-    <span class="star top" style="left:2px;--d:2.2s;--delay:0s">✦</span>
-    <span class="star top" style="left:60px;--d:1.9s;--delay:0.4s">✦</span>
-    <span class="star top" style="left:120px;--d:2.5s;--delay:0.8s">✦</span>
-    <span class="star bot" style="left:20px;--d:2.8s;--delay:1.1s">✦</span>
-    <span class="star bot" style="left:88px;--d:2.0s;--delay:0.3s">✦</span>
-    <span class="star bot" style="left:140px;--d:2.4s;--delay:0.7s">✦</span>
-    Obfuscate JavaScript
-  </a>
-</nav>
 
 <div class="toast" id="toast">
   <div class="toast-icon" id="toastIcon"></div>
@@ -473,309 +141,103 @@ input[type="text"]::placeholder{color:rgba(255,255,255,0.18);}
 </div>
 
 <div class="container">
-
-
   <div style="display:flex;flex-direction:column;gap:14px;">
 
-    <div class="glass">
-      <div class="panel-header">
-        <div class="panel-title">
-          <i class='bx bx-code-alt panel-title-icon'></i>
-          <h2>JavaScript Cần Mã Hóa</h2>
-        </div>
-        <div class="panel-actions">
-          <button class="btn-small" id="pasteBtn"><i class='bx bx-paste'></i> Dán</button>
-          <button class="btn-small" id="clearInputBtn"><i class='bx bx-trash'></i> Xoá</button>
-        </div>
-      </div>
-      <textarea class="code-editor" id="inputCode" placeholder="Dán code JavaScript vào đây..."></textarea>
-      <div class="stats-row">
-        <div class="stat" id="inputCharCount"><i class='bx bx-font'></i><span>Ký tự: 0</span></div>
-        <div class="stat" id="inputLineCount"><i class='bx bx-text'></i><span>Dòng: 0</span></div>
-        <div class="stat" id="inputSizeInfo"><i class='bx bx-data'></i><span>Kích thước: 0KB</span></div>
-      </div>
+<div class="glass">
+  <div class="panel-header">
+    <div class="panel-title">
+      <i class='bx bx-code-alt panel-title-icon'></i>
+      <h2>JavaScript Cần Mã Hóa</h2>
     </div>
-
-    <div class="options-section">
-      <div class="options-title"><i class='bx bx-cog'></i><span>Obfuscation Options</span></div>
-      <div class="options-horizontal">
-        <div class="horizontal-row" id="basicOptions"></div>
-        <div class="horizontal-row" id="mainOptions"></div>
-        <div class="horizontal-row" id="lockOptions"></div>
-      </div>
+    <div class="panel-actions">
+      <button class="btn-small" id="pasteBtn"><i class='bx bx-paste'></i> Dán</button>
+      <button class="btn-small" id="clearInputBtn"><i class='bx bx-trash'></i> Xoá</button>
     </div>
+  </div>
+  <textarea class="code-editor" id="inputCode" placeholder="Dán code JavaScript vào đây..."></textarea>
+  <div class="stats-row">
+    <div class="stat" id="inputCharCount"><i class='bx bx-font'></i><span>Ký tự: 0</span></div>
+    <div class="stat" id="inputLineCount"><i class='bx bx-text'></i><span>Dòng: 0</span></div>
+    <div class="stat" id="inputSizeInfo"><i class='bx bx-data'></i><span>Kích thước: 0KB</span></div>
+  </div>
+</div>
 
-    <div class="actions">
-      <button class="btn btn-primary" id="obfuscateBtn"><i class='bx bx-lock-alt'></i> Obfuscate</button>
-      <button class="btn btn-secondary" id="resetBtn"><i class='bx bx-reset'></i> Đặt Lại</button>
+<div class="options-section">
+  <div class="options-title"><i class='bx bx-cog'></i><span>Obfuscation Options</span></div>
+  <div class="options-horizontal">
+    <div class="horizontal-row" id="basicOptions"></div>
+    <div class="horizontal-row" id="mainOptions"></div>
+    <div class="horizontal-row" id="lockOptions"></div>
+  </div>
+</div>
+
+<div class="actions">
+  <button class="btn btn-primary" id="obfuscateBtn"><i class='bx bx-lock-alt'></i> Obfuscate</button>
+  <button class="btn btn-secondary" id="resetBtn"><i class='bx bx-reset'></i> Đặt Lại</button>
+</div>
+
+<div class="loading" id="loading"><i class='bx bx-loader-circle'></i> Đang xử lý mã hóa...</div>
+
+<div class="glass">
+  <div class="panel-header">
+    <div class="panel-title">
+      <i class='bx bx-check-shield panel-title-icon'></i>
+      <h2>Kết Quả Mã Hóa</h2>
     </div>
-
-    <div class="loading" id="loading"><i class='bx bx-loader-circle'></i> Đang xử lý mã hóa...</div>
-
-    <div class="glass">
-      <div class="panel-header">
-        <div class="panel-title">
-          <i class='bx bx-check-shield panel-title-icon'></i>
-          <h2>Kết Quả Mã Hóa</h2>
-        </div>
-      </div>
-      <textarea class="code-editor" id="outputCode" readonly placeholder="Code đã mã hóa sẽ hiện ở đây..." style="height:220px;"></textarea>
-      <div class="output-info">
-        <div class="stats">
-          <div class="stat" id="charCount"><i class='bx bx-font'></i><span>Ký tự: 0</span></div>
-          <div class="stat" id="lineCount"><i class='bx bx-text'></i><span>Dòng: 0</span></div>
-          <div class="stat" id="sizeInfo"><i class='bx bx-data'></i><span>Kích thước: 0KB</span></div>
-          <div class="stat" id="ratioInfo"><i class='bx bx-trending-up'></i><span>Tỉ lệ: —</span></div>
-        </div>
-        <div class="output-buttons">
-          <button class="btn-download" id="downloadBtn"><i class='bx bx-download'></i> Tải Xuống</button>
-          <button class="btn-copy" id="copyBtn"><i class='bx bx-copy'></i> Sao Chép</button>
-        </div>
-      </div>
+  </div>
+  <textarea class="code-editor" id="outputCode" readonly placeholder="Code đã mã hóa sẽ hiện ở đây..." style="height:220px;"></textarea>
+  <div class="output-info">
+    <div class="stats">
+      <div class="stat" id="charCount"><i class='bx bx-font'></i><span>Ký tự: 0</span></div>
+      <div class="stat" id="lineCount"><i class='bx bx-text'></i><span>Dòng: 0</span></div>
+      <div class="stat" id="sizeInfo"><i class='bx bx-data'></i><span>Kích thước: 0KB</span></div>
+      <div class="stat" id="ratioInfo"><i class='bx bx-trending-up'></i><span>Tỉ lệ: —</span></div>
     </div>
+    <div class="output-buttons">
+      <button class="btn-download" id="downloadBtn"><i class='bx bx-download'></i> Tải Xuống</button>
+      <button class="btn-copy" id="copyBtn"><i class='bx bx-copy'></i> Sao Chép</button>
+    </div>
+  </div>
+</div>
 
   </div>
 </div>
 
 <script>
-const navbar=document.getElementById('navbar');
-window.addEventListener('scroll',()=>{navbar.classList.toggle('hidden',window.scrollY>40);});
-
 const API_URL="https://api-obfuscation.vercel.app/javascript/obfuscate";
-
 const ICONS={
   success:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#86efac"><circle cx="12" cy="12" r="10"/><polyline points="8,12 11,15 16,9"/></svg>`,
   error:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#fca5a5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
   warning:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#fcd34d"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
   info:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:#93c5fd"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>`,
 };
-
 let toastTimer;
-function showToast(msg,type='info'){
-  const el=document.getElementById('toast');
-  document.getElementById('toastIcon').innerHTML=ICONS[type]||ICONS.info;
-  document.getElementById('toastMsg').textContent=msg;
-  el.className=`toast ${type} show`;
-  clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>el.classList.remove('show'),2800);
-}
-
+function showToast(msg,type='info'){const el=document.getElementById('toast');document.getElementById('toastIcon').innerHTML=ICONS[type]||ICONS.info;document.getElementById('toastMsg').textContent=msg;el.className=`toast ${type} show`;clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2800);}
 function shake(el){el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake');}
-
 const optionsConfig={
-  basic:[
-    {id:"target",type:"select",label:"Target",icon:"bx bx-globe",options:["browser","node"],default:"browser"},
-    {id:"preset",type:"select",label:"Preset",icon:"bx bx-slider-alt",options:["low","medium","high"],default:"medium"}
-  ],
-  main:[
-    {id:"stringEncoding",type:"checkbox",label:"String Encoding",icon:"bx bx-hash",default:true},
-    {id:"stringConcealing",type:"checkbox",label:"String Concealing",icon:"bx bx-hide",default:false},
-    {id:"stringCompression",type:"checkbox",label:"String Compression",icon:"bx bx-compress",default:false},
-    {id:"stringSplitting",type:"checkbox",label:"String Splitting",icon:"bx bx-cut",default:false},
-    {id:"renameVariables",type:"checkbox",label:"Rename Variables",icon:"bx bx-rename",default:true},
-    {id:"renameGlobals",type:"checkbox",label:"Rename Globals",icon:"bx bx-world",default:false},
-    {id:"movedDeclarations",type:"checkbox",label:"Moved Declarations",icon:"bx bx-move",default:false},
-    {id:"controlFlowFlattening",type:"checkbox",label:"Control Flow Flattening",icon:"bx bx-layer",default:false},
-    {id:"dispatcher",type:"checkbox",label:"Dispatcher",icon:"bx bx-network-chart",default:false},
-    {id:"opaquePredicates",type:"checkbox",label:"Opaque Predicates",icon:"bx bx-question-mark",default:false},
-    {id:"deadCode",type:"checkbox",label:"Dead Code",icon:"bx bx-x-circle",default:false},
-    {id:"calculator",type:"checkbox",label:"Calculator",icon:"bx bx-calculator",default:false},
-    {id:"integrity",type:"checkbox",label:"Integrity",icon:"bx bx-check-shield",default:false},
-    {id:"selfDefending",type:"checkbox",label:"Self Defending",icon:"bx bx-shield",default:true},
-    {id:"antiDebug",type:"checkbox",label:"Anti Debug",icon:"bx bx-bug",default:false},
-    {id:"duplicateLiteralsRemoval",type:"checkbox",label:"Duplicate Literals Removal",icon:"bx bx-trash",default:false},
-    {id:"shuffle",type:"checkbox",label:"Shuffle",icon:"bx bx-shuffle",default:false},
-    {id:"stack",type:"checkbox",label:"Stack",icon:"bx bx-layer",default:false}
-  ],
-  locks:[
-    {id:"domainLock",type:"text",label:"Domain Lock",icon:"bx bx-link",placeholder:"e.g., example.com",default:""},
-    {id:"osLock",type:"text",label:"OS Lock",icon:"bx bx-desktop",placeholder:"e.g., Windows, Linux",default:""},
-    {id:"browserLock",type:"text",label:"Browser Lock",icon:"bx bx-globe",placeholder:"e.g., Chrome, Firefox",default:""}
-  ]
+  basic:[{id:"target",type:"select",label:"Target",icon:"bx bx-globe",options:["browser","node"],default:"browser"},{id:"preset",type:"select",label:"Preset",icon:"bx bx-slider-alt",options:["low","medium","high"],default:"medium"}],
+  main:[{id:"stringEncoding",type:"checkbox",label:"String Encoding",icon:"bx bx-hash",default:true},{id:"stringConcealing",type:"checkbox",label:"String Concealing",icon:"bx bx-hide",default:false},{id:"stringCompression",type:"checkbox",label:"String Compression",icon:"bx bx-compress",default:false},{id:"stringSplitting",type:"checkbox",label:"String Splitting",icon:"bx bx-cut",default:false},{id:"renameVariables",type:"checkbox",label:"Rename Variables",icon:"bx bx-rename",default:true},{id:"renameGlobals",type:"checkbox",label:"Rename Globals",icon:"bx bx-world",default:false},{id:"movedDeclarations",type:"checkbox",label:"Moved Declarations",icon:"bx bx-move",default:false},{id:"controlFlowFlattening",type:"checkbox",label:"Control Flow Flattening",icon:"bx bx-layer",default:false},{id:"dispatcher",type:"checkbox",label:"Dispatcher",icon:"bx bx-network-chart",default:false},{id:"opaquePredicates",type:"checkbox",label:"Opaque Predicates",icon:"bx bx-question-mark",default:false},{id:"deadCode",type:"checkbox",label:"Dead Code",icon:"bx bx-x-circle",default:false},{id:"calculator",type:"checkbox",label:"Calculator",icon:"bx bx-calculator",default:false},{id:"integrity",type:"checkbox",label:"Integrity",icon:"bx bx-check-shield",default:false},{id:"selfDefending",type:"checkbox",label:"Self Defending",icon:"bx bx-shield",default:true},{id:"antiDebug",type:"checkbox",label:"Anti Debug",icon:"bx bx-bug",default:false},{id:"duplicateLiteralsRemoval",type:"checkbox",label:"Duplicate Literals Removal",icon:"bx bx-trash",default:false},{id:"shuffle",type:"checkbox",label:"Shuffle",icon:"bx bx-shuffle",default:false},{id:"stack",type:"checkbox",label:"Stack",icon:"bx bx-layer",default:false}],
+  locks:[{id:"domainLock",type:"text",label:"Domain Lock",icon:"bx bx-link",placeholder:"e.g., example.com",default:""},{id:"osLock",type:"text",label:"OS Lock",icon:"bx bx-desktop",placeholder:"e.g., Windows, Linux",default:""},{id:"browserLock",type:"text",label:"Browser Lock",icon:"bx bx-globe",placeholder:"e.g., Chrome, Firefox",default:""}]
 };
-
 const presetConfigs={
   low:{stringEncoding:true,stringConcealing:false,stringCompression:false,stringSplitting:false,renameVariables:true,renameGlobals:false,movedDeclarations:false,controlFlowFlattening:false,dispatcher:false,opaquePredicates:false,deadCode:false,calculator:false,integrity:false,selfDefending:true,antiDebug:false,duplicateLiteralsRemoval:false,shuffle:false,stack:false},
   medium:{stringEncoding:true,stringConcealing:false,stringCompression:true,stringSplitting:false,renameVariables:true,renameGlobals:false,movedDeclarations:false,controlFlowFlattening:true,dispatcher:false,opaquePredicates:false,deadCode:false,calculator:false,integrity:false,selfDefending:true,antiDebug:true,duplicateLiteralsRemoval:false,shuffle:false,stack:false},
   high:{stringEncoding:true,stringConcealing:true,stringCompression:true,stringSplitting:true,renameVariables:true,renameGlobals:true,movedDeclarations:true,controlFlowFlattening:true,dispatcher:true,opaquePredicates:false,deadCode:true,calculator:false,integrity:false,selfDefending:true,antiDebug:true,duplicateLiteralsRemoval:true,shuffle:true,stack:true}
 };
-
-const inputCode=document.getElementById('inputCode');
-const outputCode=document.getElementById('outputCode');
-const obfuscateBtn=document.getElementById('obfuscateBtn');
-const loading=document.getElementById('loading');
-
-function updateInputInfo(){
-  const t=inputCode.value;
-  document.getElementById('inputCharCount').querySelector('span').textContent=`Ký tự: ${t.length}`;
-  document.getElementById('inputLineCount').querySelector('span').textContent=`Dòng: ${t?t.split('\n').length:0}`;
-  document.getElementById('inputSizeInfo').querySelector('span').textContent=`Kích thước: ${(t.length/1024).toFixed(2)}KB`;
-}
-
-function updateOutputInfo(){
-  const t=outputCode.value,inLen=inputCode.value.length,outLen=t.length;
-  document.getElementById('charCount').querySelector('span').textContent=`Ký tự: ${outLen}`;
-  document.getElementById('lineCount').querySelector('span').textContent=`Dòng: ${t?t.split('\n').length:0}`;
-  document.getElementById('sizeInfo').querySelector('span').textContent=`Kích thước: ${(outLen/1024).toFixed(2)}KB`;
-  const ratioEl=document.getElementById('ratioInfo');
-  if(inLen>0&&outLen>0){
-    const r=((outLen/inLen)*100).toFixed(0);
-    ratioEl.querySelector('span').textContent=`Tỉ lệ: ${r}%`;
-    ratioEl.className=`stat ${outLen<=inLen*2?'ratio-good':''}`;
-  }else{
-    ratioEl.querySelector('span').textContent='Tỉ lệ: —';
-    ratioEl.className='stat';
-  }
-}
-
-function addTouchBtn(el){
-  let tm=false;
-  el.addEventListener('touchstart',()=>{tm=false;el.classList.add('is-pressed');},{passive:true});
-  el.addEventListener('touchmove',()=>{tm=true;el.classList.remove('is-pressed');},{passive:true});
-  el.addEventListener('touchend',()=>{el.classList.remove('is-pressed');});
-  el.addEventListener('touchcancel',()=>{el.classList.remove('is-pressed');});
-}
-
-function createOptionRow(option){
-  const row=document.createElement('div');row.className='option-row';
-  const label=document.createElement('label');label.className='option-label';label.htmlFor=option.id;
-  label.innerHTML=`<i class="${option.icon}"></i>${option.label}`;
-  const control=document.createElement('div');control.className='option-control';
-
-  if(option.type==='select'){
-    const sel=document.createElement('select');sel.id=option.id;
-    option.options.forEach(opt=>{
-      const el=document.createElement('option');el.value=opt;el.textContent=opt;
-      if(opt===option.default)el.selected=true;
-      sel.appendChild(el);
-    });
-    control.appendChild(sel);
-  }else if(option.type==='checkbox'){
-    const cb=document.createElement('div');
-    cb.className=`checkbox ${option.default?'checked':''}`;cb.id=option.id;
-    cb.addEventListener('click',()=>cb.classList.toggle('checked'));
-    label.addEventListener('click',e=>{e.preventDefault();cb.classList.toggle('checked');});
-    let tm=false;
-    cb.addEventListener('touchstart',()=>{tm=false;},{passive:true});
-    cb.addEventListener('touchmove',()=>{tm=true;},{passive:true});
-    cb.addEventListener('touchend',e=>{if(!tm){e.preventDefault();cb.classList.toggle('checked');}});
-    control.appendChild(cb);
-  }else if(option.type==='text'){
-    const inp=document.createElement('input');inp.type='text';inp.id=option.id;
-    inp.placeholder=option.placeholder||'';inp.value=option.default||'';
-    control.appendChild(inp);
-  }
-
-  let lm=false;
-  label.addEventListener('touchstart',()=>{lm=false;label.classList.add('is-pressed');},{passive:true});
-  label.addEventListener('touchmove',()=>{lm=true;label.classList.remove('is-pressed');},{passive:true});
-  label.addEventListener('touchend',()=>{label.classList.remove('is-pressed');});
-
-  row.appendChild(label);row.appendChild(control);return row;
-}
-
-function createOptions(){
-  optionsConfig.basic.forEach(o=>document.getElementById('basicOptions').appendChild(createOptionRow(o)));
-  optionsConfig.main.forEach(o=>document.getElementById('mainOptions').appendChild(createOptionRow(o)));
-  optionsConfig.locks.forEach(o=>document.getElementById('lockOptions').appendChild(createOptionRow(o)));
-  const ps=document.getElementById('preset');
-  if(ps)ps.addEventListener('change',applyPreset);
-}
-
-function applyPreset(){
-  const preset=document.getElementById('preset')?.value;
-  const config=presetConfigs[preset];if(!config)return;
-  for(const[id,val]of Object.entries(config)){
-    const cb=document.getElementById(id);if(cb)cb.classList.toggle('checked',val);
-  }
-  showToast(`Preset: ${preset}`,'info');
-}
-
-function getOptions(){
-  const opts={code:inputCode.value.trim()};
-  optionsConfig.basic.forEach(o=>{if(o.type==='select')opts[o.id]=document.getElementById(o.id).value;});
-  optionsConfig.main.forEach(o=>{if(o.type==='checkbox')opts[o.id]=document.getElementById(o.id).classList.contains('checked');});
-  optionsConfig.locks.forEach(o=>{if(o.type==='text'){const v=document.getElementById(o.id).value.trim();if(v)opts[o.id]=v.split(',').map(s=>s.trim()).filter(Boolean);}});
-  return opts;
-}
-
-async function obfuscate(){
-  const opts=getOptions();
-  if(!opts.code){shake(inputCode);showToast('Vui lòng nhập mã JavaScript!','warning');return;}
-  loading.style.display='block';
-  obfuscateBtn.disabled=true;
-  obfuscateBtn.innerHTML='<i class="bx bx-loader-circle" style="animation:spin 1s linear infinite;display:inline-block"></i> Đang xử lý...';
-  try{
-    const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(opts)});
-    if(res.ok){
-      outputCode.value=await res.text();
-      updateOutputInfo();
-      showToast('Mã hóa thành công!','success');
-    }else{
-      showToast(`Lỗi ${res.status}: ${await res.text()}`,'error');
-    }
-  }catch(err){
-    showToast(`Lỗi mạng: ${err.message}`,'error');
-  }finally{
-    loading.style.display='none';
-    obfuscateBtn.disabled=false;
-    obfuscateBtn.innerHTML='<i class="bx bx-lock-alt"></i> Obfuscate';
-  }
-}
-
-async function pasteFromClipboard(){
-  try{
-    const text=await navigator.clipboard.readText();
-    if(text){inputCode.value=text;updateInputInfo();showToast('Đã dán code!','success');}
-  }catch{
-    inputCode.focus();showToast('Hãy dán thủ công (Ctrl+V)','warning');
-  }
-}
-
-async function copyOutput(){
-  if(!outputCode.value.trim()){showToast('Không có dữ liệu!','warning');return;}
-  try{
-    await navigator.clipboard.writeText(outputCode.value);
-    showToast('Đã sao chép!','success');
-    const copyBtn=document.getElementById('copyBtn');
-    copyBtn.innerHTML='<i class="bx bx-check"></i> Đã sao chép';
-    setTimeout(()=>{copyBtn.innerHTML='<i class="bx bx-copy"></i> Sao Chép';},2000);
-  }catch{
-    outputCode.select();document.execCommand('copy');showToast('Đã sao chép!','success');
-  }
-}
-
-function downloadOutput(){
-  if(!outputCode.value.trim()){showToast('Không có dữ liệu!','warning');return;}
-  const blob=new Blob([outputCode.value],{type:'application/javascript'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='obfuscated-code.js';
-  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
-  showToast('Đã tải xuống!','success');
-}
-
-function resetAll(){
-  inputCode.value='';outputCode.value='';
-  updateInputInfo();updateOutputInfo();
-  showToast('Đã xóa tất cả','info');
-}
-
-function init(){
-  createOptions();
-  setTimeout(applyPreset,100);
-  updateInputInfo();updateOutputInfo();
-  obfuscateBtn.addEventListener('click',obfuscate);
-  document.getElementById('resetBtn').addEventListener('click',resetAll);
-  document.getElementById('copyBtn').addEventListener('click',copyOutput);
-  document.getElementById('downloadBtn').addEventListener('click',downloadOutput);
-  document.getElementById('pasteBtn').addEventListener('click',pasteFromClipboard);
-  document.getElementById('clearInputBtn').addEventListener('click',()=>{inputCode.value='';updateInputInfo();showToast('Đã xoá','info');});
-  inputCode.addEventListener('input',updateInputInfo);
-  outputCode.addEventListener('input',updateOutputInfo);
-  inputCode.addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='Enter'){e.preventDefault();obfuscate();}});
-  document.querySelectorAll('.btn,.btn-small,.btn-copy,.btn-download').forEach(addTouchBtn);
-}
-
+const inputCode=document.getElementById('inputCode'),outputCode=document.getElementById('outputCode'),obfuscateBtn=document.getElementById('obfuscateBtn'),loading=document.getElementById('loading');
+function updateInputInfo(){const t=inputCode.value;document.getElementById('inputCharCount').querySelector('span').textContent=`Ký tự: ${t.length}`;document.getElementById('inputLineCount').querySelector('span').textContent=`Dòng: ${t?t.split('\n').length:0}`;document.getElementById('inputSizeInfo').querySelector('span').textContent=`Kích thước: ${(t.length/1024).toFixed(2)}KB`;}
+function updateOutputInfo(){const t=outputCode.value,inLen=inputCode.value.length,outLen=t.length;document.getElementById('charCount').querySelector('span').textContent=`Ký tự: ${outLen}`;document.getElementById('lineCount').querySelector('span').textContent=`Dòng: ${t?t.split('\n').length:0}`;document.getElementById('sizeInfo').querySelector('span').textContent=`Kích thước: ${(outLen/1024).toFixed(2)}KB`;const ratioEl=document.getElementById('ratioInfo');if(inLen>0&&outLen>0){const r=((outLen/inLen)*100).toFixed(0);ratioEl.querySelector('span').textContent=`Tỉ lệ: ${r}%`;ratioEl.className=`stat ${outLen<=inLen*2?'ratio-good':''}`;}else{ratioEl.querySelector('span').textContent='Tỉ lệ: —';ratioEl.className='stat';}}
+function addTouchBtn(el){let tm=false;el.addEventListener('touchstart',()=>{tm=false;el.classList.add('is-pressed');},{passive:true});el.addEventListener('touchmove',()=>{tm=true;el.classList.remove('is-pressed');},{passive:true});el.addEventListener('touchend',()=>{el.classList.remove('is-pressed');});el.addEventListener('touchcancel',()=>{el.classList.remove('is-pressed');});}
+function createOptionRow(option){const row=document.createElement('div');row.className='option-row';const label=document.createElement('label');label.className='option-label';label.htmlFor=option.id;label.innerHTML=`<i class="${option.icon}"></i>${option.label}`;const control=document.createElement('div');control.className='option-control';if(option.type==='select'){const sel=document.createElement('select');sel.id=option.id;option.options.forEach(opt=>{const el=document.createElement('option');el.value=opt;el.textContent=opt;if(opt===option.default)el.selected=true;sel.appendChild(el);});control.appendChild(sel);}else if(option.type==='checkbox'){const cb=document.createElement('div');cb.className=`checkbox ${option.default?'checked':''}`;cb.id=option.id;cb.addEventListener('click',()=>cb.classList.toggle('checked'));label.addEventListener('click',e=>{e.preventDefault();cb.classList.toggle('checked');});let tm=false;cb.addEventListener('touchstart',()=>{tm=false;},{passive:true});cb.addEventListener('touchmove',()=>{tm=true;},{passive:true});cb.addEventListener('touchend',e=>{if(!tm){e.preventDefault();cb.classList.toggle('checked');}});control.appendChild(cb);}else if(option.type==='text'){const inp=document.createElement('input');inp.type='text';inp.id=option.id;inp.placeholder=option.placeholder||'';inp.value=option.default||'';control.appendChild(inp);}let lm=false;label.addEventListener('touchstart',()=>{lm=false;label.classList.add('is-pressed');},{passive:true});label.addEventListener('touchmove',()=>{lm=true;label.classList.remove('is-pressed');},{passive:true});label.addEventListener('touchend',()=>{label.classList.remove('is-pressed');});row.appendChild(label);row.appendChild(control);return row;}
+function createOptions(){optionsConfig.basic.forEach(o=>document.getElementById('basicOptions').appendChild(createOptionRow(o)));optionsConfig.main.forEach(o=>document.getElementById('mainOptions').appendChild(createOptionRow(o)));optionsConfig.locks.forEach(o=>document.getElementById('lockOptions').appendChild(createOptionRow(o)));const ps=document.getElementById('preset');if(ps)ps.addEventListener('change',applyPreset);}
+function applyPreset(){const preset=document.getElementById('preset')?.value;const config=presetConfigs[preset];if(!config)return;for(const[id,val]of Object.entries(config)){const cb=document.getElementById(id);if(cb)cb.classList.toggle('checked',val);}showToast(`Preset: ${preset}`,'info');}
+function getOptions(){const opts={code:inputCode.value.trim()};optionsConfig.basic.forEach(o=>{if(o.type==='select')opts[o.id]=document.getElementById(o.id).value;});optionsConfig.main.forEach(o=>{if(o.type==='checkbox')opts[o.id]=document.getElementById(o.id).classList.contains('checked');});optionsConfig.locks.forEach(o=>{if(o.type==='text'){const v=document.getElementById(o.id).value.trim();if(v)opts[o.id]=v.split(',').map(s=>s.trim()).filter(Boolean);}});return opts;}
+async function obfuscate(){const opts=getOptions();if(!opts.code){shake(inputCode);showToast('Vui lòng nhập mã JavaScript!','warning');return;}loading.style.display='block';obfuscateBtn.disabled=true;obfuscateBtn.innerHTML='<i class="bx bx-loader-circle" style="animation:spin 1s linear infinite;display:inline-block"></i> Đang xử lý...';try{const res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(opts)});if(res.ok){outputCode.value=await res.text();updateOutputInfo();showToast('Mã hóa thành công!','success');}else{showToast(`Lỗi ${res.status}: ${await res.text()}`,'error');}}catch(err){showToast(`Lỗi mạng: ${err.message}`,'error');}finally{loading.style.display='none';obfuscateBtn.disabled=false;obfuscateBtn.innerHTML='<i class="bx bx-lock-alt"></i> Obfuscate';}}
+async function pasteFromClipboard(){try{const text=await navigator.clipboard.readText();if(text){inputCode.value=text;updateInputInfo();showToast('Đã dán code!','success');}}catch{inputCode.focus();showToast('Hãy dán thủ công (Ctrl+V)','warning');}}
+async function copyOutput(){if(!outputCode.value.trim()){showToast('Không có dữ liệu!','warning');return;}try{await navigator.clipboard.writeText(outputCode.value);showToast('Đã sao chép!','success');const copyBtn=document.getElementById('copyBtn');copyBtn.innerHTML='<i class="bx bx-check"></i> Đã sao chép';setTimeout(()=>{copyBtn.innerHTML='<i class="bx bx-copy"></i> Sao Chép';},2000);}catch{outputCode.select();document.execCommand('copy');showToast('Đã sao chép!','success');}}
+function downloadOutput(){if(!outputCode.value.trim()){showToast('Không có dữ liệu!','warning');return;}const blob=new Blob([outputCode.value],{type:'application/javascript'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='obfuscated-code.js';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);showToast('Đã tải xuống!','success');}
+function resetAll(){inputCode.value='';outputCode.value='';updateInputInfo();updateOutputInfo();showToast('Đã xóa tất cả','info');}
+function init(){createOptions();setTimeout(applyPreset,100);updateInputInfo();updateOutputInfo();obfuscateBtn.addEventListener('click',obfuscate);document.getElementById('resetBtn').addEventListener('click',resetAll);document.getElementById('copyBtn').addEventListener('click',copyOutput);document.getElementById('downloadBtn').addEventListener('click',downloadOutput);document.getElementById('pasteBtn').addEventListener('click',pasteFromClipboard);document.getElementById('clearInputBtn').addEventListener('click',()=>{inputCode.value='';updateInputInfo();showToast('Đã xoá','info');});inputCode.addEventListener('input',updateInputInfo);outputCode.addEventListener('input',updateOutputInfo);inputCode.addEventListener('keydown',e=>{if(e.ctrlKey&&e.key==='Enter'){e.preventDefault();obfuscate();}});document.querySelectorAll('.btn,.btn-small,.btn-copy,.btn-download').forEach(addTouchBtn);}
 document.addEventListener('DOMContentLoaded',init);
 </script>
 </body>
